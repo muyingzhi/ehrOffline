@@ -1,0 +1,4 @@
+nvm 
+npm
+karma
+jasmine
