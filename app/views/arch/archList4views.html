@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link href="../styles/docs.min.css" rel="stylesheet" />
+<style type="text/css">
+.data_row_tip{
+	white-space: nowrap;
+	text-align: right;
+	width: 60px;
+	border: blue solid 0px;
+	display:-moz-inline-box; 
+	display: inline-block; 
+}
+.panel-body{height:150px;overflow:auto;}
+
+.panel-foot{height:112px;}
+
+.bs-glyphicons li {
+	height: 55px;
+	padding: 1px;
+	line-height: 0.4;
+	background-color: #D9EDF7;
+	color: #428BCA;
+}
+.bs-glyphicons li:hover {
+	color: #000000;
+	background-color: #F5F5F5;
+}
+.bs-glyphicons a:HOVER {
+	color: #000000;
+}
+
+</style>
+</head>
+<body>
+<div id="tb">
+	<input type="text" placeholder="输入姓名" ng-model="findName">
+	<button class="btn btn-default" type="button"  ng-click="find()">搜索</button>
+</div>
+
+<div class="container">
+<div class='row'>
+	<div ng-repeat="arch in archlist" id="archlist">
+		<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 ">
+		    <div class="panel panel-info">
+				<div class="panel-heading">
+		      		<h4>{{arch.fullname}}
+			      		<span ng-show="!arch.isOld" style="float: right;">
+			      			<a href="#/archDetail/{{arch.arch_basicinfoid}}" style="display:inline;" class="btn btn-primary col-xs-offset-2" role="button">编辑</a>
+			      		</span>
+			      		<span ng-show="arch.isOld" style="float: right;">
+			      			<a href="#/archUpdate/{{arch.arch_basicinfoid}}" style="display:inline;" class="btn btn-primary col-xs-offset-2" role="button">编辑</a>
+			      		</span>
+		      		
+		      		</h4>
+				</div>
+				<div class="panel-body">
+					<div><span class="data_row_tip">姓名：</span><span>{{arch.fullname}}</span></div>
+					<div><span class="data_row_tip">性别：</span><span>{{arch.gender}}</span></div>
+					<div><span class="data_row_tip">生日：</span><span>{{arch.birthday}}</span></div>
+					<div><span class="data_row_tip">身份证：</span><span>{{arch.identityno}}</span></div>
+					<div><span class="data_row_tip">住址：</span><span>{{arch.addr}}</span></div>
+		      	</div>
+				<div class="panel-foot bs-glyphicons" style="text-align: center;margin:0 auto;">
+					<ul class='bs-glyphicons-list'>
+						<hys-Box-Views ng-repeat = "item in arch.archViews" view-url="item.url" view-icon="item.iconClass" view-text="item.text"
+							view-jmid='{{arch.arch_basicinfoid}}' view-title="item.title" view-children="item.items" view-parameter="rootParameter" obj="item">
+						</hys-Box-Views>
+					</ul>
+		    	</div>
+				<div class="panel-foot bs-glyphicons" style="text-align: center;margin:0 auto;display: none">
+					<ul class="bs-glyphicons-list">
+						<li title="健康体检"><a href="#/arch/checklist/{{arch_basicinfoid}}">
+							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							<span class="glyphicon-class">体检</span></a></li>
+						<li><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							<span class="glyphicon-class">
+								<a href="#/arch/hyperlist/{{arch_basicinfoid}}" title="高血压随访">高血压</a></span></li>
+						<li><span class="glyphicon glyphicon-tint" aria-hidden="true"></span>
+							<span class="glyphicon-class">
+								<a href="#/arch/dmlist/{{arch_basicinfoid}}" title="糖尿病随访">糖尿病</a></span></li>
+						<li><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							<span class="glyphicon-class">
+								<a href="#/arch/schizolist/{{arch_basicinfoid}}" title="重性精神病随访">精神病</a></span></li>
+						<li><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+							<span class="glyphicon-class">
+								<a href="#/arch/visitslist/{{arch_basicinfoid}}" title="孕产妇保健">孕产妇</a></span></li>
+						<li><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							<span class="glyphicon-class">
+								<a href="#/arch/babylist/{{arch_basicinfoid}}" title="儿童保健">儿童</a></span></li>
+						<li><span class="glyphicon glyphicon-tint" aria-hidden="true"></span>
+							<span class="glyphicon-class">
+								<a href="#/arch/zycmrlist/{{arch_basicinfoid}}" title="中医体质管理">中医体质</a></span></li>
+					</ul>
+		    	</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</body>
+</html>

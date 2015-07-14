@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Insert title here</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">
+<style type="text/css">
+input.ng-invalid,select.ng-invalid {
+	background-color: pink;
+}
+.margin-top-div{
+	margin-top:5px;
+	height:35px;
+}
+
+</style>
+</head>
+<body>
+<table id="scorelist" ></table>	
+
+
+<div class="container-fluid" style="background-color:#eef;display:none;">
+<div class="col-xs-12" style="height:30px;"></div> 
+<div class="col-xs-12 table_head" style="text-align:left;">高危孕产妇管理 </div>	
+<form name="frmAction" novalidate id="frmDMAction" onsubmit="return false;" >	
+		<input name="firstcheckid" id="firstcheckid" type="hidden" ng-model="score.firstcheckid">
+		<input name="icpcode" type="hidden" ng-model="score.icpcode">
+		<input name="archid" id="archid" type="hidden" ng-model="score.archid">
+		
+		
+		<div class="col-xs-12">
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">档案ID<font class="font_red">*</font>：</span>
+				<span class="data_row_val_max">
+					<input class="form-control input-sm" type="text" id="archiveid" name="archiveid" ng-model="score.archiveid" readonly required>
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">姓名<font class="font_red">*</font>：</span>
+				<span class="data_row_val_max">
+					<input class="form-control input-sm" type="text" id="fullname" name="fullname" ng-model="score.fullname" readonly required>
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">出生日期：</span>
+				<span class="data_row_val_max">
+					<input hys-none-datebox  type="text" id="birthdate" name="birthdate" ng-model="score.birthdate" style="width:120px;height:30px " class="form-control input-sm" >
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">评分总得分<font class="font_red">*</font>：</span>
+				<span class="data_row_val_max">
+					<input type="text" id="estivalue" name="estivalue" ng-model="score.estivalue"  class="form-control input-sm" readonly required is-num>
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">危害：</span>
+				<span class="data_row_val_max">
+					<input type="text" id="disserve" name="disserve" ng-model="score.disserve"  class="form-control input-sm" >
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">确诊日期<font class="font_red">*</font>：</span>
+				<span class="data_row_val_max">
+					<input hys-none-datebox type="text" id="diagnosedate" name="diagnosedate" ng-model="score.diagnosedate"  style="width:120px;height:30px " class="form-control input-sm" required>
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">确诊时孕周：</td>
+						<td><input class="form-control input-sm" style="width:40px;margin-left:4px;" name="diagnoseweek" id="diagnoseweek" type="text" is-num ng-model="score.diagnoseweek" /></td>
+						<td>周</td>
+						<td><input class="form-control input-sm" style="width:40px;float:left;" name="diagnoseday" id="diagnoseday" type="text" is-num ng-model="score.diagnoseday" /></td>
+						<td>天</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">治疗/康复机构：</span>
+				<span class="data_row_val_max">
+					<input type="text" id="cureorg" name="cureorg" ng-model="score.cureorg"  class="form-control input-sm" >
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">治疗/康复医生：</span>
+				<span class="data_row_val_max">
+					<input type="text" id="curedoctor" name="curedoctor" ng-model="score.curedoctor"  class="form-control input-sm" >
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">转归情况：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="regress" id="regress" ng-model="score.regress" ng-options="item.id as item.text for item in regress">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">转归日期：</span>
+				<span class="data_row_val_max">
+					<input hys-none-datebox type="text" id="regressdate" name="regressdate" ng-model="score.regressdate"  style="width:120px;height:30px " class="form-control input-sm" >
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">高危结案标志<font class="font_red">*</font>：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm"  name="isover" id=isover ng-model="score.isover" ng-options="item.id as item.text for item in finalmark" required>
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">其他说明：</span>
+				<span class="data_row_val_max">
+					<input type="text" id="memo" name="memo" ng-model="score.memo"  class="form-control input-sm">
+				</span>
+			</div>
+			<div class="col-xs-12" style="text-align:center;">
+				<button id="btnSave" class="btn btn-default" ng-click="save()">
+					<span class="glyphicon glyphicon-ok"></span>&nbsp;保存
+				</button>
+			</div>
+		</div>
+		<div class="col-xs-12" style="height:30px;"></div> 
+		<div class="col-xs-12 table_head" style="text-align:left;">高危因素 >> 高危评分  </div>
+		<div class="col-xs-12" style="height:10px;"></div>
+		<table width="100%">
+			<tr>
+				<td style="height:30px;color:blue;text-align:left;background-color:#DCDCDC;">5分项目</td>
+				<td style="color:blue;text-align:left;background-color:#DCDCDC;">10分项目</td>
+				<td style="color:blue;width:70px;text-align:center;background-color:#DCDCDC;">15分项目</td>
+				<td style="color:blue;width:70px;text-align:center;background-color:#DCDCDC;">20分项目</td>
+				<td style="color:blue;width:40px;text-align:center;background-color:#DCDCDC;">取消</td>
+			</tr>
+			<tr ng-repeat="item in listScore">
+				<td style="border-bottom:1px dashed #D9D9D9;border-right:1px dashed #D9D9D9;border-left:1px dashed #D9D9D9;text-align:center;">
+					&nbsp;<input name="isinure{{item.dangerscoreid}}"  class="isinure{{item.dangerscoreid}}" id="isinure5_{{item.dangerscoreid}}"  dangerscoreid="{{item.dangerscoreid}}" ng-click="chooseItem()" type="radio" value="5" ng-show="item.fiveitem!=''" />{{item.fiveitem}}
+				</td>
+				<td style="border-bottom:1px dashed #D9D9D9;border-right:1px dashed #D9D9D9;text-align:center;">
+					&nbsp;<input name="isinure{{item.dangerscoreid}}" class="isinure{{item.dangerscoreid}}" id="isinure10_{{item.dangerscoreid}}"  dangerscoreid="{{item.dangerscoreid}}" ng-click="chooseItem()" type="radio" value="10" ng-show="item.tenitem!=''" />{{item.tenitem}}
+				</td>
+				<td style="border-bottom:1px dashed #D9D9D9;border-right:1px dashed #D9D9D9;text-align:center;">
+					<input name="isinure{{item.dangerscoreid}}" class="isinure{{item.dangerscoreid}}" id="isinure15_{{item.dangerscoreid}}"  dangerscoreid="{{item.dangerscoreid}}" ng-click="chooseItem()" type="radio" value="15" disabled="disabled"/>{{item.fifteentime}}
+				</td>
+				<td style="border-bottom:1px dashed #D9D9D9;border-right:1px dashed #D9D9D9;text-align:center;">
+					<input name="isinure{{item.dangerscoreid}}" class="isinure{{item.dangerscoreid}}" id="isinure20_{{item.dangerscoreid}}"  dangerscoreid="{{item.dangerscoreid}}" ng-click="chooseItem()" type="radio" value="20" disabled="disabled"/>{{item.twentyitem}}
+				</td>
+				<td style="height:35px;width:60px;border-bottom:1px dashed #D9D9D9;border-right:1px dashed #D9D9D9;text-align:center;">
+					<input name="isinure{{item.dangerscoreid}}"  ng-click="chooseItem()" type="radio" value="0"/>取消
+				</td>
+			</tr>
+		</table>	
+	</form>
+</div>
+</body>
+</html>

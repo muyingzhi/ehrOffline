@@ -1,0 +1,652 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>好医生诊所管理系统:::1岁以内儿童健康体检记录新建/修改页面</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">
+</head>
+<style type="text/css">
+.form_td_left{
+	height:34px;
+	line-height:34px;
+	width:100px;
+	align:right;
+}
+.form_td_center{
+	height:34px;
+	line-height:34px;
+	min-width:100px;
+}
+.form_td_right{
+	height:34px;
+	line-height:34px;
+	min-width:100px;
+}
+input.ng-invalid,select.ng-invalid {
+	background-color: pink;
+}
+
+select-Arch-Status.ng-invalid {
+	background-color: pink;
+}
+div{
+	padding: 3px;
+}
+.form-control{
+	width: 150px;
+}
+.data_row_tip{
+	white-space: nowrap;
+	text-align: right;
+	width: 120px;
+	border: blue solid 0px;
+	display:-moz-inline-box; 
+	display: inline-block; 
+	/*float: left;*/
+}
+.padding_div{
+	padding:0;
+}
+.height-div{
+	height:34px;
+	width:160px;
+	line-height:34px;
+}
+</style>
+<body>
+                          <p style="font-size: 16pt" align="center">新生儿家庭访视记录</p>
+<div class="container" style="background-color:#eef;">
+<form name="frmAction" role="form"  novalidate id="frmBobyfirstVisit" onsubmit="return false;">
+		<input type="hidden" name="id"  id="objectid" ng-model="baby.babyvisitsrecordid">
+		<input type="hidden" id="icpcode" name="icpcode" ng-model="baby.icpcode">
+		<input id="gender" name="gender" type="hidden" ng-model="baby.gender" maxlength="50">
+		<input  id="idcard" name="idcard" type="hidden" ng-model="baby.idcard" maxlength="18">
+		<input id="birthday" name="birthday" type="hidden" ng-model="baby.birthday" readonly>
+		<input id="familyaddress" name="familyaddress" type="hidden" ng-model="baby.familyaddress" maxlength="100">
+		<input id="mothername" name="mothername" type="hidden" ng-model="baby.mothername" maxlength="50">
+		<input id="motherjob" name="motherjob" type="hidden" ng-model="baby.motherjob" maxlength="50">
+		<input id="motherphone" name="motherphone" type="hidden" ng-model="baby.motherphone" maxlength="50">
+		<input id="motherbirthday" name="motherbirthday" type="hidden" ng-model="baby.motherbirthday" maxlength="20">
+		<input id="fathername" name="fathername" type="hidden" ng-model="baby.fathername" maxlength="50">
+		<input id="fatherjob" name="fatherjob" type="hidden" ng-model="baby.fatherjob" maxlength="50">
+		<input id="fatherphone" name="fatherphone" type="hidden" ng-model="baby.fatherphone" maxlength="50">
+		<input id="fatherbirthday" name="fatherbirthday" type="hidden" ng-model="baby.fatherbirthday" maxlength="20">
+	    
+<div class="row col-xs-12"  style="background-color:#eef;">
+    <div class="col-sm-6 col-md-6">
+            <span class="data_row_tip">档案ID：</span>
+            <span class="data_row_val">
+			<input id="archid" name="archid" type="hidden" ng-model="baby.archid">
+			<input readOnly  id="archiveid" name="archiveid" type="text" ng-model="baby.archiveid" class="form-control input-sm ng-pristine ng-valid">
+			</span>
+      </div>
+      <div class="col-sm-6 col-md-6">
+           <span class="data_row_tip">姓名：</span>
+           <span class="data_row_val">
+           <input  id="fullname"  type="text" readonly ng-model="baby.fullname"class="form-control input-sm ng-pristine ng-valid" >
+           </span>
+      </div>
+      <div class="col-sm-6 col-md-6">
+           <span class="data_row_tip">出生孕周：</span>
+           <span class="data_row_val">
+           <input id="gestationweeks" name="gestationweeks" type="text" ng-model="baby.gestationweeks" class="form-control input-sm ng-pristine ng-valid">
+           </span>
+       </div>
+       <div class="col-sm-12 col-md-6" style="height:40px">
+           <span>妊娠期患疾病情况：</span>
+           <span>
+           <checkbox-renchun id="gestationmalady" name="gestationmalady"  ng-model="baby.gestationmalady"></checkbox-Renchun>
+           </span>
+       </div>
+       <div class="col-sm-6 col-md-6">
+           <span class="data_row_tip">助产机构名称：</span>
+           <span class="data_row_val">
+           <input id="midwiferyorgname" name="midwiferyorgname" type="text"  ng-model="baby.midwiferyorgname" class="form-control input-sm ng-pristine ng-valid" >
+           </span>
+       </div>
+        <div class="col-sm-12 col-md-6" style="height:40px" >
+           <span>出生情况：</span>
+           <span>
+		   <checkbox-bornsituation id="bornsituation" name="bornsituation" ng-model="baby.bornsituation"></checkbox-bornsituation>
+           </span>
+       </div>
+        <div class="col-sm-6 col-md-3">
+           <span class="data_row_tip">新生儿窒息：</span>
+           <span class="data_row_val">
+           <select id="babyasphyxia" name="babyasphyxia"  ng-model="baby.babyasphyxia" 
+              ng-options="item.id as item.text for item in babyAsphyxiaAndJixingOrMore" 
+              ng-change="showAsphyxialevel()" class="form-control input-sm ng-pristine ng-valid">
+              <option value="">--请选择--</option>
+           </select>
+           </span>
+       </div>
+       <div class="col-sm-6 col-md-3">
+           <span id="asphy" style="display:none">
+           <span class="data_row_tip">窒息程度：</span>
+           <span class="data_row_val">
+           <select id="asphyxialevel" name="asphyxialevel"  ng-model="baby.asphyxialevel" 
+              ng-options="item.id as item.text for item in babyAsphyxialevel"
+               class="form-control input-sm ng-pristine ng-valid">
+             <option value="">--请选择--</option>
+           </select>
+           </span>
+           </span>
+       </div>
+       <div class="col-sm-6 col-md-3">
+           <span class="data_row_tip">是否有畸形：</span>
+           <span class="data_row_val">
+           <select id="deformity" name="deformity" type="text" ng-model="baby.deformity" 
+              ng-options="item.id as item.text for item in babyAsphyxiaAndJixingOrMore" 
+              class="form-control input-sm ng-pristine ng-valid">
+              <option value="">--请选择--</option>
+           </select>
+           </span>
+       </div> 
+       <div class="col-sm-6 col-md-3">
+           <span class="data_row_tip">新生儿听力筛查：</span>
+           <span class="data_row_val">
+           <select id="listensift" name="listensift" type="text" ng-model="baby.listensift" 
+              ng-options="item.id as item.text for item in babyListensift" 
+              class="form-control input-sm ng-pristine ng-valid">
+              <option value="">--请选择--</option>
+           </select>
+           </span>
+       </div>
+</div>
+
+
+<div class="row col-xs-12" style="background-color:#eef;">
+<div class="col-xs-12 table_head">新生儿疾病筛查</div>
+      <div class="col-sm-6 col-md-6">
+		 <span>甲低筛查时间：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		 <span>
+		   <input id="jdillsiftdate" name="jdillsiftdate"  hys-datebox  ng-model="baby.jdillsiftdate"s>
+		 </span>
+	</div>
+    <div class="col-sm-6 col-md-6">
+           <span>甲低筛查结果：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+           <span class="data_row_val">
+           <select id="jdillsift" name="jdillsift" type="text" ng-model="baby.jdillsift" 
+              ng-options="item.id as item.text for item in babyJdillsiftAndBbtillsift" 
+              class="form-control input-sm ng-pristine ng-valid">
+              <option value="">--请选择--</option>
+           </select>
+           </span>
+       </div>
+       <div class="col-sm-6 col-md-6">
+		  <span>苯丙酮尿筛查时间：</span>
+		  <span>
+		  <input id="bbtillsiftdate" name="bbtillsiftdate" hys-datebox ng-model="baby.bbtillsiftdate">
+		  </span>
+	   </div>
+       <div class="col-sm-6 col-md-6">
+           <span>苯丙酮尿筛查结果：</span>
+           <span class="data_row_val">
+           <select id="bbtillsift" name="bbtillsift" type="text" 
+             ng-options="item.id as item.text for item in babyJdillsiftAndBbtillsift" 
+             ng-model="baby.bbtillsift" class="form-control input-sm ng-pristine ng-valid">
+             <option value="">--请选择--</option>
+           </select>
+           </span>
+       </div>
+       <div class="col-sm-6 col-md-6">
+		  <span>其他筛查时间：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		  <span>
+		  <input id="othreillsiftdate" name="othreillsiftdate"  hys-datebox ng-model="baby.othreillsiftdate">
+		  </span>
+	   </div>
+       <div class="col-sm-6 col-md-6">
+           <span class="data_row_tip">其他筛查结果：&nbsp;&nbsp;</span>
+           <span class="data_row_val">
+           <input id="othreillsift" name="othreillsift" type="text" ng-model="baby.othreillsift" class="form-control input-sm ng-pristine ng-valid">
+           </span>
+       </div>
+</div>
+
+
+<div class="row col-xs-12" style="background-color:#eef;">
+<div class="col-xs-12 table_head">新生儿喂养及身体检查</div>
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%" >
+				<tr>
+					<td class="form_td_left">喂养方式：</td>
+					<td class="form_td_center"><select id="feedmode" name="feedmode" type="text" 
+					    ng-options="item.id as item.text for item in babyFeedmode" 
+					    ng-model="baby.feedmode"  class="form-control input-sm ng-pristine ng-valid">
+					    <option value="">--请选择--</option>
+					    </select></td>
+					<td class="form_td_right"></td>
+				</tr>
+		   </table>
+       </div>
+       <div class="col-sm-6 col-md-4 padding_div">
+           <table style="width:100%">
+				<tr>
+					<td class="form_td_left">出生体重：</td>
+					<td class="form_td_center"><input id="birthweight" name="birthweight" type="text" ng-model="baby.birthweight" is-float class="form-control input-sm ng-pristine ng-valid"  maxlength="50"></td>
+					<td class="form_td_right">(kg)</td>
+				</tr>
+		   </table>
+       </div>
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%">
+				<tr>
+					<td class="form_td_left">出生身长：</td>
+					<td class="form_td_center"><input id="birthheight" name="birthheight" type="text" ng-model="baby.birthheight" is-float  class="form-control input-sm ng-pristine ng-valid" maxlength="50"></td>
+					<td class="form_td_right">(cm)</td>
+				</tr>
+		   </table>
+       </div>
+<!--  -->
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%">
+                <tr>
+                    <td class="form_td_left">体温：</td>
+                    <td class="form_td_center"><input id="bodytemperature" name="bodytemperature" type="text" ng-model="baby.bodytemperature" is-float  class="form-control input-sm ng-pristine ng-valid" maxlength="50"></td>
+                    <td class="form_td_right">(℃)</td>
+                </tr>
+          </table>
+       </div>
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%">
+                <tr>
+                    <td class="form_td_left">目前体重：</td>
+                    <td class="form_td_center"><input id="nowweight" name="nowweight" type="text" ng-model="baby.nowweight" is-float class="form-control input-sm ng-pristine ng-valid"  maxlength="10"></td>
+                    <td class="form_td_right">(kg)</td>
+                </tr>
+          </table>
+       </div>
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%">
+                <tr>
+                    <td class="form_td_left">吃奶量：</td>
+                    <td class="form_td_center"><input id="milkamount" name="milkamount" type="text" ng-model="baby.milkamount" is-float  class="form-control input-sm ng-pristine ng-valid" maxlength="10"></td>
+                    <td class="form_td_right">ml/次</td>
+                </tr>
+          </table>
+       </div>
+<!--  -->
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%">
+                <tr>
+                    <td class="form_td_left">吃奶次数：</td>
+                    <td class="form_td_center"><input id="milknumber" name="milknumber" type="text" ng-model="baby.milknumber" is-float class="form-control input-sm ng-pristine ng-valid"  maxlength="10"></td>
+                    <td class="form_td_right">次/日</td>
+                </tr>
+          </table>
+       </div>
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%">
+                <tr>
+                    <td class="form_td_left">呼吸频率：</td>
+                    <td class="form_td_center"><input id="breath" name="breath" type="text" ng-model="baby.breath" is-float class="form-control input-sm ng-pristine ng-valid" maxlength="50"></td>
+                    <td class="form_td_right">(次/分钟)</td>
+                </tr>
+          </table>
+       </div>
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%">
+                <tr>
+                    <td class="form_td_left">脉率：</td>
+                    <td class="form_td_center"><input id="sphygmus" name="sphygmus" type="text" ng-model="baby.sphygmus" is-float class="form-control input-sm ng-pristine ng-valid" maxlength="50"></td>
+                    <td class="form_td_right">(次/分钟)</td>
+                </tr>
+          </table>
+       </div>
+<!--  -->
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%">
+                <tr>
+                    <td class="form_td_left">面色：</td>
+                    <td class="form_td_center"><select id="facecolor" name="facecolor" type="text" 
+                        ng-options="item.id as item.text for item in babyFacecolor" 
+                        ng-model="baby.facecolor" class="form-control input-sm ng-pristine ng-valid">
+                        <option value="">--请选择--</option>
+                        </select></td>
+                    <td class="form_td_right"></td>
+                </tr>
+          </table>
+       </div>
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%;">
+                <tr>
+                    <td class="form_td_left">前囟长：</td>
+                    <td class="form_td_center"><input id="anteriorcranial" name="anteriorcranial" type="text" ng-model="baby.anteriorcranial" is-float class="form-control input-sm ng-pristine ng-valid" maxlength="50">
+                    <td class="form_td_right">cm</td>
+                </tr>
+          </table>
+       </div>
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%">
+                <tr>
+                    <td class="form_td_left">前囟宽：</td>
+                    <td class="form_td_center"><input id="anteriorcranial_assist" name="anteriorcranial_assist" ng-model="baby.anteriorcranial_assist" is-float type="text" class="form-control input-sm ng-pristine ng-valid"  maxlength="50"></td>
+                    <td class="form_td_right">cm</td>
+                </tr>
+          </table>
+       </div>
+<!--  -->
+     <div class="col-sm-6 col-md-4 padding_div">
+        <table style="width:100%">
+                <tr>
+                    <td class="form_td_left">前囟外观：</td>
+                    <td class="form_td_center"><select id="anteriorshape" name="anteriorshape" type="text" 
+                        ng-options="item.id as item.text for item in babyAnteriorshape" 
+                        ng-model="baby.anteriorshape" class="form-control input-sm ng-pristine ng-valid">
+                        <option value="">--请选择--</option>
+                        </select></td>
+                    <td class="form_td_right"></td>
+                </tr>
+          </table>
+      </div>
+      <div class="col-sm-6 col-md-4 padding_div">
+         <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">眼：</td>
+                    <td class="form_td_center"><select id="eye" name="eye" type="text" 
+                        ng-options="item.id as item.text for item in babyPublicstatus" 
+                        ng-model="baby.eye" class="form-control input-sm ng-pristine ng-valid">
+                        </select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+         </table>
+       </div>
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">四肢活动度：</td>
+                    <td class="form_td_center"><select id="limbsactivity" name="limbsactivity" type="text" 
+                        ng-options="item.id as item.text for item in babyPublicstatus" 
+                        ng-model="baby.limbsactivity" class="form-control input-sm ng-pristine ng-valid">
+                        </select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+          </table>
+       </div>
+<!--  -->
+     <div class="col-sm-6 col-md-4 padding_div">
+        <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">颈部包块：</td>
+                    <td class="form_td_center"><select id="neck" name="neck" type="text" 
+                        ng-options="item.id as item.text for item in babyAsphyxiaAndJixingOrMore" 
+                        ng-model="baby.neck" class="form-control input-sm ng-pristine ng-valid">
+                        <option value="">--请选择--</option>
+                        </select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+         </table>
+      </div>
+      <div class="col-sm-6 col-md-4 padding_div">
+         <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">鼻：</td>
+                    <td class="form_td_center"><select id="nose" name="nose" type="text" ng-model="baby.nose"
+                        ng-options="item.id as item.text for item in babyPublicstatus"  
+                         class="form-control input-sm ng-pristine ng-valid"></select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+         </table>
+       </div>
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">皮肤：</td>
+                    <td class="form_td_center">
+                    <select id="skin" name="skin" type="text" ng-model="baby.skin" value="HR522_1"
+                        ng-options="item.id as item.text for item in babySkin" 
+                          class="form-control input-sm ng-pristine ng-valid">
+                        </select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+         </table>
+       </div>
+<!--  -->
+     <div class="col-sm-6 col-md-4 padding_div">
+        <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">口腔：</td>
+                    <td class="form_td_center"><select id="mouthcavity" name="mouthcavity" type="text" 
+                        ng-options="item.id as item.text for item in babyPublicstatus" 
+                        ng-model="baby.mouthcavity"  class="form-control input-sm ng-pristine ng-valid">
+                        </select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+         </table>
+      </div>
+      <div class="col-sm-6 col-md-4 padding_div">
+         <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">肛门：</td>
+                    <td class="form_td_center"><select id="anus" name="anus" type="text" 
+                        ng-options="item.id as item.text for item in babyPublicstatus" 
+                        ng-model="baby.anus"  class="form-control input-sm ng-pristine ng-valid"></select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+         </table>
+       </div>
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">心肺：</td>
+                    <td class="form_td_center"><select id="cardiopulmonary" name="cardiopulmonary" type="text" 
+                        ng-options="item.id as item.text for item in babyPublicstatus" 
+                        ng-model="baby.cardiopulmonary"  class="form-control input-sm ng-pristine ng-valid">
+                        </select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+          </table>
+       </div>
+<!--  -->
+     <div class="col-sm-6 col-md-4 padding_div">
+        <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">外生殖器：</td>
+                    <td class="form_td_center"><select id="genitals" name="genitals" type="text" 
+                        ng-options="item.id as item.text for item in babyPublicstatus" 
+                        ng-model="baby.genitals"  class="form-control input-sm ng-pristine ng-valid">
+                        </select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+         </table>
+      </div>
+      <div class="col-sm-6 col-md-4 padding_div">
+         <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">呕吐：</td>
+                    <td class="form_td_center"><select id="vomiting" name="vomiting" type="text" 
+                        ng-options="item.id as item.text for item in babyAsphyxiaAndJixingOrMore" 
+                        ng-model="baby.vomiting" class="form-control input-sm ng-pristine ng-valid">
+                        <option value="">--请选择--</option>
+                        </select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+         </table>
+         
+       </div>
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">大便：</td>
+                    <td class="form_td_center"><select id="stool" name="stool" type="text" ng-model="baby.stool"
+                        ng-options="item.id as item.text for item in babyStool" 
+                         class="form-control input-sm ng-pristine ng-valid">
+                        <option value="">--请选择--</option>
+                        </select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+         </table>
+       </div>
+       
+       <div class="col-sm-6 col-md-4 padding_div">
+        <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">大便次数：</td>
+                    <td class="form_td_center"><input id="stoolnumber" name="stoolnumber" type="text" ng-model="baby.stoolnumber" is-float class="form-control input-sm ng-pristine ng-valid" maxlength="10"></td>
+                    <td class="form_td_right">次/日</td>
+                 </tr>
+         </table>
+      </div>
+      <div class="col-sm-6 col-md-4 padding_div">
+         <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">腹部：</td>
+                    <td class="form_td_center"><select id="abdomen" name="abdomen" type="text" 
+                        ng-options="item.id as item.text for item in babyPublicstatus" 
+                        ng-model="baby.abdomen"  class="form-control input-sm ng-pristine ng-valid"></select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+         </table>
+         
+       </div>
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">脊柱：</td>
+                    <td class="form_td_center"><select id="spine" name="spine" type="text" 
+                        ng-options="item.id as item.text for item in babyPublicstatus" 
+                        ng-model="baby.spine"  class="form-control input-sm ng-pristine ng-valid"></select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+         </table>
+       </div>
+       
+       <div class="col-sm-6 col-md-4 padding_div">
+        <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">脐带：</td>
+                    <td class="form_td_center"><select id="umbilical" name="umbilical" type="text" 
+                        ng-options="item.id as item.text for item in babyUmbilical" 
+                        ng-model="baby.umbilical" class="form-control input-sm ng-pristine ng-valid">
+                        <option value="">--请选择--</option>
+                        </select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+         </table>
+      </div>
+      <div class="col-sm-6 col-md-4 padding_div">
+         <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">黄疸部位：</td>
+                    <td class="form_td_center"><select id="jaundice" name="jaundice" type="text" 
+                        ng-options="item.id as item.text for item in babyJaundice" 
+                        ng-model="baby.jaundice" class="form-control input-sm ng-pristine ng-valid" maxlength="50">
+                        <option value="">--请选择--</option>
+                        </select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+         </table>
+         
+       </div>
+       <div class="col-sm-6 col-md-4 padding_div">
+          <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">淋巴：</td>
+                    <td class="form_td_center"><select id="lymph" name="lymph" type="text" 
+                        ng-options="item.id as item.text for item in babyLymph" ng-model="baby.lymph" 
+                        class="form-control input-sm ng-pristine ng-valid" maxlength="30">
+                        <option value="">--请选择--</option>
+                        </select></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+         </table>
+       </div>
+       
+       <div class="col-sm-6 col-md-4 padding_div">
+        <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">淋巴(其他)：</td>
+                    <td class="form_td_center"><input id="lymph" name="lymph_other" type="text" ng-model="baby.lymph_other" class="form-control input-sm ng-pristine ng-valid" maxlength="200"></td>
+                    <td class="form_td_right"></td>
+                 </tr>
+         </table>
+      </div>
+      <div class="col-sm-6 col-md-4 padding_div">
+         <table style="width:100%">
+                 <tr>
+                    <td class="form_td_left">骨碱性磷酸酶：</td>
+                    <td class="form_td_center"><input id="gkxlsm" name="gjxlsm" ng-model="baby.gjxlsm" is-float class="form-control input-sm ng-pristine ng-valid"  maxlength="4"></td>
+                    <td class="form_td_right">U/L</td>
+                 </tr>
+         </table>
+         
+       </div>
+       <div class="col-sm-6 col-md-4 padding_div">
+       </div>
+</div>
+
+<div class="row col-xs-12" style="background-color:#eef;">
+<div class="col-xs-12 table_head">其他</div>
+     <div class="col-sm-12 col-md-12">
+          <span class="data_row_tip">异常情况：</span>	
+          <textarea style="width:75%;height:60px"  id="exceptioninfo" name="exceptioninfo" type="text" ng-model="baby.exceptioninfo" maxlength="500"></textarea>
+     </div>
+</div>
+<div class="row col-xs-12" style="background-color:#eef;">
+     <div class="col-sm-6 col-md-6">
+          <span>指导：</span>	
+          <span>
+          <checkbox-zhidaotwo id="guidance" name="guidance" type="hidden" ng-model="baby.guidance"   maxlength="15"></checkbox-zhidaotwo>
+          </span>
+     </div>
+     <div class="col-sm-6 col-md-6">
+          <span class="data_row_tip">其他指导：</span>	
+          <span class="data_row_val">
+          <input id="guidanceother" name="guidanceother" type="text" ng-model="baby.guidanceother" class="form-control input-sm ng-pristine ng-valid" maxlength="100">
+          </span>
+     </div>
+</div>
+<div class="row col-xs-12" style="background-color:#eef;">
+     <div class="col-sm-6 col-md-4">
+          <span>本次访视日期：</span>	
+          <span>
+          <input id="currvisitstime" name="currvisitstime" hys-datebox ng-model="baby.currvisitstime" ng-change="setMyBookingdate()"  required>
+          </span>
+     </div>
+     <div class="col-sm-6 col-md-4">
+          <span class="data_row_tip">本次随访地点：</span>	
+          <span class="data_row_val">
+          <input   ng-model="baby.icpname" readOnly class="form-control input-sm ng-pristine ng-valid">
+          </span>
+     </div>
+     <div class="col-sm-6 col-md-4">
+          <span class="data_row_tip">下次随访地点：</span>	
+          <span class="data_row_val">
+          <input id="nextvisitaddr" name="nextvisitaddr"  type="text" ng-model="baby.nextvisitaddr" class="form-control input-sm ng-pristine ng-valid">
+          </span>
+     </div>
+     <div class="col-sm-6 col-md-4">
+          <span>下次随访日期：</span>	
+          <span>
+          <input id="nextvisitstime" name="nextvisitstime"  hys-datebox ng-model="baby.nextvisitstime" required>
+          </span>
+     </div>
+     <div class="col-sm-6 col-md-4">
+          <span class="data_row_tip">随访医生签名：</span>	
+          <span class="data_row_val">
+          <select id="visitdoctor" name="visitdoctor" ng-model="baby.visitdoctor" required 
+			        ng-options="item.id as item.text for item in babyVisitdoctor" class="form-control input-sm ng-pristine ng-valid"></select>
+          </span>
+          <input type="hidden" name="visitdoctorname"  ng-model="baby.visitdoctorname">
+     </div>
+</div>
+</form>
+ <div class="row">
+      <table style="width:100%;height:35px;">
+          <tr>
+            <td>
+         <div class="form-group col-sm-12 col-md-12"  align="center" style="padding-top:8px;">
+              <button ng-show="!baby.isOld" id="btnSave" class="btn btn-default" ng-click="save()">
+						<span class="glyphicon glyphicon-ok"></span>&nbsp;保存</button>
+         </div>
+        </td>
+         </tr>
+     </table>
+</div>
+</div>  													
+</body>
+</html>

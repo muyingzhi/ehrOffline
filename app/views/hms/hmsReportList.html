@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html ><!--  manifest="ehrOffLine.manifest"  -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<div class="page-header">
+	<h3>&nbsp;&nbsp;<span class="glyphicon glyphicon-inbox"></span>&nbsp;一体机体检记录</h3>
+	<button onclick="ftpConn()">新体检</button>
+</div>
+<div class="table-responsive">
+            <table class="table table-striped" id="hmspersonList">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>姓名</th>
+                  <th>性别</th>
+                  <th>出生日期</th>
+                  <th>体检时间</th>
+                  <th>是否有心电图</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1,001</td>
+                  <td>Lorem</td>
+                  <td>ipsum</td>
+                  <td>dolor</td>
+                  <td>sit</td>
+                  <td>sit</td>
+                </tr>
+              </tbody>
+            </table>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myModalLabel">体检读取</h4>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+			</div>
+		</div>
+	</div>
+</div>
+    
+<div id="request-dialog" style="display:none" title="新体检">
+		<p class="validateTips"></p>
+		<form class="form-horizontal" role="form"  action="../system/CoEcgRequest_addedit.do?state=ask" id="requestForm">
+			<input type="hidden" id="id" name="id" />
+			<div style="padding:0 15px;">
+				<div class="form-group row">
+					<label for="fullname"  class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">姓名</label>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+						<input id="fullname" name="fullname" size="10" type="text"  class="form-control" />
+					</div>
+					<label for="sex"  class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">性别</label>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+						<input id="sex" name="sex" size="10" type="text" class="form-control" />
+					</div>
+					
+					<label for="birth"  class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">出生</label>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+						<input id="birth" name="birth" size="10" type="text" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="checkdate"  class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">体检时间</label>
+					<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+						<input id="checkdate" name="checkdate" rows="3" type="text" class="form-control"  ></input>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="ecg"  class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">心电图</label>
+					<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+						<textarea id="ecg" name="ecg" rows="3" type="text" class="form-control"  ></textarea>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+<script type="text/javascript" src="ftp.js"  rel="nofollow">
+</script>
+<script type="text/javascript">
+	function ftpConn(){
+	var Client = require("ftp");
+		var config = {user:"ftp",password:"ftp"};
+		var c = new Client();
+		  c.on('ready', function() {
+		    c.list(function(err, list) {
+		      if (err) throw err;
+		      console.dir(list);
+		      c.end();
+		    });
+		  });
+		c.connect(config);
+	}
+</script>
+</body>
+</html>

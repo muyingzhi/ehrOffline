@@ -1,0 +1,398 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">
+<style type="text/css">
+input.ng-invalid,select.ng-invalid {
+	background-color: pink;
+}
+.boder_bottom{
+	border-bottom:1px dashed #CCC;
+	border-right:1px dashed #CCC;
+}
+.boder_bottom_list{
+	min-height:45px;
+	border-bottom:1px dashed #CCC;
+	border-right:1px dashed #CCC;
+}
+.boder_title_bottom{
+	line-height:32px;
+	height:32px;
+	border-right:1px dashed #CCC;
+}
+.boder_input_bottom{
+	height:32px;
+}
+.table_title{
+	background-color:#C0C0C0;
+	border-right:1px dashed #CCC;
+	border-bottom:1px dashed #CCC;
+}
+.table_body{
+	border-right:1px dashed #CCC;
+	border-bottom:1px dashed #CCC;
+}
+</style>
+</head>
+<body>
+<form name="frmAction" novalidate id="frmAction" onsubmit="return false;" action="./hypertensionvisit_addedit.do" method="post">	
+	<!-- 如有需要请注意在此修改相应字段名，detail页面的字段名必须与该对象数据表字段名相对应 -->
+
+	<input name="id" id="objectId" type="hidden" ng-model="zy.id">
+	<input name="icpcode" type="hidden" ng-model="zy.icpcode">
+	<div class="col-xs-12" style="text-align:center;border-bottom:1px dashed #CCC;"><b style="font-size: 16pt">中医体质管理</b></div>
+	<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 boder_bottom">
+		<div class="col-xs-5 boder_title_bottom">档案ID</div>
+		<div class="col-xs-7 boder_input_bottom">
+			<input class="form-control input-sm" name="archiveid" id="archiveid" type="text" readonly ng-model="zy.archiveid">
+			<input id="archno" type="hidden" ng-model="zy.archno">
+			<input name="archid" id="archid" type="hidden" ng-model="zy.archid">
+		</div>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 boder_bottom">
+		<div class="col-xs-5 boder_title_bottom">姓名</div>
+		<div class="col-xs-7 boder_input_bottom"><input class="form-control input-sm" class="prop_string" id="fullname" type="text" readonly ng-model="arch.fullname"></div>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 boder_bottom">
+		<div class="col-xs-5 boder_title_bottom">性别</div>
+		<div class="col-xs-7 boder_input_bottom"><input class="form-control input-sm" class="prop_int" id="gender" type="text" readonly ng-model="arch.gender"></div>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 boder_bottom">
+		<div class="col-xs-5 boder_title_bottom">年龄</div>
+		<div class="col-xs-7 boder_input_bottom"><input class="form-control input-sm" name="age" class="prop_int" id="age" type="text" readonly ng-model="arch.age"></div>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 boder_bottom">
+		<div class="col-xs-5 boder_title_bottom">体重(kg):</div>
+		<div class="col-xs-7 boder_input_bottom"><input class="form-control input-sm" name="weight" id="weight" type="number" ng-model="zy.weight" ng-change="countBMI()" required></div>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 boder_bottom">
+		<div class="col-xs-5 boder_title_bottom">身高(m):</div>
+		<div class="col-xs-7 boder_input_bottom"><input class="form-control input-sm" name="height" id="height" type="number" ng-model="zy.height" ng-change="countBMI()" required></div>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 boder_bottom">
+		<div class="col-xs-5 boder_title_bottom">腹围(cm):</div>
+		<div class="col-xs-7 boder_input_bottom"><input class="form-control input-sm" name="bellytimes" id="bellytimes" type="number" ng-model="zy.bellytimes" ng-change='countbellytimes()' required></div>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 boder_bottom">
+		<div class="col-xs-5 boder_title_bottom">感冒次数:</div>
+		<div class="col-xs-7 boder_input_bottom"><input class="form-control input-sm" name="coldtimes" id="coldtimes" type="number" ng-model="zy.coldtimes" ng-change='countCold()' required></div>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 boder_bottom">
+		<div class="col-xs-5 boder_title_bottom">过敏次数:</div>
+		<div class="col-xs-7 boder_input_bottom"><input class="form-control input-sm" name="allergytimes" id="allergytimes" type="number" ng-model="zy.allergytimes" ng-change='countAllergytimes()' required></div>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 boder_bottom">
+		<div class="col-xs-5 boder_title_bottom"></div>
+		<div class="col-xs-7 boder_input_bottom"></div>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 boder_bottom">
+		<div class="col-xs-5 boder_title_bottom"></div>
+		<div class="col-xs-7 boder_input_bottom"></div>
+	</div>
+	<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 boder_bottom">
+		<div class="col-xs-5 boder_title_bottom"></div>
+		<div class="col-xs-7 boder_input_bottom"></div>
+	</div>
+	<div class="col-xs-12" style="border-right:1px dashed #CCC;"><h4>说明：</h4></div>
+	<div class="col-xs-12 table_head" style="text-align:center;border-right:1px dashed #CCC;border-left:none;">体质测试问卷</div>
+	
+	<!--------------------------------说明---------------------------------->
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(1)您精力充沛吗?(指精神头足，乐于做事)</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" >
+		<radio-answer name="item1" id="item1" score1="" score2="" score3="" score4="" sumscore="" phzscore="phzscore" ng-model="zy.item1"></radio-answer>
+	</div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(2)您容易疲乏吗?(指体力如何，是否稍微活动一下或做一点家务劳动就感到累)</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item2" score1="item2" score2="item3" score3="item4" score4="item14" sumscore="qxzscore" phzscore="phzscore" ng-model="zy.item2"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(3)您容易气短，呼吸短促，接不上气吗？</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item3" score1="item2" score2="item3" score3="item4" score4="item14" sumscore="qxzscore" phzscore="phzscore" ng-model="zy.item3"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(4)您说话声音低弱无力吗?（指说话没有力气）</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item4" score1="item2" score2="item3" score3="item4" score4="item14" sumscore="qxzscore" phzscore="phzscore" ng-model="zy.item4"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(5)您感到闷闷不乐、情绪低沉吗?（指心情不愉快，情绪低落）</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item5" score1="item5" score2="item6" score3="item7" score4="item8" sumscore="qyzscore" phzscore="" ng-model="zy.item5"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(6)您容易精神紧张、焦虑不安吗?（指遇事是否心情紧张）</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item6" score1="item5" score2="item6" score3="item7" score4="item8" sumscore="qyzscore" phzscore="" ng-model="zy.item6"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(7)您因为生活状态改变而感到孤独、失落吗？</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item7" score1="item5" score2="item6" score3="item7" score4="item8" sumscore="qyzscore" phzscore="" ng-model="zy.item7"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(8)您容易感到害怕或受到惊吓吗?</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item8" score1="item5" score2="item6" score3="item7" score4="item8" sumscore="qyzscore" phzscore="" ng-model="zy.item8"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >
+		(9)您感到身体超重不轻松吗?(感觉身体沉重)[BMI指数=体重
+		<input type="number" id='weight' name='weight' ng-model="zy.weight" style='width:40px;' value="">(kg)/ 身高
+		<input type="number" id='height' name='height' ng-model="zy.height" style='width:40px;' value="" /><sup>2</sup>(m&nbsp;&nbsp;<sup>2</sup>)]
+		<button ng-click='countBMI()'>计算</button>
+	</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-bmi name="item9" score1="item9" score2="item16" score3="item28" score4="item32" sumscore="tszscore" phzscore="" ng-model="zy.item9"></radio-bmi></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(10)您眼睛干涩吗?</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item10" score1="item10" score2="item21" score3="item26" score4="item31" sumscore="yinxzscore" phzscore="" ng-model="zy.item10"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(11)您手脚发凉吗?（不包含周围温度低或穿的少导致的手脚发冷）</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item11" score1="item11" score2="item12" score3="item13" score4="item29" sumscore="yxzscore" phzscore="" ng-model="zy.item11"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(12)您胃脘部、背部或腰膝部怕冷吗？（指上腹部、背部、腰部或膝关节等，有一处或多处怕冷）</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item12" score1="item11" score2="item12" score3="item13" score4="item29" sumscore="yxzscore" phzscore="" ng-model="zy.item12"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(13)您比一般人耐受不了寒冷吗？（指比别人容易害怕冬天或是夏天的冷空调、电扇等）</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item13" score1="item11" score2="item12" score3="item13" score4="item29" sumscore="yxzscore" phzscore="" ng-model="zy.item13"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(14)您容易患感冒吗?（指每年感冒的次数）<input type="number" id='coldtimes' name='coldtimes' style='width:40px;' ng-model="zy.coldtimes" ng-change='countCold()' value="">次数</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-cold name="item14" score1="item2" score2="item4" score3="item3" score4="item14" sumscore="qxzscore" phzscore="" ng-model="zy.item14"></radio-cold></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(15)您没有感冒时也会鼻塞、流鼻涕吗?</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item15" score1="item15" score2="item17" score3="item18" score4="item20" sumscore="tzzscore" phzscore="" ng-model="zy.item15"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(16)您有口黏口腻，或睡眠打鼾吗？</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item16" score1="item9" score2="item16" score3="item28" score4="item32" sumscore="tszscore" phzscore="" ng-model="zy.item16"></radio-answer></div>
+	<div class="col-xs-12 col-md-6 boder_bottom_list" >(17)您容易过敏(对药物、食物、气味、花粉或在季节交替、气候变化时)吗?一年<input type="number" id='allergytimes' style='width:40px;'  ng-change='countAllergytimes()' ng-model="zy.allergytimes" name='allergytimes' value="" >次</div>
+	<div class="col-xs-12 col-md-6 boder_bottom_list" ><radio-irritability name="item17" score1="item15" score2="item18" score3="item17" score4="item20" sumscore="tzzscore" phzscore="" ng-model="zy.item17"></radio-irritability></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(18)您的皮肤容易起荨麻疹吗? (包括风团、风疹块、风疙瘩)</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item18" score1="item15" score2="item18" score3="item17" score4="item20" sumscore="tzzscore" phzscore="" ng-model="zy.item18"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(19)您的皮肤在不知不觉中会出现青紫瘀斑、皮下出血吗?（指皮肤在没有外伤的情况下出现青一块紫一块的情况）</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item19" score1="item19" score2="item22" score3="item24" score4="item33" sumscore="xyzscore" phzscore="" ng-model="zy.item19"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(20)您的皮肤一抓就红，并出现抓痕吗?（指被指甲或钝物划过后皮肤的反应）</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item20" score1="item15" score2="item18" score3="item17" score4="item20" sumscore="tzzscore" phzscore="" ng-model="zy.item20"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(21)您皮肤或口唇干吗?</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item21" score1="item10" score2="item21" score3="item26" score4="item31" sumscore="yinxzscore" phzscore="" ng-model="zy.item21"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(22)您有肢体麻或固定部位疼痛的感觉吗？</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item22" score1="item19" score2="item22" score3="item24" score4="item33" sumscore="xyzscore" phzscore="" ng-model="zy.item22"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(23)您面部或鼻部有油腻感或者油亮发光吗?（指脸上或鼻子）</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item23" score1="item23" score2="item25" score3="item27" score4="item30" sumscore="srzscore" phzscore="" ng-model="zy.item23"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(24)您面色或目眶晦黯，或出现褐色斑块/斑点吗?</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item24" score1="item19" score2="item22" score3="item24" score4="item33" sumscore="xyzscore" phzscore="" ng-model="zy.item24"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(25)您有皮肤湿疹、疮疖吗？</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item25" score1="item23" score2="item25" score3="item27" score4="item30" sumscore="srzscore" phzscore="" ng-model="zy.item25"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(26)您感到口干咽燥、总想喝水吗？</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item26" score1="item10" score2="item21" score3="item26" score4="item31" sumscore="yinxzscore" phzscore="" ng-model="zy.item26"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(27)您感到口苦或嘴里有异味吗?（指口苦或口臭）</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item27" score1="item23" score2="item25" score3="item27" score4="item30" sumscore="srzscore" phzscore="" ng-model="zy.item27"></radio-answer></div>
+	<div class="col-xs-12 col-md-4 boder_bottom_list" >(28)您腹部肥大吗?（指腹部脂肪肥厚）腹围<input type="number" id='bellytimes'  style='width:40px' ng-change='countbellytimes()' name='bellytimes' ng-model="zy.bellytimes" value="">cm</div>
+	<div class="col-xs-12 col-md-8 boder_bottom_list" ><radio-yaowei name="item28" score1="item9" score2="item16" score3="item28" score4="item32" sumscore="tszscore" phzscore="" ng-model="zy.item28"></radio-yaowei></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(29)您吃(喝)凉的东西会感到不舒服或者怕吃(喝)凉的东西吗？（指不喜欢吃凉的食物，或吃了凉的食物后会不舒服）</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item29" score1="item11" score2="item12" score3="item13" score4="item29" sumscore="yxzscore" phzscore="" ng-model="zy.item29"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(30)您有大便黏滞不爽、解不尽的感觉吗?(大便容易粘在马桶上)</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item30" score1="item23" score2="item25" score3="item27" score4="item30" sumscore="srzscore" phzscore="" ng-model="zy.item30"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(31)您容易大便干燥吗?</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item31" score1="item10" score2="item21" score3="item26" score4="item31" sumscore="yinxzscore" phzscore="" ng-model="zy.item31"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(32)您舌苔厚腻或有舌苔厚厚的感觉吗?（如果自我感觉不清楚可由调查员观察后填写）</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item32" score1="item9" score2="item16" score3="item28" score4="item32" sumscore="tszscore" phzscore="" ng-model="zy.item32"></radio-answer></div>
+	<div class="col-sm-12 col-md-8 boder_bottom_list" >(33)您舌下静脉瘀紫或增粗吗？（可由调查员辅助观察后填写）</div>
+	<div class="col-sm-12 col-md-4 boder_bottom_list" ><radio-answer name="item33" score1="item19" score2="item22" score3="item24" score4="item33" sumscore="xyzscore" phzscore="" ng-model="zy.item33"></radio-answer></div>
+	<div class="col-xs-12">&nbsp;</div>
+	<div class="col-sm-12 col-md-6" >
+		<table width="100%">
+			<tr>
+				<td class="table_title">体质类型</td>
+				<td class="table_title">得分</td>
+				<td class="table_title">辨识结果</td>
+			</tr>
+			<tr>
+				<td class="table_body">气虚质</td>
+				<td class="table_body"><input class="form-control input-sm" name="qxzscore" id="qxzscore" type="number" value="0" style="width:70%;" ng-model="zy.qxzscore" required></td>
+				<td class="table_body">
+					<select class="form-control input-sm" id="qxzresult" name="qxzresult" ng-model="zy.qxzresult" >
+						<option value="">--请选择--</option>
+						<option value="HR553_1">是</option>
+						<option value="HR553_2">倾向是</option>
+						<option value="HR553_0">否</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-sm-12 col-md-6" >
+		<table width="100%">
+			<tr>
+				<td class="table_title">体质类型</td>
+				<td class="table_title">得分</td>
+				<td class="table_title">辨识结果</td>
+			</tr>
+			<tr>
+				<td class="table_body">阳虚质</td>
+				<td class="table_body"><input class="form-control input-sm" name="yxzscore" id="yxzscore" type="number" value="0" style="width:70%;" ng-model="zy.yxzscore" required></td>
+				<td class="table_body">
+					<select class="form-control input-sm" id="yxzresult" name="yxzresult" ng-model="zy.yxzresult"  >
+						<option value="">--请选择--</option>
+						<option value="HR553_1">是</option>
+						<option value="HR553_2">倾向是</option>
+						<option value="HR553_0">否</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-sm-12 col-md-6" >
+		<table width="100%">
+			<tr>
+				<td class="table_title">体质类型</td>
+				<td class="table_title">得分</td>
+				<td class="table_title">辨识结果</td>
+			</tr>
+			<tr>
+				<td class="table_body">阴虚质</td>
+				<td class="table_body"><input class="form-control input-sm" name="yinxzscore" id="yinxzscore" type="number" value="0" style="width:70%;" ng-model="zy.yinxzscore" required></td>
+				<td class="table_body">
+					<select class="form-control input-sm" id="yinxzresult" name="yinxzresult" ng-model="zy.yinxzresult"  >
+						<option value="">--请选择--</option>
+						<option value="HR553_1">是</option>
+						<option value="HR553_2">倾向是</option>
+						<option value="HR553_0">否</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-sm-12 col-md-6" >
+		<table width="100%">
+			<tr>
+				<td class="table_title">体质类型</td>
+				<td class="table_title">得分</td>
+				<td class="table_title">辨识结果</td>
+			</tr>
+			<tr>
+				<td class="table_body">痰湿质</td>
+				<td class="table_body"><input class="form-control input-sm" name="tszscore" id="tszscore" type="number" value="0" style="width:70%;" ng-model="zy.tszscore" required></td>
+				<td class="table_body">
+					<select class="form-control input-sm" id="tszresult" name="tszresult" ng-model="zy.tszresult">
+						<option value="">--请选择--</option>
+						<option value="HR553_1">是</option>
+						<option value="HR553_2">倾向是</option>
+						<option value="HR553_0">否</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-sm-12 col-md-6" >
+		<table width="100%">
+			<tr>
+				<td class="table_title">体质类型</td>
+				<td class="table_title">得分</td>
+				<td class="table_title">辨识结果</td>
+			</tr>
+			<tr>
+				<td class="table_body">湿热质</td>
+				<td class="table_body"><input class="form-control input-sm" name="srzscore" id="srzscore" type="number" value="0" style="width:70%;" ng-model="zy.srzscore" required></td>
+				<td class="table_body">
+					<select class="form-control input-sm" id="srzresult" name="srzresult" ng-model="zy.srzresult"  >
+						<option value="">--请选择--</option>
+						<option value="HR553_1">是</option>
+						<option value="HR553_2">倾向是</option>
+						<option value="HR553_0">否</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-sm-12 col-md-6" >
+		<table width="100%">
+			<tr>
+				<td class="table_title">体质类型</td>
+				<td class="table_title">得分</td>
+				<td class="table_title">辨识结果</td>
+			</tr>
+			<tr>
+				<td class="table_body">血瘀质</td>
+				<td class="table_body"><input class="form-control input-sm" name="xyzscore" id="xyzscore" type="number" value="0" style="width:70%;" ng-model="zy.xyzscore" required></td>
+				<td class="table_body">
+					<select class="form-control input-sm" id="xyzresult" name="xyzresult" ng-model="zy.xyzresult">
+						<option value="">--请选择--</option>
+						<option value="HR553_1">是</option>
+						<option value="HR553_2">倾向是</option>
+						<option value="HR553_0">否</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-sm-12 col-md-6" >
+		<table width="100%">
+			<tr>
+				<td class="table_title">体质类型</td>
+				<td class="table_title">得分</td>
+				<td class="table_title">辨识结果</td>
+			</tr>
+			<tr>
+				<td class="table_body">气郁质</td>
+				<td class="table_body"><input class="form-control input-sm" name="qyzscore" id="qyzscore" type="number" value="0" style="width:70%;" ng-model="zy.qyzscore" required></td>
+				<td class="table_body">
+					<select class="form-control input-sm" id="qyzresult" name="qyzresult" ng-model="zy.qyzresult" >
+						<option value="">--请选择--</option>
+						<option value="HR553_1">是</option>
+						<option value="HR553_2">倾向是</option>
+						<option value="HR553_0">否</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-sm-12 col-md-6" >
+		<table width="100%">
+			<tr>
+				<td class="table_title">体质类型</td>
+				<td class="table_title">得分</td>
+				<td class="table_title">辨识结果</td>
+			</tr>
+			<tr>
+				<td class="table_body">特禀质</td>
+				<td class="table_body"><input class="form-control input-sm" name="tzzscore" id="tzzscore" type="number" value="0" style="width:70%;" ng-model="zy.tzzscore" required></td>
+				<td class="table_body">
+					<select class="form-control input-sm" id="tzzresult" name="tzzresult" ng-model="zy.tzzresult"  >
+						<option value="">--请选择--</option>
+						<option value="HR553_1">是</option>
+						<option value="HR553_2">倾向是</option>
+						<option value="HR553_0">否</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-sm-12 col-md-6" >
+		<table width="100%">
+			<tr>
+				<td class="table_title">体质类型</td>
+				<td class="table_title">得分</td>
+				<td class="table_title">辨识结果</td>
+			</tr>
+			<tr>
+				<td class="table_body">平和质</td>
+				<td class="table_body"><input class="form-control input-sm" name="phzscore" id="phzscore" type="number" value="0" style="width:70%;" ng-model="zy.phzscore" required></td>
+				<td class="table_body">
+					<select class="form-control input-sm" id="phzresult" name="phzresult" ng-model="zy.phzresult"  >
+						<option value="">--请选择--</option>
+						<option value="HR552_0">否</option>
+						<option value="HR552_1">是</option>
+						<option value="HR552_2">基本是</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-sm-12" >&nbsp;</div>
+	
+	<div class="col-sm-12 col-md-6" >
+		<div class="col-sm-5 height-div">随访日期：</div>
+		<div class="col-sm-6">
+			<input style="width:100%;height:32px;border:1px solid #cccccc;line-height:1.428571429;" class="form-control input-sm" name="inquiredate" id="inquiredate" type="text" hys-datebox ng-model="zy.inquiredate" required>
+		</div>
+		<div class="col-sm-1"><span class="font_red">*</span></div>
+	</div>
+	<div class="col-sm-12 col-md-6" >
+		<div class="col-sm-5 height-div">随访医生：</div>
+		<div class="col-sm-6">
+			<select class="form-control input-sm" name="inquirer" id="inquirer" ng-model="zy.inquirer" required ng-options="item.id as item.text for item in dictDoctor">
+					<option value="">--请选择--</option>
+					<option value="HR553_1">是</option>
+					<option value="HR553_2">倾向是</option>
+					<option value="HR553_0">否</option>
+			</select>
+		</div>
+		<div class="col-sm-1"><span class="font_red">*</span></div>
+	</div>
+	<table width="100%" >
+		<tr>
+			<td align="center" class="div_options">
+				<button id="btnSave" class="btn btn-default" ng-show="!zy.isOld" ng-click="save()">
+				<span class="glyphicon glyphicon-ok"></span>&nbsp;保存</button>
+			</td>
+		</tr>
+	</table>
+	</form>
+</body>
+</html>

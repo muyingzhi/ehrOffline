@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">
+<style type="text/css">
+input.ng-invalid {
+	background-color: pink;
+}
+form { margin-top:10px;}
+</style>
+</head>
+<body>
+<div class="container">	
+<div class="page-header">
+	<h3>&nbsp;<span class="glyphicon glyphicon-cog"></span>&nbsp;系统配置维护</h3>
+</div>
+<div class="alert alert-warning" ng-show="config.message">
+	<div>提示：{{config.message}}</div>
+</div>
+<div class="row" ng-show="cname=='ftpinfo'||config.showAll">
+<div class="container">	
+	<div class="panel panel-info">
+		<div class="panel-heading">FTP服务器信息维护：{{cname}}</div>
+		<form name="ftpForm" class="form-horizontal" role="form" >
+		  <div class="form-group">
+		  	<label for="ftpHost" class="col-sm-3 control-label">ip地址</label>
+		    	<div class="col-sm-5">
+		  		<input id="ftpHost" name="ftpHost" type="text" ng-model="config.ftpinfo.host" class="form-control" placeholder="例如:192.168.1.107" required>
+		  	</div>
+		  </div>
+		  <div class="form-group">
+		  	<label for="port" class="col-sm-3 control-label">端口号</label>
+		    <div class="col-sm-5">
+		  		<input id="port" name="port" type="text" ng-model="config.ftpinfo.port" class="form-control" readonly>
+		  	</div>
+		  </div>
+		  <div class="form-group">
+		  	<label for="user" class="col-sm-3 control-label">用户名</label>
+		    <div class="col-sm-5">
+		  		<input id="user" name="user" type="text" ng-model="config.ftpinfo.user" class="form-control" readonly>
+		  	</div>
+		  </div>
+		  <div class="form-group">
+		  	<label for="pwd" class="col-sm-3 control-label">密码</label>
+		    <div class="col-sm-5">
+		  		<input id="pwd" name="pwd" type="password" ng-model="config.ftpinfo.pwd" class="form-control" readonly>
+		  	</div>
+		  </div>
+		  <div class="form-group">
+		  	<label for="pwd" class="col-sm-5 control-label"></label>
+	    	<div class="col-sm-2">
+		  		<button type="button" class="btn btn-default" ng-click="ftpSave()">保存</button>
+		  	</div>
+		  </div>
+		</form>
+	</div>
+</div>
+</div>
+
+<div class="row" ng-show="cname=='interchg'||config.showAll">
+<div class="container">	
+	<div class="panel panel-info">
+		<div class="panel-heading">交换平台地址维护：{{cname}}</div>
+		<form name="interchgForm" class="form-horizontal" role="form" >
+		  <div class="form-group">
+		  	<label for="interchgUrl" class="col-sm-3 control-label">交换平台地址</label>
+		    	<div class="col-sm-5">
+		  		<input id="interchgUrl" name="interchgUrl" type="text" ng-model="config.interchg.url" class="form-control" placeholder="例如:http://192.168.1.107:8080/interChg" required>
+		  	</div>
+		  </div>
+		  <div class="form-group">
+		  	<label class="col-sm-5 control-label"></label>
+	    	<div class="col-sm-2">
+	    		<button type="button" class="btn btn-default" ng-click="interchgSave()">保存</button>
+		  	</div>
+		  </div>
+		</form>
+	</div>
+</div>
+</div>
+</div>
+</body>
+</html>

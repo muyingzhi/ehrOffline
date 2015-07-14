@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insert title here</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">	
+</head>
+<body class="container-fluid">
+
+<input type="hidden" id="liveaba" name="liveaba" ng-model="oldPeople.liveaba">
+<input type="hidden" id="valueresult" name="valueresult" ng-model="oldPeople.valueresult"/>
+<input type="hidden" id="systemflag" name="systemflag" ng-model="oldPeople.systemflag"/>
+
+<div class="col-xs-12">&nbsp;</div>
+<div class="col-xs-12 table_head">老年人专项体检</div>
+<div class="col-xs-12" style="border:1px #CCCCCC solid;border-top:none;">	
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>1、生活赡养：</label></td>
+					<td><input id="support" class="form-control" name="support" ng-model="oldPeople.support"/></td>
+					<td style="font-size:12px;">(填写示例:子女赡养、领取低保等)</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>老人特殊类别：</label></td>
+					<td>
+						<checkbox-stype id="stype" name="stype" ng-model="oldPeople.stype"></checkbox-stype>
+                    </td>
+				</tr>
+			</table>
+		</div>
+		
+	</div>
+	<div class="row">
+		<div class="col-xs-12 table_head">日常生活能力评定</div>
+	</div>	
+	<div id="score" class="row">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>1)进餐：</label></td>
+					<td>
+						<select name="ss1" class="form-control" ng-model="ss1" ng-change="getScore()">			
+							<option value="0">独立完成</option>
+							<option value="00">----</option>
+							<option value="3">需要协助</option>
+							<option value="5">完全需要帮助</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>2)梳洗：</label></td>
+					<td>
+						<select name="ss2" class="form-control" ng-model="ss2" ng-change="getScore()">				
+							<option value="0">独立完成</option>
+							<option value="1">洗澡需协助其他能自理</option>
+							<option value="3">在协助和适当时间内完成部分梳洗</option>
+							<option value="7">完全需要帮助</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>3)穿衣：</label></td>
+					<td>
+						<select name="ss3" class="form-control" ng-model="ss3" ng-change="getScore()">				
+							<option value="0">独立完成</option>
+							<option value="00">----</option>
+							<option value="3">需要协助在适当时间完成部分穿衣</option>
+							<option value="5">完全需要帮助</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>4)如厕：</label></td>
+					<td>
+						<select name="ss4" class="form-control" ng-model="ss4" ng-change="getScore()">				
+							<option value="0">不需协助可自控</option>
+							<option value="1">偶尔失禁</option>
+							<option value="5">经常失禁</option>
+							<option value="10">完全失禁</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>5)活动：</label></td>
+					<td>
+						<select name="ss5" class="form-control" ng-model="ss5" ng-change="getScore()">				
+							<option value="0">独立完成所有活动</option>
+							<option value="1">借助较小外力或辅助装置完成</option>
+							<option value="5">借助较大外力才能完成</option>
+							<option value="10">卧床不起活动完全需要帮助</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="row" style="border-top:1px #CCCCCC solid;border-bottom:1px #CCCCCC solid;">
+		<div class="col-xs-12"  style="border-bottom:1px #CCCCCC solid;">
+			<div class="row">
+				<div class="col-xs-12">各项目评分标准说明：选项1:可自理, 2:轻度依赖 ,3:中度依赖, 4:不能自理</div>
+				<div class="col-xs-12">结果的评价方法：总分0~3分为可自理,4~8分为轻度自理,9~18分为中度依赖,>=19分为不能自理</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>评价结果：</label></td>
+					<td>
+			 			<select id="valueresults" name="valueresults" class="form-control" ng-model="valueresults"  disabled>
+							<option value="1">可自理</option>
+							<option value="2">轻度依赖</option>
+							<option value="3">中度依赖</option>
+							<option value="4">不能自理</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>最后得分为：</label></td>
+					<td><input id="scores" class="form-control" name="scores" ng-model="scores" readonly/></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>老年人关注级别：</label></td>
+					<td>
+						<select id="systemflag_show" name="systemflag_show" class="form-control" ng-model="systemflag_show" disabled>
+							<option value="1">一般关注</option>
+							<option value="2">中等关注</option>
+							<option value="3">高度关注</option>
+							<option value="4">极高度关注</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<input type="button" ng-click="getScore()" value="计算" />
+		</div>
+	</div>
+	<div class="row" style="border-bottom:1px #CCCCCC solid;">
+		<div class="col-xs-12">
+			<table width="100%">
+				<tr>
+					<td width="130px"><label>3、护理照顾情况：</label></td>
+					<td><input type="text" id="caredesc" name="caredesc"  class="form-control"  ng-model="oldPeople.caredesc"></input></td>
+					<td>(填写示例：良好、一般、差)</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>4、视力指数：</label></td>
+					<td><input type="text" id="eyeexponent" name="eyeexponent"  class="form-control"  ng-model="oldPeople.eyeexponent"></input></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>5、牙齿残缺：</label></td>
+					<td><input type="text" id="toothlack" name="toothlack"  class="form-control"  ng-model="oldPeople.toothlack"></input></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>被调查者：</label></td>
+					<td><input type="text" id="informant" name="informant"  class="form-control"  ng-model="oldPeople.informant"></input></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>调查者：</label></td>
+					<td><input type="text" id="inquirer" name="inquirer"  class="form-control"  ng-model="oldPeople.inquirer"></input></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>复核者：</label></td>
+					<td><input type="text" id="checker" name="checker"  class="form-control"  ng-model="oldPeople.checker"></input></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>签名日期：</label></td>
+					<td><input type="text" id="idiographdate" name="idiographdate"  class="form-control" style="width:100%;height:32px;border:1px solid #cccccc;line-height:1.428571429;" hys-none-datebox ng-model="oldPeople.idiographdate"></input></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>调查日期：<span class="font_red">*</span></label></td>
+					<td><input type="text" id="inquiredate" name="inquiredate"  class="form-control" style="width:100%;height:32px;border:1px solid #cccccc;line-height:1.428571429;" hys-none-datebox ng-model="oldPeople.inquiredate"></input></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="100px"><label>复核日期：</label></td>
+					<td><input type="text" id="checkdate" name="checkdate"  class="form-control" style="width:100%;height:32px;border:1px solid #cccccc;line-height:1.428571429;" hys-none-datebox ng-model="oldPeople.checkdate"></input></td>
+				</tr>
+			</table>
+		</div>
+		
+		<div class="col-xs-12" style="border-bottom:1px solid #ccc;">&nbsp;</div>
+		<div class="col-xs-12">&nbsp;</div>
+		<div ng-show="isTRUE" class="col-xs-12" style="text-align:center;">
+			 <button id="btnSave" class="btn btn-default" ng-click="save()"><span class="glyphicon glyphicon-ok"></span>&nbsp;保存</button>
+		</div>
+		<div class="col-xs-12">&nbsp;</div>
+	</div>
+</div>
+</body>
+</html>

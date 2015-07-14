@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ><!--    manifest="ehrOffLine.manifest"  -->
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+	<link href="../styles/bootstrap/css/bootstrap.css" rel="stylesheet" />
+	<link href="../styles/bootstrap/css/dashboard.css" rel="stylesheet" />
+	<title>离线随访</title>
+	<style type="text/css">
+	body {
+		font-size: 14px;
+		color: #000000;
+		overflow: auto;
+	}
+	.navbar-inverse .navbar-nav > li > a {
+	  color: #fff;
+	}
+</style>
+</head>
+<body>
+<div ng-controller="mainController">
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background:#c0f;height:50px;">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<div style="float:left;padding:5px 0 5px 1px;">
+					<img src="../images/logo-hjk-w.png"/>
+				</div>
+				<div style="float:left;">
+					<a class="navbar-brand" href="#" id="homePage" style="color:#fff;font-size:26px;">健康档案离线随访</a>
+				</div>
+			</div>
+			<div class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+				<!-- 顶端导航 -->
+				<ul class='nav navbar-nav'>
+					<hys-nav-menu ng-repeat = "item in topNav" menu-url="item.url" menu-icon="item.iconClass" 
+						menu-children="item.items" menu-parameter="rootParameter" obj="item" >
+						{{item.text}}
+					</hys-nav-menu>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+				  <li><a href="#/about"><span class="glyphicon glyphicon-question-sign"></span>&nbsp;帮助&nbsp;{{currentUser.username}}-{{currentUser.userid}}-{{currentUser.icpcode}}&nbsp;&nbsp;&nbsp;</a></li>
+				  <li><a href="#" ng-click="logOut()"><span class="glyphicon glyphicon-log-out"></span>&nbsp;退出&nbsp;</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row-fluid" style="margin-right:0;">
+			<!-- 左侧导航 -->
+			<div class="col-sm-2 col-md-1 sidebar" style="box-shadow:0 0 5px rgba(0, 0, 0, 0.1);">
+				<ul class="nav nav-sidebar">
+					<li ng-repeat="item in navItems" >
+						<a href="#{{item.url}}">
+							<div class="{{item.iconClass}}"></div><br>{{item.label}}
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!-- 工作区 -->
+			<div class="col-sm-10 col-sm-offset-2 col-md-11 col-md-offset-1"  style="padding:1px 8px;" >
+	           	<div id="workspace" ng-view></div>
+			</div>
+		</div>
+	</div>
+	<div id="dialogMsg">
+	</div>
+</div>
+<script type="text/javascript" src="../vendor/require.js" data-main="../scripts/main">
+</script>
+</body>
+</html>

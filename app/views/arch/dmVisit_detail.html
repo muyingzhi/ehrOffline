@@ -1,0 +1,443 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">
+<style type="text/css">
+input.ng-invalid,select.ng-invalid {
+	background-color: pink;
+}
+</style>
+</head>
+<body >
+<form name="frmAction" novalidate id="frmDMAction" onsubmit="return false;" action="./hypertensionvisit_addedit.do" method="post">	
+	<!-- 如有需要请注意在此修改相应字段名，detail页面的字段名必须与该对象数据表字段名相对应 -->
+
+	<input name="dmvisitid" id="dmvisitid" type="hidden" ng-model="dm.dmvisitid">
+	<input name="icpcode" type="hidden" ng-model="dm.icpcode">
+	
+	<div style="background-color:#dedef8;">
+		<h1 ALIGN="CENTER"><b style="font-size: 16pt">糖尿病随访记录</b></h1>
+   	<div class="row">
+     <div class="col-md-3" style="margin-top:5px;border:1px dashed #F3F9F9;">
+				<div style="margin-top:5px;margin-bottom:5px;">
+				<strong>档案ID:</strong>
+				<input name="archiveid" id="archiveid" type="text" readonly ng-model="dm.archiveid">
+				<input name="archid" id="archid" type="hidden" ng-model="dm.archid">
+				<input name="identityno" id="identityno" type="hidden" ng-model="dm.identityno"/>
+				</div>
+	 </div>
+	 
+	 <div class="col-md-3" style="margin-top:5px;border:1px dashed #F3F9F9;">
+				<div style="margin-top:5px;margin-bottom:5px;">
+				<strong>姓        名:</strong>
+				<input class="prop_string" id="fullname" type="text" readonly ng-model="arch.fullname">
+				</div>
+	 </div>
+	 
+	 <div class="col-md-3" style="margin-top:5px;border:1px dashed #F3F9F9;">
+	 			<div style="margin-top:5px;margin-bottom:5px;">
+				<strong>性        别:</strong>						
+				<input class="prop_int" id="gender" type="text" readonly ng-model="arch.gender">
+				</div>
+	 </div>
+	 
+	 <div class="col-md-3" style="margin-top:5px;border:1px dashed #F3F9F9;">
+	 			<div style="margin-top:5px;margin-bottom:5px;">
+				<strong>年        龄:</strong>						
+				<input name="age" class="prop_int" id="age" type="text" readonly ng-model="arch.age">
+				</div>
+	 </div>
+	 
+	 
+	 <div class="col-md-12" style="margin-top:5px;border:1px dashed #F3F9F9;">
+	 <div class="col-md-12" style="margin-top:5px;">
+				本次随访
+	 </div>
+	 <div class="col-md-6" style="width:300px;margin-bottom:5px;">
+				随访日期:
+				<input name="inquiredate" id="inquiredate" type="text" hys-datebox ng-model="dm.inquiredate" ng-change="setMyBookingdate()" required>
+				<span class="font_red">*</span>
+	 </div>
+	 <div class="col-md-6" style="margin-left:5px;width:200px;margin-bottom:5px;">
+				随访方式:
+				<select name="visitway" id="visitway"  ng-model="dm.visitway" required
+						ng-options="item.id as item.text for item in dictVisitway">
+				</select>
+				<span class="font_red">*</span>
+	 </div>
+	 </div>
+	 
+	 
+	  <div class="col-md-12" style="margin-top:5px;border:1px dashed #F3F9F9;">
+				<div style="margin-top:5px;">
+				症状:
+				<checkbox-mainsymptom-dm id="mainsymptom" name="mainsymptom" ng-model="dm.mainsymptom">
+				</checkbox-mainsymptom-dm>
+			</div>
+	 </div>
+	 
+	 
+	 <div class="col-md-12" style="margin-top:5px;border:1px dashed #F3F9F9;">
+	 <div class="col-md-12" style="margin-top:5px;">
+				体&nbsp;&nbsp;&nbsp;&nbsp;征
+	 </div>
+	 <div class="col-md-6" style="margin-bottom:5px;">
+				获取体检数据：
+				<button type="button" class="btn btn-default" ng-click="getHmsperson()">获取</button>
+	 </div>
+	 <div class="col-md-6" style="margin-bottom:5px;">
+				收&nbsp;&nbsp;缩&nbsp;&nbsp;压:
+				<input name="bpheigh" id="bpheigh"  type="text" size="5" is-num maxlength="5" ng-model="dm.bpheigh">mmHg
+		    	<input name="lastbpheigh" id="lastbpheigh" type="hidden" >	
+	 </div>
+	 
+	 <div class="col-md-6" style="margin-bottom:5px;">
+				舒&nbsp;&nbsp;张&nbsp;&nbsp;压:
+		    	<input name="bplow" id="bplow"  type="text" size="5" is-num maxlength="5" ng-model="dm.bplow">mmHg
+		    	<input name="lastbplow" id="lastbplow" type="hidden" >
+	 </div>
+	 
+	  <div class="col-md-6" style="margin-bottom:5px;">
+				身&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;高:
+		    	<input name="bodyheight" id="bodyheight" type="text" size="5" is-float maxlength="5" ng-change="calcBmi()" ng-model="dm.bodyheight">CM
+		    	<font class="font_blue">*&nbsp;</font>
+	 </div>
+	 
+	 <div class="col-md-6" style="margin-bottom:5px;">
+				体&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;重:
+		    	<span>
+		    	<input name="bodyweight" id="bodyweight" type="text" size="5" is-float maxlength="5" ng-change="calcBmi()" ng-model="dm.bodyweight">KG
+		    	</span>
+		    	<span>/</span>
+		    	<span>
+			 	<input name="bodydweight" id="bodydweight" type="text" size="5" is-float maxlength="5" ng-change="calcBmi()" ng-model="dm.bodydweight">KG
+			 	</span>
+	 </div>
+	 
+	 <div class="col-md-6" style="margin-bottom:5px;">
+				体质指数:
+		    	<input name="bmi" id="bmi" type="text" readonly="readonly" size="5" ng-model="dm.bmi">
+		    	<span>/</span>
+		     	<input name="bmid" id="bmid" type="text" readonly="readonly" size="5" ng-model="dm.bmid">
+	 </div>
+	 
+	 <div class="col-md-6" style="margin-bottom:5px;">
+				足背动脉搏动:
+		    	<select name="footDorsum" id="footDorsum" ng-model="dm.footdorsum"
+		    			ng-options="item.id as item.text for item in dictFootDorsum">
+		    			<option value="">--请选择--</option>
+		    	</select>
+	 </div>
+	 
+	 <div class="col-md-12" style="margin-top:5px;margin-bottom:5px;">其&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;他：
+		      <textarea name="signsothers" id="signsothers" rows="2" cols="50" maxlength="100" type="textarea" ng-model="dm.signsothers">
+		      </textarea>
+	</div>
+	</div>
+	 
+	 
+	 	<div class="col-md-12" style="margin-top:5px;border:1px dashed #F3F9F9;">
+	 <div class="col-md-12" style="margin-top:5px;">
+				行为生活方式
+	 </div>
+	 <div class="col-md-6" style="margin-bottom:5px;">
+				日吸烟量：
+		    	<input name="smoking" id="smoking" type="text" size="5" ng-model="dm.smoking" is-num maxlength="4">
+				<span>支</span>
+				<span>/</span>
+			  	<input name="smokingd" id="smokingd" type="text" size="5" ng-model="dm.smokingd" is-num maxlength="4">
+			  	<span>支</span>	
+	 </div>
+	 
+	 <div class="col-md-6" style="margin-bottom:5px;">
+				日饮酒量：
+		    	<input name="drinkwine" id="drinkwine" type="text" size="5" ng-model="dm.drinkwine" is-num maxlength="4">
+		    	<span>两 </span>
+		    	<span>/</span>
+				<input name="drinkwined" id="drinkwined" type="text" size="5" ng-model="dm.drinkwined" is-num maxlength="4">
+				<span>两 </span>
+	 </div>
+	 
+	  <div class="col-md-6" style="margin-bottom:5px;">
+				运&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;动：
+				<input name="sportsweekd" id="sportsweekd" type="text" size="5" ng-model="dm.sportsweekd" is-num maxlength="4"> 
+				次/周
+				<input name="sportseachd" id="sportseachd" type="text" size="5" ng-model="dm.sportseachd" is-num maxlength="4">
+				分钟/次
+				<input name="sportsweek" id="sportsweek" type="text" size="5" ng-model="dm.sportsweek" is-num maxlength="4"> 
+				次/周
+				<input name="sportseach" id="sportseach" type="text" size="5" ng-model="dm.sportseach" is-num maxlength="4">
+				分钟/次
+	 </div>
+	 
+	 <div class="col-md-6" style="margin-bottom:5px;">
+				主&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;食：
+				<input name="food" id="food"  type="text" size="5" ng-model="dm.food" is-float maxlength="20">克/天
+				<span>&nbsp;/</span>
+				<input name="foodd" id="foodd" type="text" size="5" ng-model="dm.foodd" is-float maxlength="20">克/天
+	 </div>
+	 
+	 <div class="col-md-6" style="margin-bottom:5px;">
+				心理调整：
+				<select name="psychology" id="psychology" ng-model="dm.psychology"
+		    			ng-options="item.id as item.text for item in dictPsychology">
+		    	</select>
+	 </div>
+	 
+	 <div class="col-md-6" style="margin-bottom:5px;">
+				遵医行为：
+				<select name="doctororder" id="doctororder" ng-model="dm.doctororder"
+		    			ng-options="item.id as item.text for item in dictPsychology">
+		    	</select>
+	 </div>
+	 
+	 </div>
+	 
+	 
+	 <div class="col-md-12" style="margin-top:5px;border:1px dashed #F3F9F9;">
+	 <div class="col-md-12" style="margin-top:5px;">
+				辅助检查
+	 </div>
+	 <div class="col-md-6" style="margin-bottom:5px;">
+				空腹血糖：
+				<input name="labglucose" id="labglucose" type="text" size="5" ng-model="dm.labglucose" is-float maxlength="5">
+				<span>mmol/L</span>	
+	 </div>
+	 
+	 <div class="col-md-6" style="margin-bottom:5px;">
+				糖化血红蛋白：
+				<input name="glycohemoglobin" id="glycohemoglobin" type="text" size="5" ng-model="dm.glycohemoglobin" is-float maxlength="200">
+				<span>%</span>
+	 </div>
+	 
+	  <div class="col-md-12" style="margin-bottom:5px;">
+				检查日期：
+				<input name="labdate" id="labdate" type="text" hys-datebox ng-model="dm.labdate">
+	 </div>
+	 
+	 <div class="col-md-12" style="margin-bottom:5px;">其&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;他：
+				<textarea name="examothers"  id="examothers" rows="2" cols="50" maxlength="100" ng-model="dm.examothers"></textarea>
+	 </div>
+	 </div>
+	 
+	 
+	 <div class="col-md-12" style="margin-top:5px;border:1px dashed #F3F9F9;">
+	 <div class="col-md-12" style="margin-top:5px;">
+				服药依从性
+	 </div>
+	 <div class="col-md-6" style="margin-bottom:5px;">
+				服药依从性：
+		    	<select name="usedrug" id="usedrug" ng-model="dm.usedrug"
+		    			ng-options="item.id as item.text for item in dictUsedrug">
+		    		<option value="">--请选择--</option>
+		    	</select>
+	 </div>
+	 
+	 <div class="col-md-6" style="margin-bottom:5px;">
+				药物不良反应：
+		    	<select name="drugadverse" id="drugadverse" ng-model="dm.drugadverse"
+		    			ng-options="item.id as item.text for item in dictHaved">
+		    	</select>
+		
+				<input name="drugadverseinfo" id="drugadverseinfo" type="text" maxlength="20"
+					   ng-model="dm.drugadverseinfo" ng-show="dm.drugadverse.indexOf('HR397_1')>=0">
+	 </div>
+	 
+	  <div class="col-md-12" style="margin-bottom:5px;">
+				低血糖反应：
+		    	<select name="lowsugarreaction" id="lowsugarreaction" ng-model="dm.lowsugarreaction"
+		    			ng-options="item.id as item.text for item in dictLowsugarreaction">
+		    			<option value="">--请选择--</option>
+		    	</select>
+	 </div>
+	 </div>
+   	
+   	<br/>
+   	
+   	  <div class="col-md-12" style="margin-top:5px;border:1px dashed #F3F9F9;">
+			<div style="margin-top:5px;">
+				此次随访分类：
+				<select name="controls" id="controls" ng-model="dm.controls"
+	    				ng-options="item.id as item.text for item in dictControls">
+	    				<option value="">--请选择--</option>
+		    	</select>
+		    </div>
+	</div>
+	
+	
+	 <div class="col-md-12" style="margin-top:5px;border:1px dashed #F3F9F9;">
+	 <div class="col-md-12" style="margin-top:5px;">
+				胰岛素
+	 </div>
+	 <div class="col-md-4" style="margin-bottom:5px;">
+				种类
+				<input name="insulin" id="insulin" ng-model="dm.insulin" maxlength="100">
+	 </div>
+	 
+	 <div class="col-md-4" style="margin-bottom:5px;">
+				用法：
+				<input name="insulinusage" id="insulinusage" ng-model="dm.insulinusage" maxlength="100">
+	 </div>
+	 
+	  <div class="col-md-4" style="margin-bottom:5px;">
+				用量：
+				<input name="insulindosage" id="insulindosage" ng-model="dm.insulindosage" maxlength="100">
+	 </div>
+	 </div>
+	 
+	 
+	  <div class="col-md-12" ng-repeat="item in dm.druglist" style="margin-top:5px;border:1px dashed #F3F9F9;">
+	  <div class="col-md-12" style="margin-top:5px;">
+				用药情况列表
+	  </div>
+	  <div class="col-md-2" style="margin-bottom:5px;">
+	  	用药名称:{{item.drugsname}}
+	  </div>
+	  <div class="col-md-2" style="margin-bottom:5px;">
+							用法:<select type="text" ng-model="item.usage" disabled ng-show="item.usage.length>0"
+									ng-options="n.id as n.text for n in dictDrugUsage">
+							</select>
+	  </div>
+	 <div class="col-md-2" style="margin-bottom:5px;">
+							用药频率/时间：<select type="text" ng-model="item.frequency" disabled ng-show="item.frequency.length>0"
+									ng-options="n.id as n.text for n in dictDrugFrequency">
+							</select>
+	 </div>
+	 <div class="col-md-2" style="margin-bottom:5px;">
+		单次用量： {{item.dosage_no}}
+							<select type="text" ng-model="item.dosage" disabled ng-show="item.dosage.length>0"
+									ng-options="n.id as n.text for n in dictDrugDosage">
+							</select>
+	 </div>
+	 <div class="col-md-2" style="margin-bottom:5px;">
+	 	用药年限：{{item.druguse_no}}
+							<select type="text" ng-model="item.druguse" disabled ng-show="item.druguse.length>0"
+									ng-options="n.id as n.text for n in dictDrugRange">
+							</select>
+	 </div>
+	 <div class="col-md-2" style="margin-bottom:5px;">
+		服药依从性：<select type="text" ng-model="item.drugcompliance" disabled ng-show="item.drugcompliance.length>0"
+									ng-options="n.id as n.text for n in dictCompliance">
+							</select>
+	
+							<button type="button" class="btn btn-default"
+							  ng-click="delDrug(item)">
+								<span class="glyphicon glyphicon-remove"></span>删除
+							</button>
+	</div>
+	</div>
+	
+	<div class="col-md-12" style="margin-top:5px;border:1px dashed #F3F9F9;">
+	 <div class="col-md-12" style="margin-top:5px;">
+				用药情况
+	  </div>
+	 <div class="col-md-2" style="margin-bottom:5px;">
+			用药名称:<select type="text" ng-model="drug.drugsname" 
+									ng-options="item.text as item.text for item in dictDrugName">
+									<option value="">--请选择--</option>
+			</select>
+	 </div>
+	 
+	 <div class="col-md-2" style="margin-bottom:5px;">
+				用法:<select type="text" ng-model="drug.usage" 
+									ng-options="item.id as item.text for item in dictDrugUsage">
+									<option value="">--请选择--</option>
+				</select>
+	 </div>
+	 
+	 <div class="col-md-2" style="margin-bottom:5px;">
+				用药频率/时间：<select type="text" ng-model="drug.frequency" 
+									ng-options="item.id as item.text for item in dictDrugFrequency">
+									<option value="">--请选择--</option>
+				</select>
+	 </div>
+	 
+	 <div class="col-md-2" style="margin-bottom:5px;">
+				单次用量：<input type="text" size="5" ng-model="drug.dosage_no" is-float>
+							<select type="text" ng-model="drug.dosage" 
+									ng-options="item.id as item.text for item in dictDrugDosage">
+									<option value="">--请选择--</option>
+				</select>
+	 </div>
+	 
+	 <div class="col-md-2" style="margin-bottom:5px;">
+				用药年限：<input type="text" size="5" ng-model="drug.druguse_no" is-num>
+							<select type="text" ng-model="drug.druguse" 
+									ng-options="item.id as item.text for item in dictDrugRange">
+									<option value="">--请选择--</option>
+				</select>
+	 </div>
+	 
+	 <div class="col-md-2" style="margin-bottom:5px;">
+				服药依从性：<select type="text" ng-model="drug.drugcompliance" 
+									ng-options="item.id as item.text for item in dictCompliance">
+									<option value="">--请选择--</option>
+				</select>
+				<button type="button" class="btn btn-default"
+							  ng-click="addDrug()">
+								<span class="glyphicon glyphicon-ok-circle"></span>增加
+				</button>
+	 </div>
+	 </div>
+	 
+	 
+	 <div class="col-md-12" style="margin-top:5px;border:1px dashed #F3F9F9;">
+	
+				评价与建议(非药物治疗)：
+	
+		
+				<textarea name="content" id="content"  rows="5" cols="100"  ng-model="dm.content"></textarea>
+		 
+	</div>
+	 
+	 
+	<div class="col-md-12" style="margin-top:5px;border:1px dashed #F3F9F9;">
+	 <div class="col-md-12" style="margin-top:5px;">
+				预约下次随访
+	 </div>
+	 <div class="col-md-4" style="margin-bottom:5px;">
+				随访医生：
+				<select name="inquirer" id="inquirer" ng-model="dm.inquirer" required
+		    			ng-options="item.id as item.text for item in dictDoctor">
+		    			<option value="">--请选择--</option>
+		    	</select>
+	 </div>
+	 
+	 <div class="col-md-4" style="margin-bottom:5px;">
+				下次随访时间：
+				<input name="bookingdate" id="bookingdate" type="text" hys-datebox ng-model="dm.bookingdate" required>
+	 </div>
+	 
+	  <div class="col-md-4" style="margin-bottom:5px;">
+				填表医生：
+				<select name="cruser" id="cruser" ng-model="dm.cruser" required
+		    			ng-options="item.id as item.text for item in dictDoctor">
+		    			<option value="">--请选择--</option>
+		    	</select>
+	 </div>
+	 </div>
+	 
+	 
+	 <div class="col-md-4" style="margin-bottom:5px;">
+	 	
+	 </div>
+	  <div class="col-md-4" style="margin-bottom:5px;">
+	 	<div class="div_options" style="background-color:#dedef8;">
+						<button ng-show="!dm.isOld" id="btnSave" class="btn btn-default" ng-click="save()">
+							<span class="glyphicon glyphicon-ok"></span>&nbsp;保存</button>
+	 	</div>
+	 </div>
+	  <div class="col-md-4" style="margin-bottom:5px;">
+	 	
+	 </div>
+	 </div>
+	 </div>
+</form>
+</body>
+<object id = "FTP_OCX" classid="clsid:43559281-DABD-11D0-9E15-444553540000" codebase="hms/hys.cab#version=1,0,0,1" width=100% height=100%>
+</object>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insert title here</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">	
+</head>
+<body class="container-fluid">
+<div class="col-xs-12">&nbsp;</div>
+<div class="col-xs-12" style="background-color:#ccc;">
+	<form class="form-inline">
+		<div class="form-group">
+			<label for="edutype">活动形式:</label>
+			<select id="edutype" name="edutype"  class="form-control" style="width:150px;height:32px;" ng-options="n.id as n.text for n in edutypes" ng-model="edutype"></select>
+		</div>
+		<div class="form-group">
+			<label for="eduobject">活动对象:</label>
+			<select id="eduobject" name="eduobject"  class="form-control" style="width:150px;height:32px;" ng-options="n.id as n.text for n in eduobjects" ng-model="eduobject"></select>
+		</div>
+		<button id="btnSave" class="btn btn-default" ng-click="getListJkjy()">查询</button>
+	</form>
+</div>
+<div ng-repeat="item in jkjyList">
+	<div class="col-xs-12 col-sm-6 col-md-4" style="margin-top:5px;">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h4>{{item.healtheduactionid}}
+				<span style="float:right;"><a href="#/arch/healthEducationUpsert/{{item.healtheduactionid}}" style="display:inline;color:#fff;" class="btn btn-primary col-xs-offset-2" role="button">查看</a></span></h4>
+			</div>
+			<div class="panel-body" style="text-align:center;">
+				<table width="95%">
+					<tr>
+						<td width="90px"><label>录入机构：</label></td>
+						<td><select id="icpcode" name="icpcode"  class="form-control"  ng-options="n.id as n.text for n in dictTgov" ng-model="item.icpcode"></select></td>
+					</tr>
+					<tr>
+						<td width="90px"><label>活动日期：</label></td>
+						<td align="left">{{item.edudate}}</td>
+					</tr>
+					<tr>
+						<td width="90px"><label>活动形式：</label></td>
+						<td><select id="edutype" name="edutype"  class="form-control"  ng-options="n.id as n.text for n in edutypes" ng-model="item.edutype"></select></td>
+					</tr>
+					<tr>
+						<td width="90px"><label>活动对象：</label></td>
+						<td><select id="eduobject" name="eduobject"  class="form-control" ng-options="n.id as n.text for n in eduobjects" ng-model="item.eduobject"></select></td>
+					</tr>
+					<tr>
+						<td width="90px"><label>参与人数：</label></td>
+						<td align="left">{{item.peoplecount}}</td>
+					</tr>
+					<tr>
+						<td width="90px"><label>活动主题：</label></td>
+						<td align="left">{{item.topic}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+			
+</body>
+</html>

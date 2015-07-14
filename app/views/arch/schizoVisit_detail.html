@@ -1,0 +1,600 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Insert title here</title>
+		<link href="../styles/table_main.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css"
+			href="../vendor/easyui/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css"
+			href="../vendor/easyui/themes/icon.css">
+		<style type="text/css">
+input.ng-invalid,select.ng-invalid {
+	background-color: pink;
+}
+</style>
+	</head>
+	<body>
+		<form name="frmAction" style="border: 1px solid #999;" role="form"
+			class="form-horizontal" novalidate
+			action="./schizophreniavisit_addedit.do" id="frmAction"
+			onsubmit="return false;" method="post">
+			<!-- 如有需要请注意在此修改相应字段名，detail页面的字段名必须与该对象数据表字段名相对应 -->
+			<input type="hidden" name="id" id="id" ng-model="schizo.schizophreniavisitid">
+			<input type="hidden" name="icpcode" ng-model="schizo.icpcode">
+			<div class="jumbotron">
+				<p>
+					重性精神疾病随访记录
+				</p>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-6 col-md-3">
+					<label for="archno" class="col-md-offset-2 control-label">
+						档案ID:
+					</label>
+					<input id="archiveid" type="text" name="archiveid"
+						style="width: 120px" readonly ng-model="schizo.archiveid" />
+					<input id="archno" type="hidden" ng-model="schizo.archno"
+						style="width: 80px" />
+					<input id="archid" name="archid" type="hidden" readonly
+						ng-model="schizo.archid" />
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<label for="fullname" class="control-label">
+						姓名：
+					</label>
+					<input id="fullname" type="text" style="width: 80px"
+						class="prop_string " readonly ng-model="arch.fullname" />
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<label for="gender" class="control-label">
+						性别：
+					</label>
+					<input id="gender" type="text" style="width: 80px" class="prop_int"
+						readonly ng-model="arch.gender" />
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<label for="age" class="control-label">
+						年龄：
+					</label>
+					<input id="age" name="age" type="text" style="width: 80px"
+						class="prop_int" readonly ng-model="arch.age" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div for="inquiredate" class="col-sm-4 col-md-3 control-label">
+					随访日期：
+				</div>
+				<div class="col-sm-8 col-md-9">
+					<input id="inquiredate" name="inquiredate" type="text" hys-datebox
+						ng-model="schizo.inquiredate" ng-change="setMyBookingdate()"
+						required />
+					<span class="font_red">*</span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div for="dangerousflag" class="col-sm-4 col-md-3 control-label">
+					危险性：
+				</div>
+				<div class="col-sm-8 col-md-9">
+					<radio-danger id="dangerousflag" name="dangerousflag"
+						ng-model="schizo.dangerousflag"
+						style="font-size: 12px; height: 18px; line-height: 18px; font-weight: bold">
+					</radio-danger>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div for="mainsymptom" class="col-sm-4 col-md-3 control-label">
+					目前症状：
+				</div>
+				<div class="col-sm-8 col-md-9">
+					<checkbox-mainsymptom-schizo id="mainsymptom" name="mainsymptom"
+						ng-model="schizo.mainsymptom">
+					</checkbox-mainsymptom-schizo>
+					<div style="float: right;"
+						ng-show="schizo.mainsymptom.indexOf('HR483_99')>=0">
+						&nbsp;&nbsp;(其他症状：
+						<input type="text" name="mainsymptomother" id="mainsymptomother"
+							size="5" maxlength="100" ng-model="schizo.mainsymptomother">
+						)
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div for="insight" class="col-sm-4 col-md-3 control-label">
+					自知力：
+				</div>
+				<div class="col-sm-8 col-md-9">
+					<select name="insight" id="insight" ng-model="schizo.insight"
+						ng-options="item.id as item.text for item in dictInsight">
+						<option value="">
+							--请选择--
+						</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div for="sleep" class="col-sm-4 col-md-3 control-label">
+					睡眠情况：
+				</div>
+				<div class="col-sm-8 col-md-9">
+					<select name="sleep" id="sleep" ng-model="schizo.sleep"
+						ng-options="item.id as item.text for item in dictGrade">
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div for="food" class="col-sm-4 col-md-3 control-label">
+					饮食情况：
+				</div>
+				<div class="col-sm-8 col-md-9">
+					<select name="food" id="food" ng-model="schizo.food"
+						ng-options="item.id as item.text for item in dictGrade">
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-4 col-md-3 control-label">
+					社会功能情况：
+				</div>
+				<div class="col-sm-8 col-md-9">
+					<div class="row">
+						<div class="col-sm-6 col-md-4">
+							<table>
+								<tr>
+									<td>
+										个人生活料理：
+									</td>
+									<td>
+										<select name="living" id="living" ng-model="schizo.living"
+											style="width: 50px;"
+											ng-options="item.id as item.text for item in dictGrade">
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<table>
+								<tr>
+									<td>
+										家务劳动：
+									</td>
+									<td>
+										<select name="housework" id="housework"
+											ng-model="schizo.housework" style="width: 50px;"
+											ng-options="item.id as item.text for item in dictGrade">
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<table>
+								<tr>
+									<td>
+										生产劳动及工作：
+									</td>
+									<td>
+										<select name="work" id="work" ng-model="schizo.work"
+											style="width: 50px;"
+											ng-options="item.id as item.text for item in dictWorkGrade">
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<table>
+								<tr>
+									<td>
+										学习能力：
+									</td>
+									<td>
+										<select name="study" id="study" ng-model="schizo.study"
+											style="width: 50px;"
+											ng-options="item.id as item.text for item in dictGrade">
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<table>
+								<tr>
+									<td>
+										社会人际交往：
+									</td>
+									<td>
+										<select name="interpersonal" id="interpersonal"
+											ng-model="schizo.interpersonal" style="width: 50px;"
+											ng-options="item.id as item.text for item in dictGrade">
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div for="hsfaffect" class="col-sm-4 col-md-3 control-label">
+						患病对家庭社会的影响：
+					</div>
+					<div class="col-sm-3 col-md-1">
+						<span style="font-size: 12px; height: 18px; line-height: 18px">
+							<radio-nothave id="hsfaffect" name="hsfaffect"
+								ng-model="schizo.hsfaffect"> </radio-nothave> </span>
+					</div>
+					<div class="col-sm-5 col-md-8">
+						<div class="col-sm-6 col-md-4">
+							<table>
+								<tr>
+									<td>
+										<div id='affectname1' ng-show="schizo.hsfaffect=='HR397_1'">
+											1.轻度滋事次数：
+										</div>
+									</td>
+									<td>
+										<div id='affectdata1'>
+											<input id="qdzscs" name="qdzscs" type="text"
+												style="width: 50px;" ng-model="schizo.qdzscs" maxlength="20"
+												ng-show="schizo.hsfaffect=='HR397_1'">
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<table>
+								<tr>
+									<td>
+										<div id='affectname2' ng-show="schizo.hsfaffect=='HR397_1'">
+											2.肇事次数：
+										</div>
+									</td>
+									<td>
+										<div id='affectdata2'>
+											<input id="zscs" name="zscs" type="text" style="width: 50px;"
+												ng-model="schizo.zscs" maxlength="20"
+												ng-show="schizo.hsfaffect=='HR397_1'">
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<table>
+								<tr>
+									<td>
+										<div id='affectname3' ng-show="schizo.hsfaffect=='HR397_1'">
+											3.肇祸次数：
+										</div>
+									</td>
+									<td>
+										<div id='affectdata3'>
+											<input id="zhcs" name="zhcs" type="text" style="width: 50px;"
+												ng-model="schizo.zhcs" maxlength="20"
+												ng-show="schizo.hsfaffect=='HR397_1'">
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<table>
+								<tr>
+									<td>
+										<div id='affectname4' ng-show="schizo.hsfaffect=='HR397_1'">
+											4.自伤次数：
+										</div>
+									</td>
+									<td>
+										<div id='affectdata4'>
+											<input id="killcs" name="killcs" type="text"
+												style="width: 50px;" ng-model="schizo.killcs" maxlength="20"
+												ng-show="schizo.hsfaffect=='HR397_1'">
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<table>
+								<tr>
+									<td>
+										<div id='affectname5' ng-show="schizo.hsfaffect=='HR397_1'">
+											5.自杀未遂次数：
+										</div>
+									</td>
+									<td>
+										<div id='affectname5'>
+											<input id="zswscs" name="zswscs" type="text"
+												style="width: 50px;" ng-model="schizo.zswscs" maxlength="20"
+												ng-show="schizo.hsfaffect=='HR397_1'">
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-4 col-md-3 control-label">
+						住院情况：
+					</div>
+					<div class="col-sm-8 col-md-9">
+						<table style="width:100%;">
+							<tr>
+								<td style="width: 160px;">
+									<select name="hospitalcn" id="hospitalcn" ng-model="schizo.hospitalcn"
+											ng-options="item.id as item.text for item in dictHospitalcn">
+											<option value="">--请选择--</option>
+									</select>
+								</td>
+								<td align="right">末次出院时间：</td>
+								<td >
+									<input id="lhospitaldate" name="lhospitaldate" style="width: 100px;" type="text" hys-datebox ng-model="schizo.lhospitaldate">
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-4 col-md-3 control-label">
+						关锁情况：
+					</div>
+					<div class="col-sm-8 col-md-9">
+						<select name="gsqk" id="gsqk" ng-model="schizo.gsqk"
+								ng-options="item.id as item.text for item in dictGsqk">
+								<option value="">--请选择--</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-4 col-md-3 control-label">
+						实验室检查：
+					</div>
+					<div class="col-sm-8 col-md-9">
+						<textarea rows="3" cols="60"  id="labexam" name="labexam" type="text" maxlength="100" ng-model="schizo.labexam"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-4 col-md-3 control-label">
+						服药依从性：
+					</div>
+					<div class="col-sm-8 col-md-9">
+						<select name="medicationcompliance" id="medicationcompliance" ng-model="schizo.medicationcompliance"
+								ng-options="item.id as item.text for item in dictCompliance">
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-4 col-md-3 control-label">
+						药物不良反应说明：
+					</div>
+					<div class="col-sm-8 col-md-9">
+						<input id="drugsideeffects_ex" name="drugsideeffects_ex"  type="text" maxlength="50" ng-model="schizo.drugsideeffects_ex">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-4 col-md-3 control-label">
+						治疗效果：
+					</div>
+					<div class="col-sm-8 col-md-9">
+						<select name="zlxg" id="zlxg" ng-model="schizo.zlxg"
+								ng-options="item.id as item.text for item in dictZlxg">
+								<option value="">--请选择--</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-4 col-md-3 control-label">
+						此次随访分类：
+					</div>
+					<div class="col-sm-8 col-md-9">
+						<select name="czsffl" id="czsffl" ng-model="schizo.czsffl"
+								ng-options="item.id as item.text for item in dictCzsf">
+								<option value="">--请选择--</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-4 col-md-3 control-label">
+						是否转诊：
+					</div>
+					<div class="col-sm-8 col-md-9">
+						<div class="col-sm-12 col-md-6">
+							<table>
+								<tr>
+									<td>
+										是否转诊：
+									</td>
+									<td>
+										<select name="zhuanzhen" id="zhuanzhen" ng-model="schizo.zhuanzhen"
+												ng-options="item.id as item.text for item in dictIsstoned">
+												<option value="">--请选择--</option>
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-sm-12 col-md-6">
+							<table>
+								<tr>
+									<td>
+										原因：
+									</td>
+									<td>
+										<input id="referralreason" name="referralreason"  type="text" maxlength="100" ng-model="schizo.referralreason">
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-sm-12 col-md-6">
+							<table>
+								<tr>
+									<td>
+										转诊机构及科室：
+									</td>
+									<td>
+										<input id="referraltarget" name="referraltarget"  type="text" maxlength="20" ng-model="schizo.referraltarget">
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div for="mainsymptom" class="col-sm-4 col-md-3 control-label">
+						目前服用药物：
+					</div>
+					<div class="dynamic_div" style="overflow-x:auto;">
+						<table style="min-width:1000px;width:98%;">
+							<tr style="background-color:silver;">
+								<td>用药名称：</td>
+								<td>用法：</td>
+								<td>用药频率/时间：</td>
+								<td>单次用量：</td>
+								<td>用药年限：</td>
+								<td>服药依从性：</td>
+								<td></td>
+							</tr>
+							<tr ng-repeat="item in schizo.druglist">
+								<td>{{item.drugsname}}</td>
+								<td>
+									<select class="form-control input-sm" type="text" ng-model="item.usage" disabled ng-show="item.usage.length>0"
+											ng-options="n.id as n.text for n in dictDrugUsage">
+									</select>
+								</td>
+								<td>
+									<select class="form-control input-sm" type="text" ng-model="item.frequency" disabled ng-show="item.frequency.length>0"
+											ng-options="n.id as n.text for n in dictDrugFrequency">
+									</select>
+								</td>
+								<td>{{item.dosage_no}}
+									<select class="form-control input-sm" type="text" ng-model="item.dosage" disabled ng-show="item.dosage.length>0"
+											ng-options="n.id as n.text for n in dictDrugDosage">
+									</select>
+							</td>
+								<td>{{item.druguse_no}}
+									<select class="form-control input-sm" type="text" ng-model="item.druguse" disabled ng-show="item.druguse.length>0"
+											ng-options="n.id as n.text for n in dictDrugRange">
+									</select>
+								</td>
+								<td>
+									<select class="form-control input-sm" type="text" ng-model="item.drugcompliance" disabled ng-show="item.drugcompliance.length>0"
+											ng-options="n.id as n.text for n in dictCompliance">
+									</select>
+							</td>
+								<td>
+									<button type="button" class="btn btn-default" ng-click="delDrug(item)">
+										<span class="glyphicon glyphicon-remove"></span>删除
+									</button>
+								</td>
+							</tr>
+								<tr>
+								<td>
+									<select class="form-control input-sm" type="text" ng-model="drug.drugsname" 
+											ng-options="item.text as item.text for item in dictDrugName">
+											<option value="">-请选择-</option>
+									</select>
+								</td>
+								<td>
+									<select class="form-control input-sm" type="text" ng-model="drug.usage" 
+											ng-options="item.id as item.text for item in dictDrugUsage">
+											<option value="">-请选择-</option>
+									</select>
+								</td>
+								<td>
+									<select class="form-control input-sm" type="text" ng-model="drug.frequency" 
+											ng-options="item.id as item.text for item in dictDrugFrequency">
+											<option value="">-请选择-</option>
+									</select>
+								</td>
+								<td>
+									<input class="form-control input-sm" style="width:40px;" type="text" size="5" ng-model="drug.dosage_no" is-float>
+									<select class="form-control input-sm" type="text" ng-model="drug.dosage" 
+											ng-options="item.id as item.text for item in dictDrugDosage">
+											<option value="">-请选择-</option>
+									</select>
+								</td>
+								<td>
+									<input class="form-control input-sm" style="width:40px;" type="text" size="5" ng-model="drug.druguse_no" is-num>
+									<select class="form-control input-sm" type="text" ng-model="drug.druguse" 
+											ng-options="item.id as item.text for item in dictDrugRange">
+											<option value="">-请选择-</option>
+									</select>
+								</td>
+								<td>
+									<select class="form-control input-sm" type="text" ng-model="drug.drugcompliance" 
+											ng-options="item.id as item.text for item in dictCompliance">
+											<option value="">-请选择--</option>
+									</select>
+								</td>
+								<td>
+									<button type="button" class="btn btn-default"
+									  ng-click="addDrug()">
+										<span class="glyphicon glyphicon-ok-circle"></span>增加
+									</button>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="form-group">
+					<div for="mainsymptom" class="col-sm-4 col-md-3 control-label">
+						康复措施：
+					</div>
+					<div class="col-sm-8 col-md-9">
+						<checkbox-rehabilitation-schizo id="rehabilitation" name="rehabilitation" ng-model="schizo.rehabilitation">
+					  	</checkbox-rehabilitation-schizo>
+						<div style="float: right;"
+							ng-show="schizo.mainsymptom.indexOf('HR483_99')>=0">
+							&nbsp;&nbsp;(其他：
+							<input type="text" name="rehabiliother" id="rehabiliother"  maxlength="100"
+							 ng-model="schizo.rehabiliother">
+							)
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-4 col-md-3 control-label">
+						预约下次随访：
+					</div>
+					<div class="col-sm-8 col-md-9">
+						<table style="width:100%;">
+							<tr>
+								<td align="right">随访医生：</td>
+								<td>
+									<select name="inquirer" id="inquirer" ng-model="schizo.inquirer" required
+										ng-options="item.id as item.text for item in dictDoctor">
+										<option value="">--请选择--</option>
+									</select>
+									<span class="font_red">*</span>
+								</td>
+								<td align="right">下次随访时间：</td>
+								<td >
+									<input id="bookingdate" name="bookingdate" style="width: 100px;" type="text" hys-datebox ng-model="schizo.bookingdate" required>
+									<span class="font_red">*</span>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="col-md-12" style="margin-bottom:5px;">
+				<div class="div_options" style="background-color:#dedef8;">
+					<button id="btnSave" class="btn btn-default" ng-show="!schizo.isOld" ng-click="save()">
+						<span class="glyphicon glyphicon-ok"></span>&nbsp;保存</button>
+				</div>
+				</div>
+		</form>
+	</body>
+</html>

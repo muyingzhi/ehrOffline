@@ -1,0 +1,1046 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">
+<style type="text/css">
+input.ng-invalid,select.ng-invalid {
+	background-color: pink;
+}
+.divc{
+    border:#CDC3D9 dotted 1px;
+	font-size: 9pt;
+	padding-top: 13px;
+	padding-right: 5px;
+	padding-left: 5px;
+	text-align:left;
+	background-color:#dedef8; 
+}
+.margin-top-div{
+	margin-top:5px;
+	height:35px;
+}
+
+</style>
+</head>
+<body style="background-color:#eef;">
+<div class="container-fluid" style="background-color:#eef;">
+	<p style="font-size: 16pt" align="center">产前首次检查</p>
+	<form name="frmAction" novalidate id="frmDMAction" onsubmit="return false;" >	
+		<input name="firstcheckid" id="firstcheckid" type="hidden" ng-model="lady.firstcheckid">
+		<input name="icpcode" type="hidden" ng-model="lady.icpcode">
+		<input name="archid" id="archid" type="hidden" ng-model="lady.archid">
+		<input name="archiveid" id="archiveid" type="hidden" ng-model="lady.archiveid">
+		
+		<input name="identityno" id="identityno" type="hidden" ng-model="arch.identityno"/>
+		<input class="prop_string" id="fullname" type="hidden" ng-model="arch.fullname">
+		<input class="prop_int" id="gender" type="hidden" ng-model="arch.gender">
+		<input name="age" class="prop_int" id="age" type="hidden" ng-model="arch.age">
+		
+		<div class="col-xs-12">
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+				<span class="data_row_tip">档案ID：</span>
+				<span class="data_row_val">
+					<input class="form-control input-sm" type="text" id="archiveid" name="archiveid" ng-model="lady.archiveid" readonly required>
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+				<span class="data_row_tip">姓名：</span>
+				<span class="data_row_val">
+					<input class="form-control input-sm" type="text" id="name" name="name" ng-model="arch.fullname" readonly required>
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+				<span class="data_row_tip">填表日期<font class="font_red">*</font>：</span>
+				<span class="data_row_val">
+					<input hys-datebox  type="text" id="booking_date" name="booking_date" ng-model="lady.booking_date" style="width: 145px;height:30px " class="form-control input-sm" required>
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+				<span class="data_row_tip">随访医生<span style="color:red;"> *</span>：</span>
+				<span class="data_row_val">
+					<select name="doctor"  class="form-control input-sm"  id="doctor" ng-model="lady.doctor" ng-options="item.id  as item.text for item in dictDoctor" required >
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+		</div>
+		<div class="col-xs-12" style="height:30px;"></div> 
+		<div class="col-xs-12 table_head">登记信息</div>	
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">产妇类型<span style="color:red;"> *</span>：</span>
+				<span class="data_row_val_max">
+	         		<radio-isfetiferous name="isfetiferous" id="isfetiferous" required ng-model="lady.isfetiferous"></radio-isfetiferous>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">末次月经<span style="color:red;"> *</span>：</span>
+				<span class="data_row_val_max">
+	   				<input class="form-control input-sm" style="width:120px;" name="last_menses" id="last_menses" type="text" ng-model="lady.last_menses" hys-datebox required />
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">丈夫姓名：</span>
+				<span class="data_row_val_max">
+					<input class="form-control input-sm" name="husband_name" id="husband_name" type="text" ng-model="lady.husband_name" />
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">丈夫年龄：</span>
+				<span class="data_row_val_max">
+	    			<input class="form-control input-sm" name="husband_age" id="husband_age" type="text" is-float ng-model="lady.husband_age" />
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">丈夫电话：</span>
+				<span class="data_row_val_max">
+	        		<input class="form-control input-sm" name="husband_tel" id="husband_tel" type="text" ng-model="lady.husband_tel" />
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">孕次<span style="color:red;">*</span>：</span>
+				<span class="data_row_val_max">
+	        		<input class="form-control input-sm" name="taici" id="taici" type="text" is-float required ng-model="lady.taici" />
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">产次<span style="color:red;">*</span>：</span>
+				<span class="data_row_val_max">
+	        		<input class="form-control input-sm" name="chanci" id="chanci" type="text" is-float required ng-model="lady.chanci" />
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">孕前体重：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="pre_weight" id="pre_weight" type="text" is-float ng-model="lady.pre_weight" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">kg</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">初潮年龄：</span>
+				<span class="data_row_val_max">
+	        		<input class="form-control input-sm" name="menarcheage" id="menarcheage" type="text" is-float ng-model="lady.menarcheage" />
+				</span>	
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">经期/周期：</td>
+						<td><input class="form-control input-sm" style="width:40px;margin-left:4px;" name="menstrual_l" id="menstrual_l" type="text" is-float ng-model="lady.menstrual_l" /></td>
+						<td>/</td>
+						<td><input class="form-control input-sm" style="width:40px;float:left;" name="menstrual_h" id="menstrual_h" type="text" is-float ng-model="lady.menstrual_h" /></td>
+						<td>天</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">月经量：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="menstrualflow" id="menstrualflow" ng-model="lady.menstrualflow" ng-options="item.id as item.text for item in menstrualflow">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">痛经：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="dysmenorrhea" id="dysmenorrhea" ng-model="lady.dysmenorrhea" ng-options="item.id as item.text for item in dysmenorrhea">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">增补叶酸：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="yesuan" id="yesuan" ng-model="lady.yesuan" ng-options="item.id as item.text for item in yesuan">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 margin-top-div">
+				<span class="data_row_tip_max">既往病史：</span>
+				<span >
+					<checkbox-ld name=jws id="jws" ng-model="lady.jws"></checkbox-ld>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 margin-top-div" ng-show="lady.jws.indexOf('lady_jwbs_8')>=0">
+				<span class="data_row_tip_max">其他既往病史：</span>
+				<span class="data_row_val_max">
+					<input class="form-control input-sm" type="text" name="jwsqt" id="jwsqt" maxlength="100" ng-model="lady.jwsqt">
+				</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">初检孕周<span style="color:red;">*</span>：</td>
+						<td><input class="form-control input-sm" style="width:40px;margin-left:4px;" name="pregnant_weeks" id="pregnant_weeks" type="text" is-float required ng-model="lady.pregnant_weeks" /></td>
+						<td>周</td>
+						<td><input class="form-control input-sm" style="width:40px;" class="input_border_min" name="pregnant_weeks1" id="pregnant_weeks1" type="text" is-float required ng-model="lady.pregnant_weeks1" /></td>
+						<td>天</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">预产期<span style="color:red;">*</span>：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" style="width:120px;" name="expected_childbirth" id="expected_childbirth" type="text" ng-model="lady.expected_childbirth" hys-datebox required /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">阴道流血：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="vaginalbleed" id="vaginalbleed" ng-model="lady.vaginalbleed" ng-options="item.id as item.text for item in haved">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.vaginalbleed.indexOf('HR397_1')>=0">
+				<span class="data_row_tip_max">阴道流血出现孕周：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="vaginalbleed_e" id="vaginalbleed_e" type="text" ng-model="lady.vaginalbleed_e" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">妊娠呕吐：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="vomitofpreg" id="vomitofpreg" ng-model="lady.vomitofpreg" ng-options="item.id as item.text for item in haved">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.vomitofpreg.indexOf('HR397_1')>=0">
+				<span class="data_row_tip_max">妊娠呕吐出现孕周：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="vomitofpreg_e" id="vomitofpreg_e" type="text" ng-model="lady.vomitofpreg_e" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">孕早期：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="earlypreg" id="earlypreg" ng-model="lady.earlypreg" ng-options="item.id as item.text for item in earlypreg">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.earlypreg.indexOf('LADY_EARLYPREG_4')>=0">
+				<span class="data_row_tip_max">服药名：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="earlypreg_e" id="earlypreg_e" type="text" ng-model="lady.earlypreg_e" /></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 margin-top-div">
+				<span class="data_row_tip_max">孕妇家族史：</span>
+				<span>
+					<checkbox-lfd name="jzs" id="jzs" ng-model="lady.jzs"></checkbox-lfd>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 margin-top-div" ng-show="lady.jzs.indexOf('HR436_005')>=0">
+				<span class="data_row_tip_max">其他家族史：</span>
+				<span class="data_row_val_max">
+					<input class="form-control input-sm" type="text" name="jzsqt" id="jzsqt" maxlength="100" ng-model="lady.jzsqt">
+				</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 margin-top-div">
+				<span class="data_row_tip_max">个人史：</span>
+				<span>
+					<checkbox-lsd name="grs" id="grs" ng-model="lady.grs"></checkbox-lsd>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 margin-top-div" ng-show="lady.grs.indexOf('HR333_6')>=0">
+				<span class="data_row_tip_max">其他个人史：</span>
+				<span class="data_row_val_max">
+					<input class="form-control input-sm" type="text" name="grsqt" id="grsqt" maxlength="100" ng-model="lady.grsqt">
+				</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">妇科手术史：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="hasfkss" id="hasfkss" ng-model="lady.hasfkss" ng-options="item.id as item.text for item in haved">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.hasfkss.indexOf('HR397_1')>=0">
+				<span class="data_row_tip_max">手术说明：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="fksss" id="fksss" type="text" ng-model="lady.fksss" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">流产：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="liuc" id="liuc" type="text" is-float ng-model="lady.liuc" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">次</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">死胎：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="sit" id="sit" type="text" is-float ng-model="lady.sit" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">次</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">死产：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="sichan" id="sichan" type="text" is-float ng-model="lady.sichan" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">次</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">新生儿死亡：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="xsesw" id="xsesw" type="text" is-float ng-model="lady.xsesw" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">次</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">出生缺陷儿：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="quexe" id="quexe" type="text" is-float ng-model="lady.quexe" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">次</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 margin-top-div" style="height:65px;">
+				<table width="80%">
+					<tr>
+						<td width="120px">备注：</td>
+						<td>
+							<textarea style="width:80%;height:60px;"  id="memo" name="memo" ng-model="lady.memo" type="textarea" elname="备注" pattern="string" required="0"  max_len="500"></textarea>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="col-xs-12" style="height:10px;">&nbsp;</div>
+		<div class="col-xs-12 table_head">体格检查</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">身高：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="height" id="height" type="text" ng-model="lady.height" ng-change="calcBmi()" is-float/>
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">cm</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">体重：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="weight" id="weight" type="text" ng-model="lady.weight" ng-change="calcBmi()" is-float />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">kg</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">体质指数：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="bmi" id="bmi" type="text" is-float ng-model="lady.bmi" readonly /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">血压(收缩压)：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="blood_pressure_ss" id="blood_pressure_ss" type="text" is-float ng-model="lady.blood_pressure_ss" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">mmHg</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">血压(舒张压)：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="blood_pressure_sz" id="blood_pressure_sz" type="text" is-float ng-model="lady.blood_pressure_sz" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">mmHg</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">是否高危：</td>
+						<td width="60px">
+							<select class="form-control input-sm" name="isdanger" id="isdanger" ng-model="lady.isdanger" ng-options="item.id as item.text for item in isstoned">
+								<option value=""></option>
+							</select>
+						</td>
+						<td>
+							<a href='' ng-click="returnA()" id="returnA" title='高危评分' style="color:red;">[高危评分]</a>
+							<!-- 
+								<a href='#/arch/ladyScoremain/{{lady.archid}}&{{lady.firstcheckid}}&0' title='高危评分' style="color:red;">[高危评分]</a>
+							-->
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">发育：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="extcol1" id="extcol1" ng-model="lady.extcol1" ng-options="item.id as item.text for item in upgrowth">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.extcol1.indexOf('HR561_2')>=0">
+				<span class="data_row_tip_max">畸形情况：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="extcol10" id="extcol10" type="text" ng-model="lady.extcol10" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">营养：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="extcol2" id="extcol2" ng-model="lady.extcol2" ng-options="item.id as item.text for item in pabulum">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">巩膜黄染：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="extcol3" id="extcol3" ng-model="lady.extcol3" ng-options="item.id as item.text for item in haved">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">甲状腺肿大：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="extcol4" id="extcol4" ng-model="lady.extcol4" ng-options="item.id as item.text for item in haved">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.extcol4.indexOf('HR397_1')>=0">
+				<span class="data_row_tip_max">甲状腺肿大情况：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="extcol11" id="extcol11" type="text" ng-model="lady.extcol11" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">肝：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="extcol5" id="extcol5" type="text" ng-model="lady.extcol5" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">脾：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="extcol6" id="extcol6" type="text" ng-model="lady.extcol6" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">浮肿：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="extcol7" id="extcol7" ng-model="lady.extcol7" ng-options="item.id as item.text for item in dropsy">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">乳房：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="extcol8" id="extcol8" type="text" ng-model="lady.extcol8" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">乳头：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="extcol9" id="extcol9" type="text" ng-model="lady.extcol9" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">心脏：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="heat" id="heat" ng-model="lady.heat" ng-options="item.id as item.text for item in isnormal">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.heat.indexOf('HR438_002')>=0">
+				<span class="data_row_tip_max">异常说明：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="heat_exception" id="heat_exception" type="text" ng-model="lady.heat_exception" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">肺部听诊：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="lung" id="lung" ng-model="lady.lung" ng-options="item.id as item.text for item in isnormal">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.lung.indexOf('HR438_002')>=0">
+				<span class="data_row_tip_max">异常说明：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="lung_other" id="lung_other" type="text" ng-model="lady.lung_other" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">外阴：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="wy" id="wy" ng-model="lady.wy" ng-options="item.id as item.text for item in isnormal">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.wy.indexOf('HR438_002')>=0">
+				<span class="data_row_tip_max">外阴异常说明：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="wyyc" id="wyyc" type="text" ng-model="lady.wyyc" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">阴道：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="yd" id="yd" ng-model="lady.yd" ng-options="item.id as item.text for item in isnormal">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.yd.indexOf('HR438_002')>=0">
+				<span class="data_row_tip_max">阴道异常说明：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="ydyc" id="ydyc" type="text" ng-model="lady.ydyc" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">宫颈：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="gongjing" id="gongjing" ng-model="lady.gongjing" ng-options="item.id as item.text for item in isnormal">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.gongjing.indexOf('HR438_002')>=0">
+				<span class="data_row_tip_max">宫颈异常说明：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="gongjingyc" id="gongjingyc" type="text" ng-model="lady.gongjingyc" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">子宫：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="zigong" id="zigong" ng-model="lady.zigong" ng-options="item.id as item.text for item in isnormal">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.zigong.indexOf('HR438_002')>=0">
+				<span class="data_row_tip_max">子宫异常说明：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="zigongyc" id="zigongyc" type="text" ng-model="lady.zigongyc" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">附件：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="fujian" id="fujian" ng-model="lady.fujian" ng-options="item.id as item.text for item in isnormal">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.fujian.indexOf('HR438_002')>=0">
+				<span class="data_row_tip_max">附件异常说明：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="fujianyc" id="fujianyc" type="text" ng-model="lady.fujianyc" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">宫高：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm"  name="uterushigh" id="uterushigh" type="text" is-float ng-model="lady.uterushigh" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">cm</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">腹围：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm"  name="abdominalgirth" id="abdominalgirth" type="text" is-float ng-model="lady.abdominalgirth" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">cm</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">胎位：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm"  name="fetalpresentation" id="fetalpresentation" type="text" ng-model="lady.fetalpresentation" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">胎心位置：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm"  name="fetalposition" id="fetalposition" type="text" ng-model="lady.fetalposition" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">胎心率：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm"  name="fetalheartrate" id="fetalheartrate" type="text" is-float ng-model="lady.fetalheartrate" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">次/分钟</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">胎先露：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm"  name="fetalfirstdew" id="fetalfirstdew" type="text" ng-model="lady.fetalfirstdew" /></span>
+			</div>
+		</div>
+		<div class="col-xs-12" style="height:10px;">&nbsp;</div>
+		<div class="col-xs-12 table_head">辅助检查</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">血红蛋白：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="xhdb" id="xhdb" type="text" is-float ng-model="lady.xhdb" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">(g/L)</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">白细胞计数值：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="baixibao" id="baixibao" type="text" is-float ng-model="lady.baixibao" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">(×10<sup>9</sup>/L)</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">白细胞分类计数：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="wbc_count" id="wbc_count" type="text" is-float ng-model="lady.wbc_count" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">血小板计数值：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="xuexiaoban" id="xuexiaoban" type="text" is-float ng-model="lady.xuexiaoban" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">(×10<sup>9</sup>/L)</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">红细胞计数值：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="erythrocytecount" id="erythrocytecount" type="text" is-float ng-model="lady.erythrocytecount" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">(×10<sup>12</sup>/L)</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">血糖：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="xuet" id="xuet" type="text" is-float ng-model="lady.xuet" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">mmol/l</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">血型：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="bloodgroup" id="bloodgroup" ng-model="lady.bloodgroup" ng-options="item.id as item.text for item in bloodtype">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">RH阴性：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="bloodRH" id="bloodRH" ng-model="lady.bloodRH" ng-options="item.id as item.text for item in bloodRH">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">其它：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="xuecgqt" id="xuecgqt" type="text" ng-model="lady.xuecgqt" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">尿蛋白：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="ndb" id="ndb" ng-model="lady.ndb" ng-options="item.id as item.text for item in antigen">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">尿比重：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="urineproportion" id="urineproportion" type="text" ng-model="lady.urineproportion" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">尿糖：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="height" id="height" type="text" ng-model="lady.niaot" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">尿酮体：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="height" id="niaott" type="text" ng-model="lady.niaott" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">尿潜血：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="niaoqx" id="niaoqx" type="text" ng-model="lady.niaoqx" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">其它：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="niaocgqt" id="niaocgqt" type="text" ng-model="lady.niaocgqt" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">血清谷丙转氨酶：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="atl" id="atl" type="text" is-float ng-model="lady.atl" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">U/L</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">血清谷草转氨酶：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="ast" id="ast" type="text" is-float ng-model="lady.ast" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">U/L</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">白蛋白：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="alb" id="alb" type="text" is-float ng-model="lady.alb" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">g/L</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">总胆红素：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="tbil" id="tbil" type="text" is-float ng-model="lady.tbil" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">umol/L</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">结合胆红素：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="jhbil" id="jhbil" type="text" is-float ng-model="lady.jhbil" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">umol/L</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">血清肌酐：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="xueqjg" id="xueqjg" type="text" is-float ng-model="lady.xueqjg" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">umol/L</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">血尿素氮：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="xuensd" id="xuensd" type="text" is-float ng-model="lady.xuensd" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">mmol/L</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">血钾浓度：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="xuejnd" id="xuejnd" type="text" is-float ng-model="lady.xuejnd" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">mmol/L</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<table>
+					<tr>
+						<td width="120px">血钠浓度：</td>
+						<td width="120px">
+							<span class="input-group" style="margin-left:4px;">
+				        		<input class="form-control input-sm" name="xuennd" id="xuennd" type="text" is-float ng-model="lady.xuennd" />
+				        		<span class="input-group-addon" style="padding: 4px" id="basic-addon2">mmol/L</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">乙型肝炎表面抗原：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="hbsag" id="hbsag" ng-model="lady.hbsag" ng-options="item.id as item.text for item in antigen">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">乙型肝炎表面抗体：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="hbsab" id="hbsab" ng-model="lady.hbsab" ng-options="item.id as item.text for item in antigen">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">乙型肝炎e抗原：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="hbeag" id="hbeag" ng-model="lady.hbeag" ng-options="item.id as item.text for item in antigen">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">乙型肝炎e抗体：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="hbeab" id="hbeab" ng-model="lady.hbeab" ng-options="item.id as item.text for item in antigen">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">乙型肝炎核心抗体：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="hbcab" id="hbcab" ng-model="lady.hbcab" ng-options="item.id as item.text for item in antigen">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-6  margin-top-div">
+				<span class="data_row_tip_max">阴道分泌物：</span>
+				<span >
+					<checkbox-lvd  name="yindfmw" id="yindfmw" type="text" ng-model="lady.yindfmw" ></checkbox-lvd>
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 margin-top-div" ng-show="lady.yindfmw.indexOf('lady_ydfmw_4')>=0">
+				<span class="data_row_tip_max">其它说明：</span>
+				<span class="data_row_val_max">
+					<input class="form-control input-sm" type="text" name="yindfmwqt" id="yindfmwqt" maxlength="100" ng-model="lady.yindfmwqt">
+				</span>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 margin-top-div" >
+				<span class="data_row_tip_max">阴道清洁度：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="yindqjd" id="yindqjd" ng-model="lady.yindqjd" ng-options="item.id as item.text for item in greekNumerals">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">梅毒血清学试验：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="lues_survey" id="lues_survey" ng-model="lady.lues_survey" ng-options="item.id as item.text for item in pandn">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">HIV抗体检测：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="hiv_survey" id="hiv_survey" ng-model="lady.hiv_survey" ng-options="item.id as item.text for item in pandn">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">其他性病检查：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="otherSTDcheck" id="otherSTDcheck" type="text" ng-model="lady.otherSTDcheck" /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">丙肝：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="hepatitisC" id="hepatitisC" ng-model="lady.hepatitisC" ng-options="item.id as item.text for item in pandn">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">OGTT：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="ogtt" id="ogtt" ng-model="lady.ogtt" ng-options="item.id as item.text for item in isnormal">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">TSH：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="tsh" id="tsh" ng-model="lady.tsh" ng-options="item.id as item.text for item in isnormal">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">B超：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="bchao" id="bchao" ng-model="lady.bchao" ng-options="item.id as item.text for item in isnormal">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-lg-8 margin-top-div">
+				<span class="data_row_tip_max">保健指导：</span>
+				<span >
+					<checkbox-lhd  name="guidance" id="guidance" type="text" ng-model="lady.guidance" ></checkbox-lhd>
+				</span>
+			</div>
+			<div class="col-xs-12 col-lg-4 margin-top-div" ng-show="lady.guidance.indexOf('HR234_6')>=0">
+				<span class="data_row_tip_max">其他保健指导：</span>
+				<span class="data_row_val_max">
+					<input class="form-control input-sm" type="text" name="guidanceother" id="guidanceother" maxlength="100" ng-model="lady.guidanceother">
+				</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">总体评估：</span>
+				<span class="data_row_val_max">
+					<select class="form-control input-sm" name="assess" id="assess" ng-model="lady.assess" ng-options="item.id as item.text for item in isnormal">
+						<option value="">--请选择--</option>
+					</select>
+				</span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.assess.indexOf('HR438_002')>=0">
+				<span class="data_row_tip_max">异常说明：</span>
+				<span class="data_row_val_max"><input class="form-control input-sm" name="assess_exception" id="assess_exception" type="text" ng-model="lady.assess_exception" /></span>
+			</div>
+			<div class="col-xs-12 margin-top-div" style="height:65px;">
+				<table width="80%">
+					<tr>
+						<td width="120px">处理意见：</td>
+						<td>
+							<textarea style="width:80%;height:60px;"  id="treatadvice" name="treatadvice" ng-model="lady.treatadvice" type="textarea" elname="处理意见" pattern="string" required="0"  max_len="500"></textarea>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">下次随访日期<span style="color:red;">*</span>：</span>
+				<span class="data_row_val_max"><input class="input_border" style="width:120px;" name="nextvisitdate" id="nextvisitdate" type="text" ng-model="lady.nextvisitdate" hys-datebox required /></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+				<span class="data_row_tip_max">结案标志<span style="color:red;">*</span>：</span>
+				<span class="data_row_val_max"><select class="form-control input-sm" name="isover" id="isover" ng-model="lady.isover" required ng-options="item.id as item.text for item in finalmark"><option>..请选择..</option></select></span>
+			</div>
+		</div>
+		<div class="col-xs-12" style="height:20px;">&nbsp;</div>
+		<div class="col-xs-12" style="text-align:center;">
+			<button id="btnSave" class="btn btn-default" ng-show="!lady.isOld" ng-click="save()">
+				<span class="glyphicon glyphicon-ok"></span>&nbsp;保存
+			</button>
+		</div>
+		<div class="col-xs-12" style="height:30px;"></div> 
+		
+	</form>
+
+</div>
+</body>
+</html>

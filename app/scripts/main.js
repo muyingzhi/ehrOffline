@@ -1,0 +1,345 @@
+require.config({
+    paths:{
+        jquery: '../vendor/jquery-1.8.3',
+        angular: '../vendor/angular.min',
+        domReady: "../vendor/domReady",
+        twitter: "../vendor/bootstrap",
+        easyui : "../vendor/easyui/jquery.easyui.min",
+        easyGroup : "../vendor/easyui/datagrid-groupview",
+        easyuizh_CN : "../vendor/easyui/locale/easyui-lang-zh_CN",
+        indexedDB : "../vendor/indexeddb",
+        //calendarInput : "../vendor/calendarInput",
+        highcharts : "../vendor/highcharts",
+        clone : "../vendor/clone",
+        bootstrap_typeahead : "../vendor/bootstrap-typeahead",
+        underscore : "../vendor/underscore"
+    },
+    shim:{
+        'twitter' : {
+            deps : ['jquery']
+        },
+        angular:{
+            deps:['jquery','twitter'],
+            exports:'angular'
+        },
+        highcharts:{
+        	deps : ['jquery']
+        },
+        bootstrap_typeahead : {
+            deps : ['twitter']
+        },
+        easyui : {
+            deps : ['jquery']
+        },
+        easyGroup : {
+            deps : ['easyui']
+        },
+        easyuizh_CN :{
+            deps : ['easyui']        
+        },
+        indexedDB : {
+            deps : ['angular']
+        }
+    }
+});
+require([
+    'angular',
+    'app',
+    'bootstrap',
+    'bootstrap_typeahead',
+    'underscore',
+    'easyui','easyGroup','easyuizh_CN','clone','highcharts',
+    'controller/loginController',
+    'controller/mainController',
+    'controller/aboutController',
+    'controller/archlistController',
+    'controller/archDetailController',
+    'controller/checklistController',
+    'controller/checkDetailController',
+    'controller/hyperlistController',
+    'controller/hyperDetailController',
+    'controller/hyperDetailControllerA',
+    'controller/babyListController',
+    'controller/babyfirstVisitdetailController',
+    'controller/babyDetailController',
+    'controller/babymorethreeDetailController',
+    'controller/dmlistController',
+    'controller/dmDetailController',
+    'controller/dmDetailControllerA',
+    'controller/zycmrlistController',
+    'controller/zycmrDetailController',
+    'controller/schizolistController',
+    'controller/schizoDetailController',
+    'controller/hmsListController',
+    'controller/synDataDownload',
+    'controller/synDataUpload',
+    'controller/cacheUpdateController',
+    'controller/sysConfigSetController',
+    'controller/ladyVisitslistController',
+    'controller/ladyFetcheckDetailController',
+    'controller/ladyVisitsDetailController',
+    'controller/ladyVisit42dayDetailController',
+    'controller/archList4viewsController',
+    'controller/ladyFirstcheckDetailController',
+    'controller/ladyScoremainDetailController',
+    'controller/ladyFirstcheckADetailController',
+    'controller/healthSupervisionController',
+    'controller/healthEducationController',
+    'controller/healthEducationUpsertController',
+    'controller/vaccinationController',
+    'controller/recordlistController',
+    'controller/recordDetailController',
+    'controller/chargeDetailController',
+    'controller/eniorcitizenController',
+    'controller/vaccinationDetalController',
+    'controller/vaccinationListController',
+    'controller/vaccinationInfoController',
+    'controller/vaccinationFactoryController',
+    'controller/sanitDownloadController',
+    'controller/infectionlistController',
+    'controller/infectionDetailController',
+    'controller/hisDownloadController'
+    ],
+    function(angular,app,bootstrap){
+	    'use strict';
+        if(app==undefined){console.log("app is undefined");}
+        
+	    app.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider){
+            $routeProvider.
+                when("/archlist",{
+                    templateUrl:"arch/archList4easyui.html",
+                    controller:"archlistController"
+                }).
+                when("/archlist/:aid",{
+                    templateUrl:"arch/archList4easyui.html",
+                    controller:"archlistController"
+                }).
+                when("/archlist/:aid&:findname",{
+                    templateUrl:"arch/archList4easyui.html",
+                    controller:"archlistController"
+                }).
+                when("/archDetail/:id",{
+                    controller:"archDetailController",
+                    templateUrl:"arch/archBasicInfo_detail.html"
+                }).
+                when("/archUpdate/:id",{
+                    controller:"archDetailController",
+                    templateUrl:"arch/archBasicInfo_update.html"
+                }).
+                when("/arch/checklist/:aid",{
+                    templateUrl:"arch/healthCheckAVisitList4easyui.html",
+                    controller:"checklistController"
+                }).
+                when("/arch/check/:aid&:cid",{
+                    templateUrl:"arch/healthCheckA.html",
+                    controller:"checkDetailController"
+                }).
+                when("/arch/hyperlist/:aid",{
+                    templateUrl:"arch/hyperVisitList4easyui.html",
+                    controller:"hyperlistController"
+                }).
+                when("/arch/hyper/:aid&:hid",{
+                    templateUrl:"arch/hyperVisit_detailA.html",
+                    controller:"hyperDetailControllerA"
+                }).
+                when("/arch/hyperTable/:aid&:hid",{
+                    templateUrl:"arch/hyperVisit_detail.html",
+                    controller:"hyperDetailController"
+                }).
+                when("/arch/dmlist/:aid",{
+                    templateUrl:"arch/dmVisitList4easyui.html",
+                    controller:"dmlistController"
+                }).
+                when("/arch/dm/:aid&:did",{
+                    templateUrl:"arch/dmVisit_detailA.html",
+                    controller:"dmDetailControllerA"
+                }).
+                when("/arch/dmTable/:aid&:did",{
+                    templateUrl:"arch/dmVisit_detail.html",
+                    controller:"dmDetailController"
+                }).
+                when("/arch/schizolist/:aid",{
+                    templateUrl:"arch/schizoVisitList4easyui.html",
+                    controller:"schizolistController"
+                }).
+                when("/arch/schizo/:aid&:sid",{
+                	templateUrl:"arch/schizoVisit_detail.html",
+                	controller:"schizoDetailController"
+                }).
+                when("/arch/zycmrlist/:aid",{
+                    controller:"zycmrlistController",
+                    templateUrl:"arch/zycmrVisitList4easyui.html"
+                }).
+                when("/arch/babylist/:aid",{
+                    controller:"babyListController",
+                    templateUrl:"arch/babyVisitList4easyui.html"
+                }).
+                when("/arch/babyfirstdetail/:aid&:hid",{
+                	controller:"babyfirstVisitdetailController",
+                    templateUrl:"arch/babyfirstVisitdetail.html"
+                }).
+                when("/arch/babydetail/:aid&:hid&:pid",{
+                    controller:"babyDetailController",
+                    templateUrl:"arch/babyVisitsrecord_detail.html"
+                }).
+                when("/arch/babymorethreedetail/:aid&:hid&:pid",{
+                	templateUrl:"arch/babyMorethree_detail.html",
+                	controller:"babymorethreeDetailController"
+                }).
+                when("/arch/zycmr/:aid&:zid",{
+                    templateUrl:"arch/zycmr_detail.html",
+                    controller:"zycmrDetailController"
+                }).
+                when("/hmslist",{
+                	controller:"hmsListController",
+                	templateUrl:"hms/hmsReportListFtp.html"
+                }).
+                when("/hmsAsDoctor",{
+                    controller:"hmsListController",
+                    templateUrl:"hms/hmsAsDoctor.html"
+                }).
+                when("/archDownload",{
+                    controller:"synDataDownload",
+                    templateUrl:"syn/synData_download.html"
+                }).
+                when("/sanitDownload",{
+                    controller:"sanitDownloadController",
+                    templateUrl:"syn/sanitDownload.html"
+                }).
+                when("/datasUpload",{
+                    controller:"synDataUpload",
+                    templateUrl:"syn/synData_upload.html"
+                }).
+                when("/about",{
+                    controller:"aboutController",
+                    templateUrl:"about.html"
+                }).
+                when("/cacheUpdate",{
+                    controller:"cacheUpdateController",
+                    templateUrl:"syn/cacheUpdate.html"
+                }).
+                 when("/configSet",{
+                    controller:"sysConfigSetController",
+                    templateUrl:"syn/sysConfig_set.html"
+                }).
+                when("/configSet/:cname",{
+                	controller:"sysConfigSetController",
+                	templateUrl:"syn/sysConfig_set.html"
+                }).
+                when("/arch/visitslist/:aid",{
+                    templateUrl:"arch/ladyVisitslist4easyui.html",
+                    controller:"ladyVisitslistController"
+                }).
+                when("/arch/visits/:aid&:taici&:cid",{
+                    templateUrl:"arch/ladyVisitsDetail.html",
+                    controller:"ladyVisitsDetailController"
+                }).
+                 when("/arch/visit42day/:aid&:taici&:cid",{
+                    templateUrl:"arch/ladyVisit42dayDetail.html",
+                    controller:"ladyVisit42dayDetailController"
+                }).
+                when("/arch/firstcheck/:aid&:sid",{
+                    templateUrl:"arch/ladyFirstcheckDetail.html",
+                    controller:"ladyFirstcheckDetailController"
+                }).
+                when("/arch/ladyScoremain/:aid&:cid&:typ&:taici",{
+                    templateUrl:"arch/ladyScoremainDetail.html",
+                    controller:"ladyScoremainDetailController"
+                }).
+                when("/arch/fetcheck/:aid&:taici&:cid",{
+                    templateUrl:"arch/ladyFetcheckDetail.html",
+                    controller:"ladyFetcheckDetailController"
+                }).
+                when("/arch/firstcheckA/:aid&:sid",{
+                    templateUrl:"arch/ladyFirstcheckADetail.html",
+                    controller:"ladyFirstcheckADetailController"
+                }).
+                when("/archlist4views",{
+                    templateUrl:"arch/archList4views.html",
+                    controller:"archList4viewsController"
+                }).
+                when("/healthSupervision",{
+                    templateUrl:"arch/healthSupervision.html",
+                    controller:"healthSupervisionController"
+                }).
+                when("/healthEducation",{
+                    templateUrl:"arch/healthEducation.html",
+                    controller:"healthEducationController"
+                }).
+                when("/arch/healthEducationUpsert/:id",{
+                    templateUrl:"arch/healthEducationUpsert.html",
+                    controller:"healthEducationUpsertController"
+                }).
+                when("/vaccination",{
+                    templateUrl:"arch/vaccination.html",
+                    controller:"vaccinationController"
+                }).
+                when("/recordlist",{
+                	controller:"recordlistController",
+                    templateUrl:"record/recordList4easyui.html"
+                }).
+                when("/recordlist/:aid",{
+                	controller:"recordlistController",
+                    templateUrl:"record/recordList4easyui.html"
+                }).
+                when("/recordlist/:aid&:findname",{
+                	controller:"recordlistController",
+                    templateUrl:"record/recordList4easyui.html"
+                }).
+                when("/medicalRecord/:id",{
+                    controller:"recordDetailController",
+                    templateUrl:"record/medicalRecord_detail.html"
+                }).
+                when("/charge/:id",{
+                    controller:"chargeDetailController",
+                    templateUrl:"record/charge_detail.html"
+                }).
+                when("/eniorcitizen/:aid&:id",{
+                    controller:"eniorcitizenController",
+                    templateUrl:"arch/eniorcitizen.html"
+                }).
+                when("/vaccinationDetal/:id",{
+                    controller:"vaccinationDetalController",
+                    templateUrl:"arch/vaccinationDetal.html"
+                }).
+                when("/vaccinationList/:id",{
+                    controller:"vaccinationListController",
+                    templateUrl:"arch/vaccinationList.html"
+                }).
+                when("/vaccinationInfo/:id&:listId",{
+                    controller:"vaccinationInfoController",
+                    templateUrl:"arch/vaccinationInfo.html"
+                }).
+                when("/vaccinationFactory/:id",{
+                    controller:"vaccinationFactoryController",
+                    templateUrl:"arch/vaccinationFactory.html"
+                }).
+                when("/infectionlist",{
+                    controller:"infectionlistController",
+                    templateUrl:"arch/infectionList4easyui.html"
+                }).
+                when("/infectionlist/:aid",{
+                	controller:"infectionlistController",
+                    templateUrl:"arch/infectionList4easyui.html"
+                }).
+                when("/infectionlist/:aid&:findname",{
+                	controller:"infectionlistController",
+                    templateUrl:"arch/infectionList4easyui.html"
+                }).
+                when("/infectionDetail/:id",{
+                    controller:"infectionDetailController",
+                    templateUrl:"arch/infection_detail.html"
+                }).
+                when("/hisDownload",{
+                    controller:"hisDownloadController",
+                    templateUrl:"syn/his_download.html"
+                }).
+                otherwise({
+                    redirectTo:"/"
+                });
+            }]
+        );
+        bootstrap();
+    }
+    
+);

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">
+<style type="text/css">
+.boy{
+background-image:url(../images/boy.jpg)}
+.girl{
+background-image:url(../images/girl.jpg)}
+input.ng-invalid {
+	background-color: pink;
+}
+select.ng-invalid {
+	background-color: pink;
+}
+select-Arch-Status.ng-invalid {
+	background-color: pink;
+}
+.row div{
+	padding: 3px;
+}
+.form-control{
+	width: 150px;
+}
+</style>
+</head>
+<body>
+<form name="frmAction" onsubmit="return false;">
+	<input type="hidden" id="arch_basicinfoid" name="arch_basicinfoid" ng-model="arch.arch_basicinfoid"/>
+	<input type="hidden" id="link_from" name="link_from" ng-model="arch.link_from"/>
+	<input type="hidden" name="archstatus1" id="archstatus1" ng-model="arch.archstatus1">
+	<input type="hidden" name="id" id="objectid" ng-model="arch.objectid">
+	<input type="hidden" name="archiveid" id="archiveid" ng-model="arch.archiveid">
+	<input type="hidden" id="extField1" name="extField1" ng-model="arch.extField1">
+	<input type="hidden" id="submitflag" name="submitflag"  ng-model="arch.submitflag">
+	<input type="hidden" id="arch_builddate_edit" name="arch_builddate_edit" ng-model="arch.arch_builddate_edit">
+	<input type="hidden" id="insuranceFlag" name="insuranceFlag" ng-model="arch.insuranceFlag">
+<div class="row">
+	<div class="col-xs-12 table_head" style="background-color:#FFF;border:0;"></div>
+	<div class="col-xs-12">
+		<table style="width: 100%">
+			<tr>
+				<td>
+					<span id="div_insurance_img" style="display: block">
+					<div alt="照片" id="img" style="width:102px;height: 126px;"
+					 ng-class="{boy:arch.gender=='HR481_1',girl:arch.gender=='HR481_2'}"></div>
+					</span>
+				</td>
+				<td>
+					<div class="col-xs-12">
+						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+							<span class="data_row_tip"><font class="font_red">姓名*：</font></span>
+							<span class="data_row_val">
+								<input class="form-control input-sm ng-pristine ng-valid" type="text" id="fullname" name="fullname" ng-model="arch.fullname" ng-change="setNameSpell()" required maxlength="20">
+							</span>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+							<span class="data_row_tip"><font class="font_red">拼音码：</font></span>
+							<span class="data_row_val">
+								<input class="form-control input-sm ng-pristine ng-valid" type="text" id="namepinyincode" name="namepinyincode" ng-model="arch.namepinyincode" required maxlength="20" ng-change="setNameSpell()">
+							</span>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+							<span class="data_row_tip"><font class="font_red">乡镇(街道)*：</font></span>
+							<span class="data_row_val">
+								<select id="street" name="street" ng-model="arch.street"  required
+									ng-options="item.id as item.text for item in dictStreet"
+									class="form-control input-sm ng-pristine ng-valid" >
+									<option value="">--请选择--</option>
+								</select>
+							</span>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+							<span class="data_row_tip"><font class="font_red">村(居)委会*：</font></span>
+							<span class="data_row_val">
+								<select id="residentcommittee" name="residentcommittee" ng-model="arch.residentcommittee"
+									 ng-options="item.id as item.text for item in dictResident" required class="form-control input-sm ng-pristine ng-valid" >
+									<option value="">--请选择--</option>
+								</select>
+							</span>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+							<span class="data_row_tip">现住址 :</span>
+							<span class="data_row_val">
+								<input type="text" name="addr" id="addr" ng-model="arch.addr" maxlength="20" class="form-control input-sm ng-pristine ng-valid" >
+							</span>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+							<span class="data_row_tip">本人电话：</span>
+							<span class="data_row_val">
+								<input name="tel" id="tel" type="text" ng-model="arch.tel" maxlength="20" class="form-control input-sm ng-pristine ng-valid" >
+							</span>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+							<span class="data_row_tip">户籍地址：</span>
+							<span class="data_row_val">
+								<input type="text" name="fatherbirthland" id="fatherbirthland" ng-model="arch.fatherbirthland" maxlength="20" class="form-control input-sm ng-pristine ng-valid" >
+							</span>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+							<span class="data_row_tip"><font class="font_red">责任医生：</font></span>
+							<span class="data_row_val">
+								<select name="duty_doctor" ng-model="arch.duty_doctor"	
+									ng-options="item.id as item.text for item in dictDoctor" required class="form-control input-sm ng-pristine ng-valid" > 
+									<option value="">--请选择--</option>
+								</select>
+							</span>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+							<span class="data_row_tip">档案状态：</span>
+							<span class="data_row_val">
+								<select-Arch-Status id="archstatus" name="archstatus" ng-model = "arch.archstatus" required class="form-control input-sm ng-pristine ng-valid" >
+								</select-Arch-Status>
+							</span>
+							<span id="detailbutton" ng-show="arch.archstatus=='HR421_4'"> 
+								(<a href="###" onclick="opendetail(this); return false;" style="font-size: 10pt;">终止原因</a>)
+							</span> 
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+							<span class="data_row_tip">建档人：</span>
+							<span class="data_row_val">
+								<select name="cruser" ng-model="arch.cruser"
+									ng-options="item.id as item.text for item in dictDoctor" required class="form-control input-sm ng-pristine ng-valid" >
+									<option value="">--请选择--</option>
+								</select>
+							</span>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+							<span class="data_row_tip">电子建档日期：</span>
+							<span class="data_row_val">
+								<input type="text" hys-datebox name="build_date" id="build_date" ng-model="arch.build_date" required style="width: 145px;height:30px " class="form-control input-sm ng-pristine ng-valid" >														
+								<span id="div_datechange" style="display: none">
+									(<a href="#" onclick="adminConfirm('build_date'); return false;" style="font-size: 10pt;">修改</a>)
+								</span>				
+							</span>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+							<span class="data_row_tip">档案管理机构：</span>
+							<span class="data_row_val">
+								<select name="icpcode" ng-model="arch.icpcode"
+									ng-options="item.id as item.text for item in dictTgov" required class="form-control input-sm ng-pristine ng-valid" >
+									<option value="">--请选择--</option>
+								</select>
+								<a id="a_searchYLJG" href="#" onclick="searchYLJG(this);return false;" ng-show="false">(查询)</a>
+							</span>
+						</div>
+
+					</div>
+
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-xs-12 table_head">档案信息</div>
+
+	<div class="col-xs-12">
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">纸质档案号：</span>
+			<span class="data_row_val">
+				<input id="updateflag" name="updateflag" type="hidden" ng-model="arch.updateflag">
+				<input id="archiveno" name="archiveno" type="text" ng-model="arch.archiveno" readonly class="form-control input-sm ng-pristine ng-valid" >
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip"><font class="font_red">性别*：</font></span>
+			<span class="data_row_val" style="height:30px">
+				<radio-gender ng-model="arch.gender" id="gender" name="gender" required>
+				</radio-gender>
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip"><font class="font_blue">身份证号</font>：</span>
+			<span class="data_row_val" style="height:30px">
+				<input ng-change="calcBir(arch.identityno)" id="identityno" name="identityno" type="text" ng-model="arch.identityno" minlength="15" maxlength="18" class="form-control">
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip"><font class="font_red">出生日期*：</font></span>
+			<span class="data_row_val">
+				<input type="text" hys-datebox id="birthday" name="birthday" ng-model="arch.birthday" required style="width: 145px;height:30px;" class="form-control input-sm ng-pristine ng-valid" >
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">工作单位：</span>
+			<span class="data_row_val">
+				<input type="text" name="company" id="company" ng-model="arch.company" maxlength="20" class="form-control input-sm ng-pristine ng-valid" >
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">联系人姓名：</span>
+			<span class="data_row_val">
+				<input type="text" name="linkman" id="linkman" ng-model="arch.linkman" maxlength="20" class="form-control input-sm ng-pristine ng-valid" >
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">联系人电话：</span>
+			<span class="data_row_val">
+				<input type="text" name="linkman_tel" id="linkman_tel" ng-model="arch.linkman_tel" maxlength="20" class="form-control input-sm ng-pristine ng-valid" >
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">常住类型：</span>
+			<span class="data_row_val">
+				<select name="residenttype" id="residenttype" ng-model="arch.residenttype"
+					ng-options="item.id as item.text for item in dictResidenttype" class="form-control input-sm ng-pristine ng-valid" >
+					<option value="">--请选择--</option>
+				</select>
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">民族：</span>
+			<span class="data_row_val">
+				<select name="nation" id="nation" ng-model="arch.nation"
+					ng-options="item.id as item.text for item in dictNation" class="form-control input-sm ng-pristine ng-valid" >
+					<option value="">--请选择--</option>
+				</select>
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">血型：</span>
+			<span class="data_row_val">
+				<select id="bloodgroup" name="bloodgroup" ng-model="arch.bloodgroup"
+					ng-options="item.id as item.text for item in dictBloodtype" class="form-control input-sm ng-pristine ng-valid" >
+					<option value="">--请选择--</option>
+				</select>
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">RH阴性：</span>
+			<span class="data_row_val">
+				<select id="bloodRH" name="bloodRH" ng-model="arch.bloodRH"
+					ng-options="item.id as item.text for item in dictBloodRH" class="form-control input-sm ng-pristine ng-valid" >
+					<option value="">--请选择--</option>
+				</select>
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">文化程度：</span>
+			<span class="data_row_val">
+				<select id="education" name="education" ng-model="arch.education"
+					ng-options="item.id as item.text for item in dictEducation" class="form-control input-sm ng-pristine ng-valid" >
+					<option value="">--请选择--</option>
+				</select>
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">职业：</span>
+			<span class="data_row_val">
+				<select id="vocation" name="vocation" ng-model="arch.vocation"
+					ng-options="item.id as item.text for item in dictVocation" class="form-control input-sm ng-pristine ng-valid" >
+					<option value="">--请选择--</option>
+				</select>
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">婚姻状况：</span>
+			<span class="data_row_val">
+				<select id="marriage" name="marriage" ng-model="arch.marriage"
+					ng-options="item.id as item.text for item in dictMarriage" class="form-control input-sm ng-pristine ng-valid" >
+					<option value="">--请选择--</option>
+				</select>
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">社保类型：</span>
+			<span class="data_row_val">
+				<select ng-model="arch.medicare_type"
+					ng-options="item.id as item.text for item in dictMedicaretype" class="form-control input-sm ng-pristine ng-valid" >
+					<option value="">--请选择--</option>
+				</select>
+			</span>
+		</div>
+	</div>
+	<div class="col-xs-12">
+		<span class="data_row_tip">付费类型：</span>
+		<radio-paytype id="paytype" name="paytype" ng-model="arch.paytype">
+		</radio-paytype>
+		<input type="text" name="paytype_other" id="paytype_other_id"  ng-model="arch.paytype_other_id" ng-show="arch.paytype=='HR101_9'" maxlength="20" class="form-control input-sm ng-pristine ng-valid" >
+
+	</div>
+	<div class="col-xs-12">
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">新农合/社保号：</span>
+			<span class="data_row_val">
+				<input type="text" name="medicareid" id="medicareid" ng-model="arch.medicareid" maxlength="20" class="form-control input-sm ng-pristine ng-valid" >
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">用户密码：</span>
+				<span class="data_row_val">
+				<input name="comedicardid" id="comedicardid" type="password"  ng-model="arch.comedicardid" maxlength="10" class="form-control input-sm ng-pristine ng-valid" >
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">密码确认：</span>
+				<span class="data_row_val">
+				<input name="makecomedicardid" id="makecomedicardid" type="password"  ng-model="arch.makecomedicardid" maxlength="10" class="form-control input-sm ng-pristine ng-valid" >
+			</span>
+		</div>
+	</div>
+
+	<div class="col-xs-12 table_head">其他信息</div>
+	<div class="col-xs-12">
+		<span class="data_row_tip">过敏史：</span>
+		<checkbox-hypersuses id="hypersuses" name="hypersuses" ng-model="arch.hypersuses"> 
+		</checkbox-hypersuses>
+		<div style="float:right;" ng-show="arch.hypersuses.indexOf('HR398_4')>=0">
+			&nbsp;&nbsp;(其他药物过敏史：
+			<input id="hypersuses_other" name="hypersuses_other" type="text" ng-model="arch.hypersuses_other" maxlength="20">)
+		</div>
+	</div>
+	<div class="col-xs-12">
+		<span class="data_row_tip">暴露史：</span>
+		<checkbox-undress id="undress" name="undress" ng-model="arch.undress"> 
+		</checkbox-undress>
+		<div style="float:right" ng-show="arch.undress.indexOf('HR441_5')>=0">
+			&nbsp;&nbsp;(其它暴露：
+			<input id="undress_other" name="undress_other" type="text" ng-model="arch.undress_other" maxlength="20">)
+		</div>
+	</div>
+	<div class="col-xs-12">
+		<span class="data_row_tip">疾病史：</span>
+		<checkbox-discomname id="discomname" name="discomname" ng-model="arch.discomname"> 
+		</checkbox-discomname>
+	</div>
+	
+	<div class="col-xs-12">
+		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+			<span class="data_row_tip">手术/外伤/输血史：</span>
+		</div>
+		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+			<table>
+				<tr>
+					<td>类型：</td>
+					<td>原因：</td>
+					<td>就诊医院：</td>
+					<td>就诊日期：</td>
+					<td></td>
+				</tr>
+				<tr ng-repeat="ops in arch.opslist">
+					<td><select disabled ng-model="ops.type_code" ng-options="item.id as item.text for item in opsType"/></select></td>
+					<td>{{ops.type_name}}</td>
+					<td>{{ops.hospital}}</td>
+					<td>{{ops.happend_time}}</td>
+					<td><button type="button" class="btn btn-default" ng-click="delOps(ops)">
+							<span class="glyphicon glyphicon-remove"></span>删除</button>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<select type="text" ng-model="ops.type_code" ng-options="item.text for item in opsType" 
+							style="width: 80px" class="form-control input-sm ng-pristine ng-valid"/></select></td>
+					<td><input type="text" ng-model="ops.type_name"  maxlength="20" class="form-control input-sm ng-pristine ng-valid"/></td>
+					<td><input type="text" ng-model="ops.hospital"  maxlength="20" class="form-control input-sm ng-pristine ng-valid"></td>
+					<td><input type="text" hys-datebox ng-model="ops.happend_time" style="width:100px;height:30px;" class="form-control input-sm ng-pristine ng-valid"></td>
+					<td>
+						<button type="button" class="btn btn-default" ng-click="addOps()">
+							<span class="glyphicon glyphicon-ok-circle"></span>增加
+						</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="col-xs-12">
+		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+			<span class="data_row_tip" style="width:100px">家族史：</span>
+		</div>
+		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+			<table>
+				<tr>
+					<td>与本人关系</td>
+					<td>疾病</td>
+					<td>备注</td>
+					<td></td>
+				</tr>
+				<tr ng-repeat="item in arch.familydislist">
+					<td><select disabled ng-model="item.relationtoself" ng-options="one.id as one.text for one in dictFamilyrelation"/></select></td>
+					<td><select disabled ng-model="item.disease" ng-options="one.id as one.text for one in dictDis"/> </select></td>
+					<td>{{item.remark}}</td>
+					<td>
+						<button type="button" class="btn btn-default" ng-click="delFamilyDisease(item)">
+							<span class="glyphicon glyphicon-remove"></span>删除
+						</button>
+					</td>
+				</tr>
+				<tr>
+					<td><select ng-model="familyDisease.relationtoself" ng-options="item.id as item.text for item in dictFamilyrelation" 
+							style="width: 80px" class="form-control input-sm ng-pristine ng-valid"/></select></td>
+					<td><select ng-model="familyDisease.disease" ng-options="item.id as item.text for item in dictDis" 
+							class="form-control input-sm ng-pristine ng-valid"/></select></td>
+					<td><input type="text" ng-model="familyDisease.remark"  maxlength="20" class="form-control input-sm ng-pristine ng-valid"></td>
+					<td>
+						<button type="button" class="btn btn-default" ng-click="addFamilyDisease()">
+							<span class="glyphicon glyphicon-ok-circle"></span>增加
+						</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	<div class="col-xs-12">
+		<span class="data_row_tip">有无遗传病史：</span>
+		<span class="">
+			<radio-nothave id="has_inherit_disease" name="has_inherit_disease" ng-model="arch.has_inherit_disease" maxlength="20">
+			</radio-nothave>
+		</span>
+		<div style="float: right;" ng-show="arch.has_inherit_disease=='HR397_1'">
+			(遗传病名称：<input id="inherit_disease"	name="inherit_disease" type="text" elname="遗传病名称" ng-model="arch.inherit_disease" 
+				maxlength="20" class="form-control input-sm ng-pristine ng-valid">)
+		</div>
+	</div>
+	<div class="col-xs-12">
+		<span class="data_row_tip">残疾类型：</span>
+		<checkbox-deformity id="deformity" name="deformity" ng-model="arch.deformity"> 
+		</checkbox-deformity>
+		<div style="float: right;" ng-show="arch.deformity.indexOf('HR402_8')>=0">
+			&nbsp;&nbsp;(其它残疾：<input id="deformity_other"	name="deformity_other" type="text" ng-model="arch.deformity_other" 
+				maxlength="20" class="form-control input-sm ng-pristine ng-valid">)
+		</div>
+	</div>
+	<div class="col-xs-12">
+		<span class="data_row_tip">备注：</span>
+		<span class="data_row_val">
+			<input id="remark" name="remark" type="text" ng-model="arch.remark" class="form-control input-sm ng-pristine ng-valid">
+		</span>
+	</div>
+</div>
+
+
+	<table border="1" cellpadding="0" cellspacing="0" width="100%" class="table_main">
+		<tr  ng-show="false">
+			<td class="table_head" colspan='3'>
+				生活环境
+			</td>
+		</tr>
+		<tr ng-show="false">
+			<td>
+				<span class="data_row_tip">家庭编号：</span>
+				<span>
+					<input type="hidden" name="familyid" id="familyid" ng-model="arch.familyid">													
+					<input type="text" id="familyno" name="familyno" ng-model="arch.familyno" readonly>
+				</span>
+			</td>
+			<td>
+				<span class="data_row_tip">户主：</span>
+				<span class="">
+					<input type="text" name="familyhead" id="familyhead"  ng-model="arch.familyhead" readonly>
+				</span>
+			</td>
+			<td>
+				<span class="data_row_tip">与户主关系：</span>
+				<span class="">
+					<input  readonly type="text" name="familyposition" id="familyposition"  ng-model="arch.familyposition">
+					<input  type="hidden" id="familypositionhidden" name="familypositionhidden"  ng-model="arch.familypositionhidden">
+				</span>
+				
+			</td>
+		</tr>
+		<tr  ng-show="false">
+			<td>
+				<span class="data_row_tip">厨房排风设施：</span>
+				<span class="">
+					<input type="text" name="" id="">
+				</span>
+			</td>
+			<td>
+				<span class="data_row_tip">燃料类型：</span>
+				<span class="">
+					<input type="text" name="" id="">
+				</span>
+			</td>
+			<td>
+				<span class="data_row_tip">饮水：</span>
+				<span class="">
+					<input type="text" name="" id="">
+				</span>
+			</td>
+		</tr>
+		<tr ng-show="false">
+			<td>
+				<span class="data_row_tip">厕所：</span>
+				<span class="">
+					<input type="text" name="" id="">
+				</span>
+			</td>
+			<td>
+				<span class="data_row_tip">禽畜栏：</span>
+				<span class="">
+					<input type="text" name="" id="" >
+				</span>
+			</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="div_options" colspan="3">
+					<button type="button" class="btn btn-default"
+					  ng-click="saveArch()">
+						<span class="glyphicon glyphicon-ok"></span>保存
+					</button>
+			</td>
+		</tr>
+	</table>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html manifest="app/views/ehrOffLine.manifest"> <!--  manifest="app/views/ehrOffLine.manifest"   -->
+<head>
+<title>系统登录</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link href="login.css" rel="stylesheet" />
+</head>
+<body ng-controller="loginController">
+<form name="loginForm" novalidate>
+	<div class="pageTitle">
+		<div>
+			系统名称
+		</div>
+	</div>
+	<div class="content">
+		<div class="c1"></div>
+		<div class="c2">
+			<table width="100%" border="0">
+				<tr>
+					<td align="right" width="33%" class="STYLE1">用户名：</td>
+					<td  width="33%">
+						<input type="text" name="username" id="username" style="width: 150px" ng-model="loginInfo.username" required>
+					</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td class="STYLE1" align="right">密码：</td>
+					<td>
+						<input type="password" name="password" id="password" style="width: 150px" ng-model="loginInfo.password" required>
+					</td>
+					<td>&nbsp;</td>
+				</tr>
+			</table>
+		</div>
+		<div class="c3">
+			<img src="images/login/login_03.png" width="388" height="74" border="0" usemap="#Map" />
+			<map name="Map" id="Map">
+				<area shape="rect" coords="93,14,185,40" href="#" id="btnLogin" ng-click="login()"/>
+				<area shape="rect" coords="202,14,293,40" href="#" id="btnRest" ng-click="reset()"/>
+			</map>
+		</div>
+		<div>
+			<center>
+				<h3>
+					<a ng-href="{{loginInfo.downloadHref}}">下载记录</a>
+				</h3>
+			</center>
+		</div>
+		<div id="errorMsg" style="color: green;font-weight: bold;width:400px;margin:10px auto;text-align:center;">
+		</div>
+		<div style="color: red;font-weight: bold;" ng-show="loginInfo.message">
+			<center>
+			提示：{{loginInfo.message}}
+			</center>
+		</div>
+	</div>
+	<div class="footer">
+		<center>
+		©版权所有：&nbsp;&nbsp;
+    	技术支持：&nbsp;&nbsp;
+     	</center>	   
+    </div>
+</form>
+<script type="text/javascript">
+updateAppCache();
+function updateAppCache(){
+	var msgNode = document.querySelector("#errorMsg");
+	if(navigator.onLine){
+		window.addEventListener('load', function(e) {  
+			var appCache = window.applicationCache;
+			var updateNum = 0;//---更新文件的数量
+			
+			appCache.addEventListener('checking', function(e) {
+				msgNode.textContent = '正在检查系统版本';
+			}, false); 
+			
+			appCache.addEventListener('error', function(e) {
+				alert( '系统版本检查失败，请刷新或者直接使用系统:'+e.message);
+			}, false);
+			
+			appCache.addEventListener('noupdate', function(e) {
+				msgNode.textContent = '系统已是最新';
+			}, false);
+			
+			appCache.addEventListener('downloading', function(e) {
+				msgNode.textContent = '正在下载...';
+			}, false); 
+
+			appCache.addEventListener('progress', function(e) {
+				updateNum++;
+				msgNode.textContent = '更新下载...'+updateNum+'/'+(e.total+1)+'';
+			}, false);
+			
+			appCache.addEventListener('updateready', function(e) {  
+		      window.applicationCache.swapCache(); //---启用新版本
+		      msgNode.textContent = '系统更新完成，下载文件'+updateNum+'个。'; 
+		      console.log('系统更新完成。');
+			}, false); 
+			
+			appCache.addEventListener('cached', function(e) {
+				msgNode.textContent = '应用缓存已下载完成';
+			}, false); 
+			
+		}, false); 
+	}else{
+		msgNode.textContent = '离线';
+	}
+}
+</script>
+<script type="text/javascript" src="app/vendor/require.js" data-main="app/scripts/main">
+</script>
+</body>
+</html>

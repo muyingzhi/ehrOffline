@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insert title here</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">	
+</head>
+<body class="container-fluid">
+<div class="col-xs-12">&nbsp;</div>
+<div class="col-xs-12 table_head">健康教育活动记录表</div>
+<div class="col-xs-12" style="border:1px #CCCCCC solid;border-top:none;">	
+	<div class="row">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>活动日期：<span class="font_red">*</span></label></td>
+					<td><input id="edudate" style="width:100%;height:32px;border:1px solid #cccccc;line-height:1.428571429;" hys-none-datebox ng-model="jkjy.edudate"/></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>宣传主题：<span class="font_red">*</span></label></td>
+					<td><select id="publicitytype" name="publicitytype"  class="form-control"  ng-options="n.id as n.text for n in publicitytypes" ng-model="jkjy.publicitytype"></select></td>
+				</tr>
+			</table>
+		</div>	
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>活动地点：<span class="font_red">*</span></label></td>
+					<td><input type="text" class="form-control" id="address" ng-model="jkjy.address" ></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>活动形式：<span class="font_red">*</span></label></td>
+					<td><select id="edutype" name="edutype"  class="form-control"  ng-options="n.id as n.text for n in edutypes" ng-model="jkjy.edutype"></select></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>活动对象：<span class="font_red">*</span></label></td>
+					<td><select id="eduobject" name="eduobject"  class="form-control" ng-options="n.id as n.text for n in eduobjects" ng-model="jkjy.eduobject"></select></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>参与人群：<span class="font_red">*</span></label></td>
+					<td><select id="category" name="category"  class="form-control" ng-options="n.id as n.text for n in categorys" ng-model="jkjy.category"></select></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>持续时间：</label></td>
+					<td><input type="text" class="form-control" id="doingtime" ng-model="jkjy.doingtime" ></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>主办单位：<span class="font_red">*</span></label></td>
+					<td><input type="text" class="form-control" id="organizers" ng-model="jkjy.organizers" ></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>合作伙伴：</label></td>
+					<td><input type="text" class="form-control" id="partners" ng-model="jkjy.partners" ></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>宣教人：</label></td>
+					<td><input type="text" class="form-control" id="dodoctor" ng-model="jkjy.dodoctor" ></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>宣传单/卡：</label></td>
+					<td><input type="text" class="form-control" id="xcdhkcount" ng-model="jkjy.xcdhkcount" is-float></td>
+					<td>张 </td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>健教处方：</label></td>
+					<td><input type="text" class="form-control" id="jkjycfcount" ng-model="jkjy.jkjycfcount" is-float></td>
+					<td>张 </td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>宣传画：</label></td>
+					<td><input type="text" class="form-control" id="xchcount" ng-model="jkjy.xchcount" is-float></td>
+					<td>张 </td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>健教手册：</label></td>
+					<td><input type="text" class="form-control" id="jkjysccount" ng-model="jkjy.jkjysccount" is-float></td>
+					<td>张 </td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>播放音像资料：</label></td>
+					<td><input type="text" class="form-control" id="bfyyzlnumber" ng-model="jkjy.bfyyzlnumber" is-float></td>
+					<td>种</td>
+					<td><input type="text" class="form-control" id="bfyyzlcount" ng-model="jkjy.bfyyzlcount" is-float></td>
+					<td>次 </td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>个体化健康教育：</label></td>
+					<td><input type="text" class="form-control" id="gthjkjycount" ng-model="jkjy.gthjkjycount" is-float></td>
+					<td>种健教知识</td>
+					<td><input type="text" class="form-control" id="jkjyrccount" ng-model="jkjy.jkjyrccount" is-float></td>
+					<td>健教人次</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>参与人数：<span class="font_red">*</span></label></td>
+					<td><input type="text" class="form-control" id="peoplecount" ng-model="jkjy.peoplecount" is-float></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>活动主题：</label></td>
+					<td><textarea rows="2" style="width:100%;" id="topic" ng-model="jkjy.topic"></textarea></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>活动小结：</label></td>
+					<td><textarea rows="2" style="width:100%;" id="content" ng-model="jkjy.content"></textarea></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>活动评价：</label></td>
+					<td><textarea rows="2" style="width:100%;" id="memo" ng-model="jkjy.memo"></textarea></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>费用：</label></td>
+					<td><textarea rows="2" style="width:100%;" id="charge" ng-model="jkjy.charge"></textarea></td>
+				</tr>
+			</table>
+		</div>
+		<!-- 
+			<div class="col-xs-12">
+				<table width="100%">
+					<tr>
+						<td width="120px"><label>文件上传：</label></td>
+						<td><input type="file" id="file" name="file" ng-model="jkjy.file" /></td>
+					</tr>
+				</table>
+			</div>
+		 -->
+		<div class="col-xs-12">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>存档资料：</label></td>
+					<td><checkbox-archives-means type="text"  id="cdcl" ng-model="jkjy.cdcl" ></checkbox-archives-means></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>负责人：<span class="font_red">*</span></label></td>
+					<td><select id="doctor" name="doctor"  class="form-control" ng-options="n.id as n.text for n in dictDoctor" ng-model="jkjy.doctor"></select></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<table width="100%">
+				<tr>
+					<td width="120px"><label>填表时间：<span class="font_red">*</span></label></td>
+					<td><input type="text" class="form-control" id="fillformdate" readOnly ng-model="jkjy.fillformdate" ></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-12" style="border-bottom:1px solid #ccc;">&nbsp;</div>
+		<div class="col-xs-12">&nbsp;</div>
+		<div ng-show="isTRUE" class="col-xs-12" style="text-align:center;">
+			 <button id="btnSave" class="btn btn-default" ng-click="save()"><span class="glyphicon glyphicon-ok"></span>&nbsp;保存</button>
+		</div>
+		<div class="col-xs-12">&nbsp;</div>
+	</div>
+</div>
+</body>
+</html>

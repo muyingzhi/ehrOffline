@@ -1,0 +1,431 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">
+<style type="text/css">
+input.ng-invalid,select.ng-invalid {
+	background-color: pink;
+}
+.divc{
+    border:#CDC3D9 dotted 1px;
+	font-size: 9pt;
+	padding-top: 13px;
+	padding-right: 5px;
+	padding-left: 5px;
+	text-align:left;
+	background-color:#dedef8; 
+}
+
+.radius_div{
+	background-color:#eef;
+	border:1px solid #BDE9F1;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+	color:#30708F;
+}
+.cathetus_div{
+	background-color:#eef;
+	color:#30708F;
+}
+.input_border{
+	border:0;
+	background-color:#eef;
+	border-bottom:1px solid #30708F;
+	width:100px;
+}
+.input_border_min{
+	border:0;
+	width:60px;
+	background-color:#eef;
+	border-bottom:1px solid #30708F;
+}
+
+</style>
+</head>
+<body style="background-color:#eef;">
+<div class="container-fluid">
+	<p style="font-size: 16pt" align="center">高血压随访记录</p>
+	<form name="frmAction" role="form"  novalidate id="frmHyperVisit" onsubmit="return false;">	
+		<input name="id" id="id" type="hidden" ng-model="hyper.hypertensionvisitid">
+		<input name="icpcode" type="hidden" ng-model="hyper.icpcode">
+		<input type="hidden" ng-model="hyper.visitflag">
+				
+		<input name="archiveid" id="archiveid" type="hidden" ng-model="hyper.archiveid" style="width:110px;">
+		<input name="archid" id="archid"  type="hidden" ng-model="hyper.archid"  style="width:85px;">
+		<input name="identityno" id="identityno" type="hidden" ng-model="arch.identityno"/>
+		<input id="fullname" type="hidden" readonly ng-model="arch.fullname">
+		<input id="gender" type="hidden" readonly ng-model="arch.gender">
+		<input name="age" class="prop_int" id="age" type="hidden" readonly ng-model="arch.age">
+		<div class="panel panel-info">
+			<div class="panel-body radius_div">
+				<div class="col-xs-12">&nbsp;</div>
+				<div class="col-xs-10">
+					<strong>档案ID：</strong>{{hyper.archiveid}}&nbsp;&nbsp;<strong>姓名：</strong>	{{arch.fullname}}&nbsp;&nbsp;<strong>性别：</strong>{{arch.gender}}&nbsp;&nbsp;
+					<br/><br/>
+					<strong>年龄：</strong>{{arch.age}}
+					&nbsp;&nbsp;<strong>随访日期：</strong><input class="input_border" name="inquiredate" id="inquiredate" type="text" ng-model="hyper.inquiredate" hys-datebox required ng-change="setMyBookingdate()">
+					&nbsp;&nbsp;<strong>随访方式：</strong>
+					<select name="visitway" id="visitway"  ng-model="hyper.visitway" ng-options="item.id as item.text for item in dictVisitway"></select><span class="font_red">*</span>
+					<br/>
+				</div>
+				<div class="col-xs-2">
+					<br/>
+					  <a href='#/arch/hyperTable/{{hyper.archid}}&{{hyper.hypertensionvisitid}}' title='切换'>
+					  	<button type="button" class="btn btn-info btn-sm" >
+					  		<span class="glyphicon glyphicon-list" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;&nbsp;切&nbsp;换
+						</button>
+					  </a>
+				</div>
+				<div class="col-xs-12">&nbsp;</div>
+			</div>
+		</div>
+		&nbsp;
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<ul class="nav nav-pills">
+				  <li role="presentation" class="active" data="tz"><a href="">体征</a></li>
+				  <li role="presentation" id="xwhshfsn" data="xwhshfs"><a href="">行为生活方式</a></li>
+				  <li role="presentation" id="sfqkzjn" data="sfqkzj"><a href="">随访情况总结</a></li>
+				</ul>
+			</div>
+			<div class="panel-body show-div" style="border-color:#BDE9F1;">
+			    <div class="col-xs-12 cathetus_div" id="tz">
+					<div class="col-xs-12 form-inline">
+						<div class="col-xs-12"><label>检查测量:</label><button type="button" class="btn btn-link" ng-click="getHmsperson()">（获取检查数据）</button></div>
+						<div class="col-xs-12">
+							<div class="form-group">
+							    <label for="bpheigh">收缩压：</label>
+							    <input class="input_border_min" name="bpheigh" id="bpheigh" type="text" is-float size="5" ng-model="hyper.bpheigh" is-num maxlength="5">mmHg
+							</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<div class="form-group">
+							    <label for="bplow">舒张压：</label>
+			              		<input class="input_border_min" name="bplow" id="bplow" type="text" is-float size="5" ng-model="hyper.bplow" is-num maxlength="5">mmHg
+							</div>
+							<div class="form-group">
+								<button type="button" class="btn btn-link" id="getWindow" >（血压变化情况）</button>
+							</div>	
+						</div>
+						<div class="col-xs-12" style="height:5px;"></div> 
+						<div class="col-xs-12">
+							<div class="form-group">
+							    <label for="bodyheight">身高：</label>
+				                <input class="input_border_min" name="bodyheight" id="bodyheight" type="text" is-float size="5" ng-model="hyper.bodyheight" ng-change="calcBmi()" is-float maxlength="5">CM
+						        <font class="font_blue">*&nbsp;</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+							<div class="form-group">
+							    <label for="bodyweight">体重：</label>
+			              		<input class="input_border_min" name="bodyweight" id="bodyweight"  type="text" is-float size="5" ng-model="hyper.bodyweight" ng-change="calcBmi()" is-float maxlength="5">KG
+				          		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+							<div class="form-group">
+								<label for="targetweight">体重目标：</label>
+			              		&nbsp;{{arguments.targetweight}} KG&nbsp;<span style="color:red;">{{arguments.targetweightName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+							<div class="form-group">
+								<label for="bodydweight">下次随访体重目标：</label>
+			              		<input class="input_border_min" name="bodydweight" id="bodydweight"  type="text" is-float size="5" ng-model="hyper.bodydweight" ng-change="calcBmi()" is-float maxlength="5">KG
+			              		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+						</div>
+						<div class="col-xs-12" style="height:5px;"></div> 
+						<div class="col-xs-12">
+							<div class="form-group">
+							    <label for="bmi">体质指数：</label>
+				                <input name="bmi" id="bmi" type="text" readonly size="5" ng-model="hyper.bmi">
+						        <span>/</span>
+						        <input name="bmid" id="bmid" type="text" readonly size="5" ng-model="hyper.bmid">
+							</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</div>
+						<div class="col-xs-12" style="height:5px;"></div> 
+						<div class="col-xs-12">
+							<div class="form-group">
+							    <label for="heartrate">心率：</label>
+		                  		<input class="input_border_min" name="heartrate" id="heartrate" type="text" is-float size="5" is-float ng-model="hyper.heartrate">
+							</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</div>
+						<div class="col-xs-12" style="height:5px;"></div> 
+						<div class="col-xs-12">
+							<label>其他： </label><input class="input_border_min" name="signsothers" id="signsothers" type="text"  ng-model="hyper.signsothers" style="width:80%">
+						</div>
+						<div class="col-xs-12" style="height:5px;"></div> 
+						<div class="col-xs-12">
+							<label>随访有发现以下症状吗： </label>
+							<checkbox-mainsymptom id="mainsymptom" name="mainsymptom" ng-model="hyper.mainsymptom"></checkbox-mainsymptom>
+		        			<div ng-show="hyper.mainsymptom.indexOf('dis_hyper_10')>=0">
+								(其他症状： <input type="text" name="mainsymptom_other" id="mainsymptom_other" maxlength="100" ng-model="hyper.mainsymptom_other">)
+							</div>
+						</div>
+						<div class="col-xs-12" style="height:5px;"></div> 
+						<div class="col-xs-12" style="text-align:right;">	
+							<button type="button" class="btn btn-info btn-sm" aria-label="Left Align" ng-click="nextFunction('xwhshfs')">
+							  下 一 步&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+							</button>
+						</div>
+					</div>
+					<div class="col-xs-12" style="height:40px;">&nbsp;</div> 
+				</div> 
+				<div class="col-xs-12 cathetus_div" id="xwhshfs" style="display:none;">
+					<div class="col-xs-12 form-inline">
+						<div class="col-xs-12" style="height:5px;"></div> 
+						<div class="col-xs-12"><label>生活方式询问:</label></div>
+						<div class="col-xs-12">
+							<div class="form-group">
+							    <label for="smoking">日吸烟量：</label>
+                				<input class="input_border_min" name="smoking" id="smoking" type="text" is-float size="5" ng-model="hyper.smoking" ng-change="fyqkBmi()" is-num maxlength="4"><span>支</span>
+                				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+							<div class="form-group">
+							    <label for="smokingdd">日吸烟量目标：</label>
+			  					&nbsp;{{arguments.smokingdd}} 支&nbsp;<span style="color:red;">{{arguments.smokingddName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+							<div class="form-group">
+							    <label for="smokingd">下次日吸烟量目标：</label>
+			  					<input class="input_border_min" name="smokingd" id="smokingd" type="text" is-float size="5" ng-model="hyper.smokingd" is-num maxlength="4"><span>支</span>
+			  					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>	
+						</div>
+						<div class="col-xs-12" style="height:5px;"></div> 
+						<div class="col-xs-12">
+							<div class="form-group">
+							    <label for="drinkwine">日饮酒量：</label>
+				                <input class="input_border_min" name="drinkwine" id="drinkwine" type="text" is-float size="5" ng-model="hyper.drinkwine" ng-change="fyqkBmi()" is-num maxlength="4"><span>两 </span>
+				                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+							<div class="form-group">
+							    <label for="drinkwinedd">日饮酒量目标：</label>
+			  					&nbsp;{{arguments.drinkwinedd}} 两&nbsp;<span style="color:red;">{{arguments.drinkwineddName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+							<div class="form-group">
+								<label for="drinkwined">下次日饮酒量目标：</label>
+								<input class="input_border_min" name="drinkwined" id="drinkwined" type="text" is-float size="5" ng-model="hyper.drinkwined" is-num maxlength="4"><span>两 </span>
+							  	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+						</div>
+						<div class="col-xs-12" style="height:5px;"></div> 
+						<div class="col-xs-12">
+							<div class="form-group">
+							    <label for="food">摄盐情况：</label>
+                  				<radio-situation name="food" id="food" ng-model="hyper.food"></radio-situation>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+							<div class="form-group">
+							    <label for="saltdd">摄盐目标：</label>
+                  				&nbsp;<input type="text" id="syqka" data="" style="width:20px;border:none;background-color:#eef;color:#30708F;" readonly />
+                  				<input type="text" id="sysfdb" style="width:50px;border:none;background-color:#eef;color:red;" readonly />
+                  				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+							<div class="form-group">
+							    <label for="saltd">下次摄盐目标：</label>
+                  				<radio-situation-next name="saltd" id="saltd" ng-model="hyper.saltd"></radio-situation-next>
+                  				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+						</div>
+						<div class="col-xs-12" style="height:5px;"></div> 
+						<div class="col-xs-12">
+							<div class="form-group">
+							    <label for="sportsweekd">运动：</label>
+                  				<input class="input_border_min" name="sportsweek" id="sportsweek" type="text" is-float size="5" ng-model="hyper.sportsweek" ng-change="fyqkBmi()" is-num maxlength="4"> 
+						        	次/周
+				  				<input class="input_border_min" name="sportseach" id="sportseach" type="text" is-float size="5" ng-model="hyper.sportseach" ng-change="fyqkBmi()" is-num maxlength="4">分钟/次
+				  				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+							<div class="form-group">
+							    <label for="sportsweekdd">运动目标：</label>
+                  				&nbsp;{{arguments.sportsweekdd}} 次/周 {{arguments.sportsweekddd}} 分钟/次&nbsp;<span style="color:red;">{{arguments.sportsweekddName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+							<div class="form-group">
+							    <label for="sportsweekd">下次运动目标：</label>
+                  				<input class="input_border_min" name="sportsweekd" id="sportsweekd" type="text" is-float size="5" ng-model="hyper.sportsweekd" is-num maxlength="4"> 
+						        	次/周
+				  				<input class="input_border_min" name="sportseachd" id="sportseachd" type="text" is-float size="5" ng-model="hyper.sportseachd" is-num maxlength="4">分钟/次
+				  				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+						</div>
+						<div class="col-xs-12" style="height:5px;"></div> 
+						<div class="col-xs-12">
+							<label>心理调整： </label>
+							<radio-doctor-order name="doctororder" id="doctororder" ng-model="hyper.doctororder"></radio-doctor-order>
+						</div>
+						<div class="col-xs-12" style="height:5px;"></div> 
+						<div class="col-xs-12">
+							<label>服药依从性： </label>
+							<radio-usedrug name="usedrug" id="usedrug" ng-model="hyper.usedrug"></radio-usedrug>
+						</div>
+						<div class="col-xs-12" style="height:5px;"></div> 
+						<div class="col-xs-12">
+							<label>辅助检查： </label>
+							<input class="input_border_min" name="labexamine" id="labexamine" type="text"  ng-model="hyper.labexamine" style="width:80%">
+						</div>
+						<div class="col-xs-12" style="height:5px;"></div> 
+						<div class="col-xs-12" style="text-align:right;">	
+							<button type="button" class="btn btn-info btn-sm" aria-label="Left Align" ng-click="nextFunction('sfqkzj')">
+							  下 一 步&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+							</button>
+						</div>
+					</div>
+					<div class="col-xs-12" style="height:40px;">&nbsp;</div> 
+				</div>
+				<div class="col-xs-12 cathetus_div" id="sfqkzj" style="display:none;">
+					<div class="col-xs-12 form-inline" style="width:100%;" >
+						<label>测量血压：</label>{{hyper.bpheigh}} mmHg /{{hyper.bplow}} mmHg   <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上次测量血压：</label>{{arguments.scclxy}}<br/>
+						<label>随访症状：</label><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>上次随访症状：</label><span id="scsfzz"></span>&nbsp;&nbsp;&nbsp;&nbsp;<label>本次随访症状：</label><span id="bcsfzz"></span><br/>
+						<label>遵医行为：</label><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;体重<span style="color:red;">{{arguments.targetweightName}}</span><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日吸烟量<span style="color:red;">{{arguments.smokingddName}}</span><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日饮酒量<span style="color:red;">{{arguments.drinkwineddName}}</span><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;运动计划<span style="color:red;">{{arguments.sportsweekddName}}</span><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;摄盐<input type="text" id="yqsy" style="width:30px;border:none;background-color:#eef;color:red;" readonly />预期<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;结论：<span style="color:red;">{{arguments.yqjl}}</span><br/>
+						<label>服药情况：</label><span id="fyqk"></span><br/>
+						<label>本次随访处理措施：</label><radio-follow-measures name="controls" id="controls" ng-model="hyper.controls"></radio-follow-measures><br/>
+						<div ng-show="hyper.controls.indexOf('HR423_2')>=0 || hyper.controls.indexOf('HR423_3')>=0" class="dynamic_div_f" style="overflow-x:auto;">
+							<table style="min-width:1000px;width:98%;">
+								<tr style="background-color:silver;">
+									<td>用药名称：</td>
+									<td>用法：</td>
+									<td>用药频率/时间：</td>
+									<td>单次用量：</td>
+									<td>用药年限：</td>
+									<td>服药依从性：</td>
+									<td></td>
+								</tr>
+								<tr ng-repeat="item in hyper.druglist">
+									<td>{{item.drugsname}}</td>
+									<td>
+										<select class="form-control input-sm" type="text" ng-model="item.usage" disabled ng-show="item.usage.length>0"
+												ng-options="n.id as n.text for n in dictDrugUsage">
+										</select>
+									</td>
+									<td>
+										<select class="form-control input-sm" type="text" ng-model="item.frequency" disabled ng-show="item.frequency.length>0"
+												ng-options="n.id as n.text for n in dictDrugFrequency">
+										</select>
+									</td>
+									<td>{{item.dosage_no}}
+										<select class="form-control input-sm" type="text" ng-model="item.dosage" disabled ng-show="item.dosage.length>0"
+												ng-options="n.id as n.text for n in dictDrugDosage">
+										</select>
+								</td>
+									<td>{{item.druguse_no}}
+										<select class="form-control input-sm" type="text" ng-model="item.druguse" disabled ng-show="item.druguse.length>0"
+												ng-options="n.id as n.text for n in dictDrugRange">
+										</select>
+									</td>
+									<td>
+										<select class="form-control input-sm" type="text" ng-model="item.drugcompliance" disabled ng-show="item.drugcompliance.length>0"
+												ng-options="n.id as n.text for n in dictCompliance">
+										</select>
+								</td>
+									<td>
+										<button type="button" class="btn btn-default" ng-click="delDrug(item)">
+											<span class="glyphicon glyphicon-remove"></span>删除
+										</button>
+									</td>
+								</tr>
+									<tr>
+									<td>
+										<select class="form-control input-sm" type="text" ng-model="drug.drugsname" 
+												ng-options="item.text as item.text for item in dictDrugName">
+												<option value="">-请选择-</option>
+										</select>
+									</td>
+									<td>
+										<select class="form-control input-sm" type="text" ng-model="drug.usage" 
+												ng-options="item.id as item.text for item in dictDrugUsage">
+												<option value="">-请选择-</option>
+										</select>
+									</td>
+									<td>
+										<select class="form-control input-sm" type="text" ng-model="drug.frequency" 
+												ng-options="item.id as item.text for item in dictDrugFrequency">
+												<option value="">-请选择-</option>
+										</select>
+									</td>
+									<td>
+										<input class="form-control input-sm" style="width:40px;" type="text" is-float size="5" ng-model="drug.dosage_no" is-float>
+										<select class="form-control input-sm" type="text" ng-model="drug.dosage" 
+												ng-options="item.id as item.text for item in dictDrugDosage">
+												<option value="">-请选择-</option>
+										</select>
+									</td>
+									<td>
+										<input class="form-control input-sm" style="width:40px;" type="text" is-float size="5" ng-model="drug.druguse_no" is-num>
+										<select class="form-control input-sm" type="text" ng-model="drug.druguse" 
+												ng-options="item.id as item.text for item in dictDrugRange">
+												<option value="">-请选择-</option>
+										</select>
+									</td>
+									<td>
+										<select class="form-control input-sm" type="text" ng-model="drug.drugcompliance" 
+												ng-options="item.id as item.text for item in dictCompliance">
+												<option value="">-请选择--</option>
+										</select>
+									</td>
+									<td>
+										<button type="button" class="btn btn-default"
+										  ng-click="addDrug()">
+											<span class="glyphicon glyphicon-ok-circle"></span>增加
+										</button>
+									</td>
+								</tr>
+							 </table>
+						</div>
+						<div ng-show="hyper.controls.indexOf('HR423_4')>=0 || hyper.controls.indexOf('HR423_5')>=0">
+							转诊机构及科别：<input class="input_border_min" style="width:120px;">
+						</div>
+						<div class="col-xs-12" style="height:5px;"></div> 
+							<div class="form-group">
+							    <label for="inquirer">随访医生：</label>
+                  				<select name="inquirer" id="inquirer" ng-model="hyper.inquirer" required ng-options="item.id as item.text for item in dictDoctor">
+		    						<option value="">--请选择--</option>
+		    					</select> 
+				  				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+							<div class="form-group">
+							    <label for="bookingdate">下次随访时间：</label>
+                  				<input name="bookingdate"  id="bookingdate" type="text" ng-model="hyper.bookingdate" hys-datebox required style="width:120px">
+				  				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+							<div class="form-group">
+							    <label for="sportsweekd">填表医生：</label>
+				                <select name="cruser" id="cruser" ng-model="hyper.cruser" required ng-options="item.id as item.text for item in dictDoctor">
+						    			<option value="">--请选择--</option>
+						    	</select>
+				  				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+					</div>
+					<div class="col-xs-12" style="height:5px;"></div> 
+					<div class="col-xs-12" style="text-align:right;">
+						<button ng-show="!hyper.isOld" id="btnSave" class="btn btn-default" ng-click="save()">
+							<span class="glyphicon glyphicon-ok"></span>&nbsp;保存
+						</button>
+					</div>
+					<div class="col-xs-12" style="height:10px;"></div> 
+				</div>
+			</div>
+		</div>
+	</form>
+
+</div>
+<div id="detail">
+	<div class="tit"><label>&nbsp;血压变化情况</label><i class="close">x</i></div>
+	<div id="container" style="width:490px; height: 400px; margin: 0 auto"></div>
+</div> 
+
+</body>
+<script>
+	$('.dynamic_div_f').width($('#sfqkzj').width()-10);
+	$(window).resize(function() {
+		$('.dynamic_div_f').width($('#sfqkzj').width()-10);
+	});
+	 
+</script>
+
+<object id = "FTP_OCX" classid="clsid:43559281-DABD-11D0-9E15-444553540000" codebase="hms/hys.cab#version=1,0,0,1" width=100% height=100%>
+</object>
+</html>

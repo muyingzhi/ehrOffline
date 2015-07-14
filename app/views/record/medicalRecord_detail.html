@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">
+<style type="text/css">
+.boy{
+background-image:url(../images/boy.jpg)}
+.girl{
+background-image:url(../images/girl.jpg)}
+input.ng-invalid {
+	background-color: pink;
+}
+select.ng-invalid {
+	background-color: pink;
+}
+select-Arch-Status.ng-invalid {
+	background-color: pink;
+}
+div{
+	padding: 3px;
+}
+.form-control{
+	width: 150px;
+}
+</style>
+</head>
+<body>
+<form name="frmAction" onsubmit="return false;">
+	<input type="hidden" name="namepinyincode" id="namepinyincode" ng-model="record.namepinyincode">
+
+	<input type="hidden" id="link_from" name="link_from" ng-model="record.link_from"/>
+	<input type="hidden" name="id" id="objectid" ng-model="record.objectid">
+	<input type="hidden" id="extField1" name="extField1" ng-model="record.extField1">
+	<input type="hidden" id="submitflag" name="submitflag"  ng-model="record.submitflag">
+	<input type="hidden" id="arch_builddate_edit" name="arch_builddate_edit" ng-model="record.arch_builddate_edit">
+	<input type="hidden" id="insuranceFlag" name="insuranceFlag" ng-model="record.insuranceFlag">
+	
+	<div class="col-xs-12 table_head">基本信息</div>
+	<div class="col-xs-12" style="border: 1px;">
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">姓名<font class="font_red">*</font>：</span>
+			<span class="data_row_val">
+				<input type="text" style="height:30px;" id="fullname" name="fullname" ng-model="record.fullname" required maxlength="20" class="form-control input-sm ng-pristine ng-valid">
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">性别<font class="font_red">*</font>：</span>
+			<span class="data_row_val">
+				<select name="gender" id="gender" ng-model="record.gender"
+					ng-options="item.id as item.text for item in dictGender" required class="form-control input-sm ng-pristine ng-valid" >
+					<option value="">--请选择--</option>
+				</select>
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">出生日期<font class="font_red">*</font>：</span>
+			<span class="data_row_val">
+				<input type="text" hys-datebox id="birthday" name="birthday" ng-model="record.birthday" required style="width: 145px;height:30px;" class="form-control input-sm ng-pristine ng-valid" >
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">身份证号：</span>
+			<span class="data_row_val">
+				<input ng-change="calcBir(record.identityno)" style="height:30px;" id="identityno" name="identityno" type="text" ng-model="record.identityno" maxlength="18" class="form-control input-sm ng-pristine ng-valid" >
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">现住址 ：</span>
+			<span class="data_row_val">
+				<input type="text" name="addr" id="addr" style="height:30px;" ng-model="record.addr" maxlength="20" class="form-control input-sm ng-pristine ng-valid" >
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">本人电话：</span>
+			<span class="data_row_val">
+				<input name="tel" id="tel" type="text" ng-model="record.tel" maxlength="20" class="form-control input-sm ng-pristine ng-valid" >
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">职业：</span>
+			<span class="data_row_val">
+				<select id="workcode" name="workcode" ng-model="record.workcode"
+					ng-options="item.id as item.text for item in dictVocation" class="form-control input-sm ng-pristine ng-valid" >
+					<option value="">--请选择--</option>
+				</select>
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">家长姓名：</span>
+			<span class="data_row_val">
+				<input name="jzname" id="jzname" type="text" ng-model="record.jzname" maxlength="20" class="form-control input-sm ng-pristine ng-valid" >
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">医生<font class="font_red">*</font>：</span>
+			<span class="data_row_val">
+				<select name="doctor" ng-model="record.doctor"	
+					ng-options="item.id as item.text for item in dictDoctor" required class="form-control input-sm ng-pristine ng-valid" > 
+					<option value="">--请选择--</option>
+				</select>
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">发病日期：</span>
+			<span class="data_row_val">
+				<input type="text" hys-datebox name="diatime" id="diatime" ng-model="record.diatime" required style="width: 145px;height:30px; " class="form-control input-sm ng-pristine ng-valid" >			
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">就诊类型：</span>
+			<span class="data_row_val">
+				<select name="clinictype" id="clinictype" ng-model="record.clinictype"
+					ng-options="item.id as item.text for item in dictClinictype" required class="form-control input-sm ng-pristine ng-valid" >
+				</select>
+			</span>
+		</div>
+	</div>
+	
+	<div class="col-xs-12 table_head">主观资料</div>
+	<div class="col-xs-12">
+		<textarea style="width:100%;height:60px"  id="datas" name="datas" type="text" ng-model="record.datas" maxlength="200">
+		</textarea>
+	</div>
+	<div class="col-xs-12 table_head">客观资料</div>
+	<div class="col-xs-12">
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">体温：</span>
+			<span class="data_row_val">
+				<input type="text" name="temperature" id="temperature" ng-model="record.temperature" maxlength="5" class="form-control input-sm ng-pristine ng-valid" />
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">脉搏：</span>
+			<span class="data_row_val">
+				<input type="number" name="maibo" id="maibo" ng-model="record.maibo" maxlength="3" class="form-control input-sm ng-pristine ng-valid" />
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">收缩压：</span>
+			<span class="data_row_val">
+				<input type="number" name="blood_ss" id="blood_ss" ng-model="record.blood_ss" maxlength="3" class="form-control input-sm ng-pristine ng-valid" />
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">舒张压：</span>
+			<span class="data_row_val">
+				<input type="number" name="blood_sz" id="blood_sz" ng-model="record.blood_sz" maxlength="3" class="form-control input-sm ng-pristine ng-valid" />
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">心率：</span>
+			<span class="data_row_val">
+				<input type="number" name="xinlv" id="xinlv" ng-model="record.xinlv" maxlength="3" class="form-control input-sm ng-pristine ng-valid" />
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">空腹血糖：</span>
+			<span class="data_row_val">
+				<input type="number" name="fbg" id="fbg" ng-model="record.fbg" maxlength="5" class="form-control input-sm ng-pristine ng-valid" />
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">随机血糖：</span>
+			<span class="data_row_val">
+				<input type="number" name="glycemic" id="glycemic" ng-model="record.glycemic" maxlength="5" class="form-control input-sm ng-pristine ng-valid" />
+			</span>
+		</div>
+	</div>
+	<div class="col-xs-12 table_head">体格检查</div>
+	<div class="col-xs-12">
+		<textarea style="width:100%;height:60px"  id="externaldata" name="externaldata" type="text" ng-model="record.externaldata" maxlength="200">
+		</textarea>
+	</div>
+	<div class="col-xs-12 table_head">诊断</div>
+	<div class="col-xs-12">
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">疾病名称<font class="font_red">*</font>：</span>
+			<span class="data_row_val">
+				<input type="text" name="diseasename" id="diseasename" ng-model="record.diseasename" data-provide="typeahead" maxlength="30" class="form-control input-sm ng-pristine ng-valid" >
+			</span>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+			<span class="data_row_tip">疾病编码<font class="font_red">*</font>：</span>
+			<span class="data_row_val">
+				<input type="text" name="diagnoses" id="diagnoses" ng-model="record.diagnoses" maxlength="10" class="form-control input-sm ng-pristine ng-valid" readonly />
+			</span>
+		</div>
+	</div>
+	<div class="col-xs-12 table_head">常规诊断</div>
+	<div class="col-xs-12">
+		<textarea style="width:100%;height:60px"  id="diagnosestext" name="diagnosestext" type="text" ng-model="record.diagnosestext" maxlength="200">
+		</textarea>
+	</div>
+	<div class="div_options" colspan="3">
+			<button type="button" class="btn btn-default"
+			  ng-click="saveArch()">
+				<span class="glyphicon glyphicon-ok"></span>保存
+			</button>
+	</div>
+</form>
+
+</body>
+</html>

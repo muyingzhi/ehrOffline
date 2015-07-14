@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">
+<style>
+.marginTop{
+margin-top:15px;
+margin-left:15px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="page-header">
+	<h3>&nbsp;<span class="glyphicon glyphicon-retweet"></span>&nbsp;门诊下载</h3>
+</div>
+<div class="jumbotron">
+	<h1>注意!</h1>
+	<p>门诊下载，将根据当前登录人管辖的机构下载资源。</p>
+	<p>下载开始前，请确保本地数据已经同步完成；否则将删除原有本地数据。</p>
+</div>
+
+<form class="form-inline" role="form" ng-show="!loginFlag">
+  <div class="form-group">
+  	<label for="userid">用户：</label>
+    <input type="text" class="form-control" style="width:80%" placeholder="用户名" id="userid" ng-model="soap.body.userid">
+  </div>
+  <div class="form-group">
+    <label for="password">密码：</label>
+    <input type="password" class="form-control" style="width:80%" placeholder="密码" id="password" ng-model="soap.body.password">
+  </div>
+  <button type="button" class="btn btn-default" ng-click="soapLogin()">登录</button>
+</form>
+
+
+
+<form class="form-inline" role="form" >
+  <div class="form-group" ng-show="loginFlag&&!offPwdFlag">
+  	<label for="userpwd" class="col-sm-3 control-label" style="height:34px;line-height:34px;">设置离线登陆密码:</label>
+    <div class="col-sm-3">
+  		<input id="userpwd" class="form-control" placeholder="离线随访用户登录密码" ng-model="soap.body.userpwd">
+  	</div>
+  	<div class="col-sm-3">
+  		<input id="userpwd2" class="form-control" placeholder="确认输入登录密码" ng-model="soap.body.userpwd2">
+  	</div>
+  	<div class="col-sm-3">
+  		<button type="button" class="btn btn-default" ng-click="saveOffPwd()">保存</button>
+  	</div>
+  </div>
+</form>
+<div >&nbsp;</div>
+<div class="alert alert-info" ng-show="message">
+	<div id="divNotic" >
+			提示：{{message}}
+	</div>
+</div>
+
+<div class="alert alert-info" ng-show="detailMsgs.length>0">
+	<span ng-repeat="msg in detailMsgs">{{msg+"||"}}</span>
+</div>
+</div>
+
+</body>
+</html>

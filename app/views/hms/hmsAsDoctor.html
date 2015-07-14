@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html ><!--  manifest="ehrOffLine.manifest"  -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<div class="page-header">
+	<h3>&nbsp;&nbsp;<span class="glyphicon glyphicon-inbox"></span>&nbsp;一体机看病</h3>
+</div>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr><th cols="2">第一步：检查结果</th></tr>
+		</thead>
+		<tbody>
+			<tr><td>心电</td><td>窦性心动过速</td></tr>
+			<tr><td>血氧饱和度SaO2</td><td>血氧饱和度增高</td></tr>
+			<tr><td>脉率</td><td>脉率增快</td></tr>
+			<tr><td>血压</td><td>血压增高</td></tr>
+			<tr><td>体温</td><td>中等度热</td></tr>
+			<tr><td>血糖</td><td>血糖升高</td></tr>
+			<tr><td>尿常规</td>
+				<td>1）尿比重增高;<br>
+					2）尿潜血阴性;<br>
+					3）尿白细胞阴性;<br>
+					4）尿偏碱;<br>
+					5）尿胆原阴性;<br>
+					6）尿蛋白阴性;<br>
+					7）酮体（KET）尿酮体阴性;<br>
+					8）亚硝酸盐（NIT）阴性</br>
+					9）尿糖（GLU）阴性</br>
+					10）胆红素（BIL）阳性</td>
+			</tr>
+		</tbody>
+	</table>
+	<button onclick="ftpConn()">下一步</button>
+</div>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr><th cols="2">第二步：结果对应疾病</th></tr>
+		</thead>
+		<tbody>
+			<tr><td>大叶性肺炎</td>
+				<td>
+					<ul class="list-group">
+						<li class="list-group-item">高热</li>
+						<li class="list-group-item">
+							<span class="badge glyphicon glyphicon-star">&nbsp;</span>窦性心动过速</li>
+						<li class="list-group-item">血氧饱和度降低</li>
+						<li class="list-group-item">
+							<span class="badge glyphicon glyphicon-star">&nbsp;</span>脉率增快</li>
+					</ul>
+				</td>
+				<td><button type="button" class="btn btn-warning btn-lg">
+					<span class="glyphicon glyphicon-hand-right"></span>疑似问诊
+					</button>
+				</td>
+			</tr>
+			<tr><td>急性肾盂肾炎</td>
+				<td>
+					<ul class="list-group">
+						<li class="list-group-item">高热</li>
+						<li class="list-group-item">
+							<span class="badge glyphicon glyphicon-star">&nbsp;</span>窦性心动过速</li>
+						<li class="list-group-item">
+							<span class="badge glyphicon glyphicon-star">&nbsp;</span>脉率增快</li>
+						<li class="list-group-item">
+							<span class="badge glyphicon glyphicon-star">&nbsp;</span>尿比重增高</li>
+						<li class="list-group-item">尿潜血阳性</li>
+						<li class="list-group-item">尿白细胞阳性</li>
+						<li class="list-group-item">尿蛋白阳性</li>
+					</ul>
+				</td>
+				<td><button type="button" class="btn btn-default btn-lg">
+					<span class="glyphicon glyphicon-hand-right"></span>疑似问诊
+					</button>
+				</td>
+			</tr>
+			<tr><td>肺型血吸虫病</td>
+				<td>
+					<ul class="list-group">
+						<li class="list-group-item">
+							<span class="badge glyphicon glyphicon-star">&nbsp;</span>中等度热</li>
+						<li class="list-group-item">
+							<span class="badge glyphicon glyphicon-star">&nbsp;</span>脉率增快</li>
+						<li class="list-group-item">血氧饱和度降低</li>
+						<li class="list-group-item">尿蛋白阳性</li>
+					</ul>
+				</td>
+				<td><button type="button" class="btn btn-default btn-lg">
+					<span class="glyphicon glyphicon-hand-right"></span>疑似问诊
+					</button>
+				</td>
+			</tr>
+			<tr><td>冠心病心肌梗死</td>
+				<td><li>低热</li>
+					<li>室性期前收缩</li>
+					<li>左心室肥厚</li>
+					<li>心肌梗死（心电图）</li>
+					<li>血压降低</li>
+					<li><span class="glyphicon glyphicon-star">血糖升高</span></li>
+				</td>
+				<td><button type="button" class="btn btn-default btn-lg">
+					<span class="glyphicon glyphicon-hand-right"></span>疑似问诊
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div class="panel panel-warning">
+		<div class="panel-heading">
+    		<h3 class="panel-title">大叶性肺炎</h3>
+		</div>
+		<div class="panel-body">
+		<li>1、	问诊：<br>
+			发病急骤（<select width="100"> ）
+			<option>急</option>
+			<option>缓</option>
+			</select>，
+			胸痛（ <select width="100">
+			<option>痛</option>
+			<option>不痛</option>
+			</select>），
+			咳嗽，深呼吸加剧（<select width="100">
+			<option>加剧</option>
+			<option>不加剧</option>
+			</select> ），
+			咳铁锈色痰（<select width="100">
+			<option>是</option>
+			<option>不是</option>
+			</select> ）
+		</li>
+		<li>2、体检：<br>
+			急性热病容（ ），<br>
+			触诊语颤增强（ ）<br>
+			听诊呼吸音减弱（ ），<br>
+			可闻及支气管呼吸音（ ）</li>
+
+		</div>
+	</div>
+
+	<div class="panel panel-success">
+		<div class="panel-heading">
+    		<h3 class="panel-title">初步诊断和建议</h3>
+		</div>
+		<div class="panel-body">
+		<li>1、	你得的病初步考虑为大叶性肺炎，也叫肺炎链球菌肺炎，这个病一般得病急，病情较重。
+		</li>
+		<li>2、	为确切诊断建议你尽快补充进行胸部X线检查</li>
+		<li>3、	如果有条件，建议住院治疗</li>
+		</div>
+	</div>
+</div>
+</body>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+<title>Insert title here</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="rows">
+	<div class="col-xs-12 table_head">预防接种卡</div>
+	<div class="col-xs-12" style="border-bottom:1px dashed #ccc;">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">卡片编码：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.inocucardseries" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">档案编号：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.archid" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">姓名：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.fullname" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">性别：</span>
+			<span class="data_row_val">
+				<select class="form-control" ng-model="data.gender" ng-options="item.id as item.text for item in gender"></select>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">出生日期：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.birthday" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12">&nbsp;</div>
+	</div>
+	<div class="col-xs-12" style="border-bottom:1px dashed #ccc;">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">监护人姓名：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.guardian" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">与儿童关系：</span>
+			<span class="data_row_val">
+				<select class="form-control" ng-model="data.relation">
+					<option value=""></option>
+					<option value="父亲">父亲</option>
+					<option value="母亲">母亲</option>
+					<option value="其它关系">其它关系</option>
+				</select>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">监护人联系电话：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.tel" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">家庭现住址：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.addr" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">户籍地址：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.hukou_addr" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12">&nbsp;</div>
+	</div>	
+	<div class="col-xs-12" style="border-bottom:1px dashed #ccc;">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">迁入时间：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.settletime" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">迁出时间：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.moveoutDate" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">迁出原因：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.moveoutReason" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12">&nbsp;</div>
+	</div>	
+	<div class="col-xs-12" style="border-bottom:1px dashed #ccc;">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">疫苗异常反应史：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.item1" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">接种禁忌：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.item2" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">传染病史：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.item3" style="margin-top:5px;" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12">&nbsp;</div>
+	</div>	
+	<div class="col-xs-12" >
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">建卡日期：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.buildDate" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">建卡人：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.buildDoctor" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">建卡机构：</span>
+			<span class="data_row_val">
+				<select class="form-control" ng-model="data.cricpcode" ng-options="item.id as item.text for item in dictTgov"></select>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">管理机构：</span>
+			<span class="data_row_val">
+				<select class="form-control" ng-model="data.icpcode" ng-options="item.id as item.text for item in dictTgov"></select>
+			</span>
+		</div>
+	</div>	
+</div>
+
+</body>
+</html>

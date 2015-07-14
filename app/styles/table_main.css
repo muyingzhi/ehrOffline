@@ -1,0 +1,103 @@
+@CHARSET "UTF-8";
+
+.table_main{
+	border: none;
+	border-collapse:collapse; 
+}
+
+.table_main td{
+	border:#CDC3D9 dotted 1px;
+	font-size: 9pt;
+	padding-top: 1px;
+	padding-right: 5px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	height:20px;
+}
+
+.table_head{	
+	text-align : center;
+	background-color : #F1E6FF;
+	height:25px;
+	font-weight:bold;
+	border: 1px #CCCCCC solid;
+}
+
+.data_row_tip{
+	white-space: nowrap;
+	text-align: right;
+	width: 100px;
+	border: blue solid 0px;
+	display:-moz-inline-box; 
+	display: inline-block; 
+}
+.data_row_tip_max{
+	white-space: nowrap;
+	text-align: left;
+	width: 120px;
+	border: blue solid 0px;
+	display:-moz-inline-box; 
+	display: inline-block;
+}
+.data_row_val_max, .data_multi_row_val_max{
+	width: 120px;
+	border: cyan solid 0px;
+	text-align: left;
+	display:-moz-inline-box; 
+	display: inline-block; 
+	height:32px;
+}
+.data_row_val, .data_multi_row_val{
+	width: 120px;
+	border: cyan solid 0px;
+	text-align: left;
+	display:-moz-inline-box; 
+	display: inline-block; 
+}
+.div_options{
+	padding: 8px;
+	background: #f4f4f4;
+	text-align: center;
+}
+
+.font_red{
+	font-weight:bold;
+	color: red;
+	font-size: 10pt;
+	padding-left: 5px;
+}
+.font_blue{
+	font-weight:bold;
+	color: blue;
+	font-size: 10pt;
+	padding-left: 5px;
+}
+input[readonly]{
+	background-color:#eef;
+	border: #eef solid 2px;
+}
+.question td{
+	font-size:12pt;
+}
+.question:hover{
+	background-color:#ccf;
+	font-size:16pt;
+}
+#detail{	
+	position:absolute;
+	width:500px;
+	border:1px solid #ccc;
+	background:#efefef; 
+	display:none;
+}
+#detail .tit{ 
+	background:#E6EFFF; 
+	display:block; 
+	height:25px; 
+	cursor:move;
+}
+#detail .tit i{ 
+	float:right; 
+	line-height:25px; 
+	padding:0 8px;
+}

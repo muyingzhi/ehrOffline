@@ -1,0 +1,42 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1><span class="glyphicon glyphicon-download"></span>离线应用更新</h1>
+	<table class="table table-striped table-bordered" >
+	<tr><th>&nbsp;</th><th></th></tr>
+	<tr ng-if="online" >
+		<td><input type="checkbox" checked></td>
+		<td>在线</td>
+	</tr>
+	<tr>
+		<td><input type="checkbox" value="0"></td>
+		<td>无缓存</td>
+	</tr>
+	<tr>
+		<td><input type="checkbox" value="1"></td>
+		<td>闲置</td>
+	</tr>
+	<tr>
+		<td><input type="checkbox" value="2"></td>
+		<td>检查中</td>
+	</tr>
+	<tr>
+		<td><input type="checkbox" value="3"></td>
+		<td>下载中</td>
+	</tr>
+	<tr>
+		<td><input type="checkbox" value="4"></td>
+		<td>更新完成</td>
+	</tr>
+	<tr>
+		<td><input type="checkbox" value="5"></td>
+		<td>废弃</td>
+	</tr>
+	</table>
+	<button ng-click="updateCache()">升级</button>
+</body>
+</html>

@@ -1,0 +1,2432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Insert title here</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">
+<style type="text/css">
+.toggleDiv{
+	cursor: pointer;
+	color:blue;
+	float:right;
+}
+input.ng-invalid,select.ng-invalid {
+	background-color: pink;
+}
+.height-div{
+	height:34px;
+	line-height:34px;
+}
+.title_div{
+	height:30px;
+	line-height:30px;
+	font-weight:bold;
+	background-color:#F1E6FF;
+	border:1px #CCCCCC solid;
+	border-top:solid #fff;
+}
+.fonts_red{
+	color:red;
+	font-size:10pt;
+	font-weight:bold;
+}
+.form_td_left{
+	height:34px;
+	line-height:34px;
+	width:100px;
+}
+.form_td_center{
+	height:34px;
+	line-height:34px;
+	min-width:100px;
+}
+.form_td_right{
+	height:34px;
+	line-height:34px;
+	min-width:100px;
+}
+.padding_div{
+	padding:0;
+}
+.boder_bottom{
+	border-bottom:1px dashed #CCC;
+}
+.boder_left_bottom{
+	border-left:1px dashed #CCC;
+	border-bottom:1px dashed #CCC;
+}
+</style>
+</head>
+<body>
+	
+	<form style="margin-top:0px;" class="form-inline" name="frmAction" id="frmAction" onsubmit="return false;" action="./hypertensionvisit_addedit.do" method="post">
+		<input name="id" id="id" type="hidden" ng-model="checka.id">
+		<input name="icpcode" type="hidden" ng-model="checka.icpcode">
+				
+		<div class="col-xs-12 title_div" >
+			<div class="toggleDiv" ng-click="hide()">【全部收缩】</div>
+			<div class="toggleDiv" ng-click="show('all')">【全部展开】</div>
+		</div>
+		<div class="form-group col-xs-12">
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 padding_div">
+				<div class="col-sm-5 height-div">档案ID</div>
+				<div class="col-sm-7">
+					<input class="form-control input-sm" name="archiveid" id="archiveid"  readonly  ng-model="checka.archiveid">
+					<input name="archid" id="archid" type="hidden" ng-model="checka.arch_id">
+				</div>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 padding_div">
+				<div class="col-sm-5 height-div">姓名</div>
+				<div class="col-sm-7">
+					<input class="form-control input-sm prop_string" id="fullname"  readonly ng-model="arch.fullname">
+				</div>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 padding_div">
+				<div class="col-sm-5 height-div">体检日期<span class="font_red">*</span></div>
+				<div class="col-sm-7">
+					<input style="width:100%;height:32px;border:1px solid #cccccc;line-height:1.428571429;" name="record_date" id="record_date"  hys-datebox ng-model="checka.record_date" required>
+				</div>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 padding_div">
+				<div class="col-sm-5 height-div">责任医生<span class="font_red">*</span></div>
+				<div class="col-sm-7" >
+					<select class="form-control input-sm" style="width:100%;" name="duty_doctor" id="duty_doctor" ng-model="checka.duty_doctor" ng-options="item.id as item.text for item in dictDoctor" required>
+						<option value="">--请选择--</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 padding_div">
+				<div class="col-sm-5 height-div">填表医生<span class="font_red">*</span></div>
+				<div class="col-sm-7" >
+					<select class="form-control input-sm" style="width:100%;" name="cruser" id="cruser" ng-model="checka.cruser" ng-options="item.id as item.text for item in dictDoctor" required>
+						<option value="">--请选择--</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 title_div">
+			<div class="col-xs-10" style="text-align:center;">症状 一般情况</div>
+			<div class="col-xs-2" style="text-align:left;">
+				<div class="toggleDiv" ng-click="show('1')" ng-show="toggle.toggleText.indexOf('hide_1')>=0" >【展开】</div>
+				<div class="toggleDiv" ng-click="hide()" ng-show="toggle.toggleText.indexOf('show_1')>=0" >【收缩】</div>
+			</div>
+		</div>
+		<div class="form-group col-xs-12" ng-show="toggle.toggleText.indexOf('show_1')>=0">
+			<table width="100%">
+				<tr>
+					<td width="100px" class="boder_bottom">症状：</td>
+					<td class="boder_left_bottom">
+						<checkbox-mainsymptom-checka id="symptom" name="symptom" ng-model="checka.symptom"></checkbox-mainsymptom-checka>
+						<div style="float:right;" ng-show="checka.symptom.indexOf('HR415_25')>=0">&nbsp;&nbsp;
+							(其他症状：<input type="text" name="symptom_other" id="symptom_other" maxlength="100" ng-model="checka.mainsymptom_other">)
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="boder_bottom">一般状况：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">体温：</td>
+										<td class="form_td_center"><input class="form-control input-sm" id="heat" name="heat" type="text" size="5" ng-model="checka.heat" is-float></td>
+										<td class="form_td_right">(℃)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">脉率：</td>
+										<td class="form_td_center"><input class="form-control input-sm" id="cardiotach_ometer" name="cardiotach_ometer" type="text" size="5" maxlength="20" ng-model="checka.cardiotach_ometer" is-num></td>
+										<td class="form_td_right">(次/分钟)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">呼吸频率：</td>
+										<td class="form_td_center"><input class="form-control input-sm" id="breath_count" name="breath_count" type="text" size="5" maxlength="6" ng-model="checka.breath_count" is-num></td>
+										<td class="form_td_right">(次/分钟)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">身高：</td>
+										<td class="form_td_center"><input class="form-control input-sm" id="height" name="height" type="text" size="5" ng-model="checka.height" ng-change="calcBmi()" is-float></td>
+										<td class="form_td_right">(cm)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">体重：</td>
+										<td class="form_td_center"><input class="form-control input-sm" id="weight" name="weight" type="text" size="5" ng-model="checka.weight" ng-change="calcBmi()" is-float></td>
+										<td class="form_td_right">(kg)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">体质指数：</td>
+										<td class="form_td_center"><input class="form-control input-sm" id="bmi" name="bmi" type="text" size="5" ng-model="checka.bmi" readonly></td>
+										<td class="form_td_right"></td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">腰围：</td>
+										<td class="form_td_center"><input class="form-control input-sm" id="yaowei" name="yaowei" type="text" size="5" ng-model="checka.yaowei" ng-change="calcYtb()" is-float maxlength="6"></td>
+										<td class="form_td_right">(cm)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">臀围：</td>
+										<td class="form_td_center"><input class="form-control input-sm" id="tunwei" name="tunwei" type="text" size="5" ng-model="checka.tunwei" ng-change="calcYtb()" is-float maxlength="6"></td>
+										<td class="form_td_right">(cm)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">腰臀围比值：</td>
+										<td class="form_td_center"><input class="form-control input-sm" id="ytb" name="ytb" type="text" size="5" ng-model="checka.ytb" readonly></td>
+										<td class="form_td_right"></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left"><font class="fonts_red">左侧</font>收缩压：</td>
+										<td class="form_td_center">
+											<table style="width:100%">
+												<tr>
+													<td><input class="form-control input-sm" id="blood_lss" name="blood_lss" type="text" size="5" maxlength="6" ng-model="checka.blood_lss" is-num></td>
+													<td style="width:40px;">(mmHg)</td>
+												</tr>
+											</table>
+										</td>
+										<td class="form_td_right">正常范围:90~139</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left"><font class="fonts_red">左侧</font>舒张压：</td>
+										<td class="form_td_center">
+											<table style="width:100%">
+												<tr>
+													<td><input class="form-control input-sm" id="blood_lsz" name="blood_lsz" type="text" size="5" maxlength="6" ng-model="checka.blood_lsz" is-num></td>
+													<td style="width:40px;">(mmHg)</td>
+												</tr>
+											</table>
+										</td>
+										<td class="form_td_right">正常范围:60~89</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left"><font class="fonts_red">右侧</font>收缩压：</td>
+										<td class="form_td_center">
+											<table style="width:100%">
+												<tr>
+													<td><input class="form-control input-sm" id="blood_rss" name="blood_rss" type="text" size="5" ng-model="checka.blood_rss" is-num maxlength="6"></td>
+													<td style="width:40px;">(mmHg)</td>
+												</tr>
+											</table>
+										</td>
+										<td class="form_td_right">正常范围:90~139</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left"><font class="fonts_red">右侧</font>舒张压：</td>
+										<td class="form_td_center">
+											<table style="width:100%">
+												<tr>
+													<td><input class="form-control input-sm" id="blood_rsz" name="blood_rsz" type="text" size="5" ng-model="checka.blood_rsz" is-num maxlength="6"></td>
+													<td style="width:40px;">(mmHg)</td>
+												</tr>
+											</table>
+										</td>
+										<td class="form_td_right">正常范围:60~89</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!-- -----------------------------------------------------生活方式、器脏功能--------------------------------------------- -->
+	   	<div class="col-xs-12 title_div">
+			<div class="col-xs-10" style="text-align:center;">生活方式、器脏功能</div>
+			<div class="col-xs-2" style="text-align:left;">
+				<div class="toggleDiv" ng-click="show('2')" ng-show="toggle.toggleText.indexOf('hide_2')>=0" >【展开】</div>
+				<div class="toggleDiv" ng-click="hide()" ng-show="toggle.toggleText.indexOf('show_2')>=0" >【收缩】</div>
+			</div>
+		</div>
+		<div id="shfs_div" class="form-group col-xs-12" ng-show="toggle.toggleText.indexOf('show_2')>=0">
+			<table width="100%">
+				<tr>
+					<td width="100" rowspan="5"  class="boder_bottom">生活方式：</td>
+					<td width="80" class="boder_left_bottom">
+                    	体育锻炼：
+					</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">锻炼频率：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%;" name="exercise_frequency" id="exercise_frequency" ng-model="checka.exercise_frequency" ng-options="item.id as item.text for item in dictExerciseFrequency">
+								    		</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" id="exercise_timeslice_id" ng-show="checka.exercise_frequency.indexOf('HR409_4')<0" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">每次锻炼时间：</td>
+										<td class="form_td_center">
+                                        	<input class="form-control input-sm" id="exercise_timeslice" name="exercise_timeslice" type="text" size="5" ng-model="checka.exercise_timeslice" is-num maxlength="10">
+                                        </td>
+										<td class="form_td_right">(分钟)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" id="persisttime_id" ng-show="checka.exercise_frequency.indexOf('HR409_4')<0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">坚持锻炼时间：</td>
+										<td class="form_td_center">
+                                        <input class="form-control input-sm" id="persisttime" name="persisttime" type="text" size="5" ng-model="checka.persisttime" is-float maxlength="6">
+                                        </td>
+										<td class="form_td_right">(年)</td>
+									</tr>
+								</table>
+							</div>
+                    	</div>
+                        <div class="col-xs-12 padding_div" style="padding-left:2px;" id="exercisemethod" ng-show="checka.exercise_frequency.indexOf('HR409_4')<0" >
+							<div class="col-xs-12 col-sm-12 col-md-6 padding_div" id="persisttime_id" ng-show="checka.exercise_frequency.indexOf('HR409_4')<0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">锻炼方式：</td>
+										<td class="form_td_center">
+                                            <checkbox-exercisemethod id="exercise_method" name="exercise_method" ng-model="checka.exercise_method">
+                                            </checkbox-exercisemethod>
+                                        </td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-4 padding_div" ng-show="checka.exercise_method.indexOf('HR410_4')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">其他锻炼方式:</td>
+										<td class="form_td_center">
+                                        	<input class="form-control input-sm" type="text" name="exercise_other" id="exercise_other"  ng-model="checka.exercise_other" maxlength="50">
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                        	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="80" class="boder_left_bottom">
+					  	饮食习惯：
+				    </td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<table style="width:100%">
+								<tr>
+									<td class="form_td_left">饮食习惯：</td>
+									<td class="form_td_center">
+	                                   	<checkbox-eathabit id="eat_habit" name="eat_habit" ng-model="checka.eat_habit"></checkbox-eathabit>
+	                                </td>
+								</tr>
+							</table>						
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="80" class="boder_left_bottom">
+					  	吸烟情况：
+				    </td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">吸烟情况：</td>
+										<td class="form_td_center">
+	                                       	<select class="form-control input-sm" name="smoke_frequency" style="width:100%;" id="smoke_frequency" ng-model="checka.smoke_frequency" ng-options="item.id as item.text for item in dictSmokeFrequency"></select>
+	                                    </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" id="smoke_start_age_v" ng-show="checka.smoke_frequency.indexOf('HR403_1')<0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">开始吸烟年龄:</td>
+										<td class="form_td_center">
+	                                       	<input class="form-control input-sm" id="smoke_start_age" name="smoke_start_age" type="text" size="5" ng-model="checka.smoke_start_age" is-num maxlength="6">
+	                                    </td>
+										<td class="form_td_right">(岁)</td>
+									</tr>
+								</table>
+							</div>  
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.smoke_frequency.indexOf('HR403_3')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">日吸烟量：</td>
+										<td class="form_td_center">
+	                                       	<input class="form-control input-sm" id="smoke_count_day" name="smoke_count_day" type="text" size="5" ng-model="checka.smoke_count_day" is-num maxlength="10">
+	                                    </td>
+										<td class="form_td_right">(岁)</td>
+									</tr>
+								</table>
+							</div> 
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.smoke_frequency.indexOf('HR403_2')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">戒烟年龄：</td>
+										<td class="form_td_center">
+	                                       	<input class="form-control input-sm" id="smoke_end_age" name="smoke_end_age" type="text" size="5" ng-model="checka.smoke_end_age" is-num maxlength="6">
+	                                    </td>
+										<td class="form_td_right">(岁)</td>
+									</tr>
+								</table>
+							</div> 
+						</div>                     
+					</td>
+				</tr>
+				<tr>
+					<td width="80" class="boder_left_bottom">
+					  	饮酒情况：
+				    </td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">饮酒频率：</td>
+										<td class="form_td_center">
+										<select class="form-control input-sm" style="width:100%" name="wine_frequency" id="wine_frequency" ng-model="checka.wine_frequency" ng-options="item.id as item.text for item in dictWineFrequency">
+	                                    </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" id="wine_count_id" ng-show="checka.wine_frequency.indexOf('HR404_1')<0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">日饮酒量：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="wine_count" name="wine_count"  type="text" size="5" ng-model="checka.wine_count" is-float maxlength="6">
+	                                    </td>
+										<td class="form_td_right">(两)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" id="wine_start_age_id" ng-show="checka.wine_frequency.indexOf('HR404_1')<0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">开始饮酒年龄：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="wine_start_age" name="wine_start_age" type="text" size="5" ng-model="checka.wine_start_age" is-num maxlength="6">
+	                                    </td>
+										<td class="form_td_right">(岁)</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="col-xs-12 padding_div" style="padding-left:2px;" id="wine_refrainid">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.wine_frequency.indexOf('HR404_1')<0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">是否戒酒：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%" name="wine_refrain" id="wine_refrain" ng-model="checka.wine_refrain" ng-options="item.id as item.text for item in dictWineRefrain">
+									    			<option value="">--请选择--</option>
+									    	</select>
+	                                    </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.wine_frequency.indexOf('HR404_1')<0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">是否曾醉酒：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%" name="isstoned" id="isstoned" ng-model="checka.isstoned" ng-options="item.id as item.text for item in dictIsstoned">
+									    			<option value="">--请选择--</option>
+									    	</select>
+	                                    </td>
+										<td class="form_td_right">（一年内）</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.wine_frequency.indexOf('HR404_1')<0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">戒酒年龄：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="wine_refrain_age" name="wine_refrain_age"  type="text" size="5" ng-model="checka.wine_refrain_age" is-num maxlength="6">
+	                                    </td>
+										<td class="form_td_right">(岁)</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+                    	<div class="col-xs-12 padding_div" style="padding-left:2px;" ng-show="checka.wine_frequency.indexOf('HR404_1')<0">
+							<table style="width:100%">
+								<tr>
+									<td class="form_td_left">饮酒种类：</td>
+									<td class="form_td_center">
+	                                   	<checkbox-winetype id="wine_type" name="wine_type" ng-model="checka.wine_type"></checkbox-winetype>
+	                                </td>
+								</tr>
+							</table>						
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="80" class="boder_left_bottom">
+					  	职业暴露：
+				    </td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div boder_bottom" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">有无暴露：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%" name="undress" id="undress" ng-model="checka.undress" ng-options="item.id as item.text for item in dictHaved">
+								    		</select>
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.undress.indexOf('HR397_1')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">职业：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="undress_work"  name="undress_work"  type="text" size="5" ng-model="checka.undress_work" maxlength="50">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.undress.indexOf('HR397_1')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">从业时间：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="undress_worktime" name="undress_worktime"  type="text" size="5" ng-model="checka.undress_worktime" is-num maxlength="3"> 
+										</td>
+										<td class="form_td_right">(年)</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+                    	<div class="col-xs-12 padding_div" style="padding-left:2px;" ng-show="checka.undress.indexOf('HR397_1')>=0">
+                    		<div class="dynamic_div_f" style="overflow-x:auto;">
+	                    		<table style="min-width:500px;" ng-show="checka.undress.indexOf('HR397_1')>=0">
+									<tr style="background-color:silver;">
+										<td>毒物种类：</td>
+										<td>毒物描述：</td>
+										<td>有无防护措施：</td>
+										<td>防护措施说明：</td>
+										<td></td>
+									</tr>
+									<tr ng-repeat="item in checka.exposurelist ">
+										<td>
+											<select class="form-control input-sm" type="text" ng-model="item.poisontype" disabled ng-show="item.poisontype.length>0"
+													ng-options="n.id as n.text for n in dictPoisontype">
+											</select>
+										</td>
+										<td>{{item.poisoncontent}}</td>
+										<td>
+											<select class="form-control input-sm" type="text" ng-model="item.hasfense" disabled ng-show="item.hasfense.length>0"
+													ng-options="n.id as n.text for n in dictHaved">
+											</select>	
+										</td>
+										<td>{{item.fensecontent}}</td>
+										<td>
+											<button type="button" class="btn btn-default"
+											  ng-click="delPoison(item)">
+												<span class="glyphicon glyphicon-remove"></span>删除
+											</button>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<select class="form-control input-sm" type="text" ng-model="poison.poisontype" 
+													ng-options="item.id as item.text for item in dictPoisontype">
+													<option value="">-请选择-</option>
+											</select>
+										</td>
+										<td><input class="form-control input-sm" type="text" ng-model="poison.poisoncontent"/></td>
+										<td>
+											<select class="form-control input-sm" type="text" ng-model="poison.hasfense" 
+													ng-options="item.id as item.text for item in dictHaved">
+													<option value="">-请选择-</option>
+											</select>	
+										</td>
+										<td><input class="form-control input-sm" type="text" ng-model="poison.fensecontent" ng-show="poison.hasfense.indexOf('HR397_1')>=0"></td>
+										<td>
+											<button type="button" class="btn btn-default"
+											  ng-click="addPoison()">
+												<span class="glyphicon glyphicon-ok-circle"></span>增加
+											</button>
+										</td>
+									</tr>
+								</table>
+							</div>
+                    	</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" rowspan="4" class="boder_bottom">脏器功能：</td>
+					<td width="80" class="boder_left_bottom">
+                   	 	口腔：
+					</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12" style="padding-left:2px;" >
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">口唇：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%" name="lip" id="lip" ng-model="checka.lip" ng-options="item.id as item.text for item in dictLip"></select>
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">齿列：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%" name="tooth" id="tooth" ng-model="checka.tooth" ng-options="item.id as item.text for item in dictIsnormal">
+								    		</select>
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+                    	</div>
+                    	<div class="col-xs-12 padding_div" style="padding-left:2px;" ng-show="checka.tooth.indexOf('HR438_002')>=0">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td rowspan="2" class="form_td_left">缺齿:</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="toothless_top" name="toothless_top" type="text" size="5" ng-model="checka.toothless_top" is-num maxlength="20">
+										</td>
+										<td class="form_td_right">
+											<input class="form-control input-sm" id="toothless_left" name="toothless_left" type="text" size="5"  ng-model="checka.toothless_left" is-num maxlength="20">
+										</td>
+									</tr>
+									<tr>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="toothless_down" name="toothless_down" type="text" size="5" ng-model="checka.toothless_down" is-num maxlength="20">
+										</td>
+										<td class="form_td_right">
+											<input class="form-control input-sm" id="toothless_right" name="toothless_right" type="text" size="5" ng-model="checka.toothless_right" is-num maxlength="20">
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td rowspan="2" class="form_td_left">龋齿:</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="decayedtooth_top" name="decayedtooth_top" type="text" size="5" ng-model="checka.decayedtooth_top" is-num maxlength="20">
+										</td>
+										<td class="form_td_right">
+											<input class="form-control input-sm" id="decayedtooth_down" name="decayedtooth_down" type="text" size="5" ng-model="checka.decayedtooth_down" is-num maxlength="20">
+										</td>
+									</tr>
+									<tr>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="decayedtooth_left" name="decayedtooth_left" type="text" size="5" ng-model="checka.decayedtooth_left" is-num maxlength="20">
+										</td>
+										<td class="form_td_right">
+											<input class="form-control input-sm" id="decayedtooth_right" name="decayedtooth_right" type="text" size="5" ng-model="checka.decayedtooth_right" is-num maxlength="20">		
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td rowspan="2" class="form_td_left">假牙(义齿):</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="falsetooth_top" name="falsetooth_top" type="text" size="5" ng-model="checka.falsetooth_top" is-num maxlength="20">
+										</td>
+										<td class="form_td_right">
+											<input class="form-control input-sm" id="falsetooth_down" name="falsetooth_down" type="text" size="5" ng-model="checka.falsetooth_down" is-num maxlength="20">
+										</td>
+									</tr>
+									<tr>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="falsetooth_left" name="falsetooth_left" type="text" size="5" ng-model="checka.falsetooth_left" is-num maxlength="20">
+										</td>
+										<td class="form_td_right">
+											<input class="form-control input-sm" id="falsetooth_right" name="falsetooth_right" type="text" size="5" ng-model="checka.falsetooth_right" is-num maxlength="20">
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="80" class="boder_left_bottom">
+					  	视力：
+				    </td>
+					<td class="boder_left_bottom">
+                    	<div class="col-xs-12" style="padding-left:2px;" >
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">裸眼视力(左)：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="eye_nakedness_left" name="eye_nakedness_left" type="text" size="5" ng-model="checka.eye_nakedness_left" is-float maxlength="6">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">裸眼视力(右)：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="eye_nakedness_right" name="eye_nakedness_right" type="text" size="5" ng-model="checka.eye_nakedness_right" is-float maxlength="6">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">矫正视力(左)：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="eye_remedy_left" name="eye_remedy_left" type="text" size="5" ng-model="checka.eye_remedy_left" is-float maxlength="6">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">矫正视力(右)：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="eye_remedy_right" name="eye_remedy_right" type="text" size="5" ng-model="checka.eye_remedy_right" is-float maxlength="6">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="80" class="boder_left_bottom">
+					  	听力：
+				    </td>
+					<td class="boder_left_bottom">
+                    	<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<table style="width:100%">
+								<tr>
+									<td class="form_td_left">听力：</td>
+									<td class="form_td_center">
+	                                   	<select class="form-control input-sm" name="audition" id="audition" ng-model="checka.audition" ng-options="item.id as item.text for item in dictAudition">
+								    	</select>
+	                                </td>
+									<td class="form_td_right">&nbsp;</td>
+								</tr>
+							</table>						
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="80" class="boder_left_bottom">
+					  	运动功能：
+				    </td>
+					<td class="boder_left_bottom">
+                    	<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<table style="width:100%">
+								<tr>
+									<td class="form_td_left">运动功能：</td>
+									<td class="form_td_center">
+	                                   	<select class="form-control input-sm" name="sport_fun" id="sport_fun" ng-model="checka.sport_fun" ng-options="item.id as item.text for item in dictSportfun">
+								    	</select>
+	                                </td>
+									<td class="form_td_right">&nbsp;</td>
+								</tr>
+							</table>						
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!-- -----------------------------------------------------查体--------------------------------------------- -->
+	   	<div class="col-xs-12 title_div">
+			<div class="col-xs-10" style="text-align:center;">查体</div>
+			<div class="col-xs-2" style="text-align:left;">
+				<div class="toggleDiv" ng-click="show('3')" ng-show="toggle.toggleText.indexOf('hide_3')>=0" >【展开】</div>
+				<div class="toggleDiv" ng-click="hide()" ng-show="toggle.toggleText.indexOf('show_3')>=0" >【收缩】</div>
+			</div>
+		</div>
+		<div class="form-group col-xs-12" ng-show="toggle.toggleText.indexOf('show_3')>=0">
+			<table width="100%">
+				<tr>
+					<td width="100" class="boder_bottom">眼底：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">眼底：</td>
+										<td class="form_td_center">
+								    		<select class="form-control input-sm" style="width:100%;" name="yandi" id="yandi" ng-model="checka.yandi" ng-options="item.id as item.text for item in dictIsnormal" >
+							    			</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" id="yandi_other_id" ng-show="checka.yandi.indexOf('HR438_002')>=0" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">眼底异常：</td>
+										<td class="form_td_center">
+                                        	<input class="form-control input-sm" id="yandi_other" name="yandi_other"  type="text" ng-model="checka.yandi_other" maxlength="100">
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100"  class="boder_bottom">皮肤：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">皮肤：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%;" name="skin" id="skin" ng-model="checka.skin" ng-options="item.id as item.text for item in dictSkin" >
+							    			</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.skin.indexOf('HR458_7')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">皮肤-其他：</td>
+										<td class="form_td_center">
+                                        	<input class="form-control input-sm" id="skin_other" name="skin_other"  type="text" ng-model="checka.skin_other" maxlength="50">
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100"  class="boder_bottom">巩膜 ：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">巩膜 ：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%;" name="gongmo" id="gongmo" ng-model="checka.gongmo" ng-options="item.id as item.text for item in dictGongmo" >
+							    			</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.gongmo.indexOf('arch_gm_4')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">巩膜-其他：</td>
+										<td class="form_td_center">
+                                        	<input class="form-control input-sm" id="gongmo_qt" name="gongmo_qt"  type="text" ng-model="checka.gongmo_qt" maxlength="50">
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100"  class="boder_bottom">淋巴结：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">淋巴结：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%;" name="lymph" id="lymph" ng-model="checka.lymph" ng-options="item.id as item.text for item in dictLymph" >
+								    		</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.lymph.indexOf('HR457_4')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">淋巴结-其他：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="lymph_other" name="lymph_other"  type="text" ng-model="checka.lymph_other" maxlength="50">
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100" rowspan="3" class="boder_bottom">肺：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">桶状胸：</td>
+										<td class="form_td_center">
+								    		<select class="form-control input-sm"  style="width:100%;" name="tongzhuangxiong" id="tongzhuangxiong" ng-model="checka.tongzhuangxiong" ng-options="item.id as item.text for item in dictWhether">
+						    				</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                    	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">呼吸音：</td>
+										<td class="form_td_center">
+								    		<select class="form-control input-sm" style="width:100%;" name="breath" id="breath" ng-model="checka.breath" ng-options="item.id as item.text for item in dictIsnormal" >
+							    			</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.breath.indexOf('HR438_002')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">呼吸音-其他：</td>
+										<td class="form_td_center">
+                                        	<input class="form-control input-sm" id="breath_other" name="breath_other"  type="text" ng-model="checka.breath_other" maxlength="50">
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">罗音：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%;" name="luoyin" id="luoyin" ng-model="checka.luoyin" ng-options="item.id as item.text for item in dictLuoyin" >
+							    			</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.luoyin.indexOf('arch_luoyin_4')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">罗音-其他：</td>
+										<td class="form_td_center">
+                                        	<input class="form-control input-sm" id="luoyin_qt" name="luoyin_qt" type="text" ng-model="checka.luoyin_qt" maxlength="50">
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100" rowspan="3" class="boder_bottom">心脏：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">心率：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="xinlv_count" name="xinlv_count"  type="text" size="5" ng-model="checka.xinlv_count" is-num maxlength="20">
+                                        </td>
+										<td class="form_td_right">(次/分钟)</td>
+									</tr>
+								</table>
+							</div>                     	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">心律：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%;" name="xinlv" id="xinlv" ng-model="checka.xinlv" ng-options="item.id as item.text for item in dictXinlv" >
+									    	</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                    	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">杂音：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%;" name="zayin" id="zayin" ng-model="checka.zayin" ng-options="item.id as item.text for item in dictHaved" >
+							    			</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.zayin.indexOf('HR397_1')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">杂音说明：</td>
+										<td class="form_td_center">
+                                        	<input class="form-control input-sm" id="zayin_sm" name="zayin_sm"  type="text" ng-model="checka.zayin_sm" maxlength="50">
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100" rowspan="5" class="boder_bottom">腹部：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">压痛：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%;" name="yagen" id="yagen" ng-model="checka.yagen" ng-options="item.id as item.text for item in dictHaved" >
+									    	</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.yagen.indexOf('HR397_1')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">压痛说明：</td>
+										<td class="form_td_center">
+                                        	<input class="form-control input-sm" id="yagen_sm" name="yagen_sm" type="text" ng-model="checka.yagen_sm" maxlength="50">
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">包块：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%;" name="baokuai" id="baokuai" ng-model="checka.baokuai" ng-options="item.id as item.text for item in dictHaved" >
+									    	</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.baokuai.indexOf('HR397_1')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">包块说明：</td>
+										<td class="form_td_center">
+                                        	<input class="form-control input-sm" id="baokuai_sm" name="baokuai_sm" type="text" ng-model="checka.baokuai_sm" maxlength="50">
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">肝大：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%;" name="ganda" id="ganda" ng-model="checka.ganda" ng-options="item.id as item.text for item in dictHaved" >
+							    			</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.ganda.indexOf('HR397_1')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">肝大说明：</td>
+										<td class="form_td_center">
+                                        	<input class="form-control input-sm" id="ganda_sm" name="ganda_sm" type="text" ng-model="checka.ganda_sm" maxlength="50">
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">脾大：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%;" name="pida" id="pida" ng-model="checka.pida" ng-options="item.id as item.text for item in dictHaved" >
+									    	</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.pida.indexOf('HR397_1')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">脾大说明：</td>
+										<td class="form_td_center">
+                                        	<input class="form-control input-sm" id="pida_sm" name="pida_sm" type="text" ng-model="checka.pida_sm" maxlength="50">
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">移动性浊音：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%;" name="ydxzhuoyin" id="ydxzhuoyin" ng-model="checka.ydxzhuoyin" ng-options="item.id as item.text for item in dictHaved" >
+									    	</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.ydxzhuoyin.indexOf('HR397_1')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">移动性浊音说明：</td>
+										<td class="form_td_center">
+                                        	<input class="form-control input-sm" id="ydxzhuoyin_sm" name="ydxzhuoyin_sm" type="text" ng-model="checka.ydxzhuoyin_sm" maxlength="50">
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100"  class="boder_bottom">下肢水肿：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">下肢水肿：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%;" name="xzsz" id="xzsz" ng-model="checka.xzsz" ng-options="item.id as item.text for item in dictXzsz" >
+									    	</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                     	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100"  class="boder_bottom">足背动脉搏动：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">足背动脉搏动：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%;" name="zbdmbd" id="zbdmbd" ng-model="checka.zbdmbd" ng-options="item.id as item.text for item in dictZbdmbd">
+									    	</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                    	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100"  class="boder_bottom">肛门指诊：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">肛门指诊：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" style="width:100%;" name="gmzz" id="gmzz" ng-model="checka.gmzz" ng-options="item.id as item.text for item in dictGmzz" >
+									    	</select>
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.gmzz.indexOf('HR456_5')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">肛门指诊-其他：</td>
+										<td class="form_td_center">
+                                        	<input class="form-control input-sm" id="gmzz_other" name="gmzz_other" type="text" ng-model="checka.gmzz_other" maxlength="20">
+                                        </td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">其他：</td>
+					<td class="boder_left_bottom">
+						<textarea style="width:75%;height:60px"  id="chati_qt" name="chati_qt" type="text" ng-model="checka.chati_qt" maxlength="200"></textarea>                   	
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!-- -----------------------------------------------------辅助检查--------------------------------------------- -->
+	   	<div class="col-xs-12 title_div">
+			<div class="col-xs-10" style="text-align:center;">辅助检查</div>
+			<div class="col-xs-2" style="text-align:left;">
+				<div class="toggleDiv" ng-click="show('4')" ng-show="toggle.toggleText.indexOf('hide_4')>=0" >【展开】</div>
+				<div class="toggleDiv" ng-click="hide()" ng-show="toggle.toggleText.indexOf('show_4')>=0" >【收缩】</div>
+			</div>
+		</div>
+		<div class="form-group col-xs-12" ng-show="toggle.toggleText.indexOf('show_4')>=0">
+			<table width="100%">
+				<tr>
+					<td width="100" class="boder_bottom">空腹血糖：</td>
+					<td width="100" class="boder_left_bottom">
+							<select class="form-control input-sm" style="width:98%;" id="kfxt_exp" name="kfxt_exp" ng-model="checka.kfxt_exp" ng-options="item.id as item.text for item in dictIsnormal" >
+								<option value="">-请选择-</option>
+							</select>
+					</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12" style="padding-left:2px;" >
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">空腹血糖：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="kfxt_mmol" name="kfxt_mmol" type="text" size="5" ng-model="checka.kfxt_mmol" is-float maxlength="5">
+										</td>
+										<td class="form_td_right">(mmol/L)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">(或)</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="kfxt_mg" name="kfxt_mg" type="text" size="5" ng-model="checka.kfxt_mg" is-float maxlength="5">
+										</td>
+										<td class="form_td_right">(mg/dL)</td>
+									</tr>
+								</table>
+							</div>
+                    	</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">血常规：</td>
+					<td width="100" class="boder_left_bottom">
+                   	 	<select class="form-control input-sm" style="width:98%;" id="blood_exp" name="blood_exp" ng-model="checka.blood_exp" ng-options="item.id as item.text for item in dictIsnormal" >
+							<option value="">-请选择-</option>
+						</select>
+					</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12" style="padding-left:2px;" >
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">血红蛋白：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="blood_com" name="blood_com" type="text" size="5" ng-model="checka.blood_com" is-float maxlength="5">
+										</td>
+										<td class="form_td_right">(g/L)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">白细胞：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="baixibao" name="baixibao" type="text" size="5" ng-model="checka.baixibao" is-float maxlength="5">
+										</td>
+										<td class="form_td_right">(x10<sup>9</sup>/L)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">血小板：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="xuexiaoban" name="xuexiaoban" type="text" size="5" ng-model="checka.xuexiaoban" is-float maxlength="5">
+										</td>
+										<td class="form_td_right">(x10<sup>9</sup>/L)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">其他：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm"id="xcg_qt" name="xcg_qt" type="text" size="5" ng-model="checka.xcg_qt" maxlength="100">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+                    	</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">尿常规：</td>
+					<td width="100" class="boder_left_bottom">
+                   	 	<select class="form-control input-sm" style="width:98%;" id="niao_exp" name="niao_exp" ng-model="checka.niao_exp" ng-options="item.id as item.text for item in dictIsnormal" >
+							<option value="">-请选择-</option>
+						</select>
+					</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12" style="padding-left:2px;" >
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">尿蛋白：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="niaodanbai" name="niaodanbai" type="text" size="5" ng-model="checka.niaodanbai" maxlength="30">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">尿糖：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="niaotang" name="niaotang" type="text" size="5" ng-model="checka.niaotang" maxlength="30">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">尿酮体：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="niaotongti" name="niaotongti" type="text" size="5" ng-model="checka.niaotongti" maxlength="30">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">尿潜血：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="niaoqianxue" name="niaoqianxue" type="text" size="5" ng-model="checka.niaoqianxue" maxlength="30">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">其他：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="ncg_qt" name="ncg_qt" type="text" size="5" ng-model="checka.ncg_qt" maxlength="100">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+                    	</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">尿微量白蛋白：</td>
+					<td width="100" class="boder_left_bottom">				
+						<select class="form-control input-sm" style="width:98%;" id="nwlbdb_exp" name="nwlbdb_exp" ng-model="checka.nwlbdb_exp" ng-options="item.id as item.text for item in dictIsnormal" >
+								<option value="">-请选择-</option>
+						</select>	
+					</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12" style="padding-left:2px;" >
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">尿微量白蛋白：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="nwlbdb" name="nwlbdb" type="text" size="5" ng-model="checka.nwlbdb" is-float maxlength="5">
+										</td>
+										<td class="form_td_right">(mg/dL)</td>
+									</tr>
+								</table>
+							</div>
+                    	</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">大便潜血：</td>
+					<td width="100" class="boder_left_bottom">
+                   	 	<select class="form-control input-sm" style="width:98%;" id="dbqx" name="dbqx" ng-model="checka.dbqx" ng-options="item.id as item.text for item in dictPandn" >
+							<option value="">-请选择-</option>
+						</select>	
+					</td>
+					<td class="boder_left_bottom"></td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">肝功能：</td>
+					<td width="100" class="boder_left_bottom">
+                   	 	<select class="form-control input-sm" style="width:98%;" id="ggn_exp" name="ggn_exp" ng-model="checka.ggn_exp" ng-options="item.id as item.text for item in dictIsnormal" >
+							<option value="">-请选择-</option>
+						</select>	
+					</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12" style="padding-left:2px;" >
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">血清谷丙转氨酶：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="atl" name="atl" type="text" size="5" ng-model="checka.atl"  is-float maxlength="6">
+										</td>
+										<td class="form_td_right">(U/L)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">血清谷草转氨酶：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="ast" name="ast" type="text" size="5" ng-model="checka.ast" is-float maxlength="6">
+										</td>
+										<td class="form_td_right">(U/L)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">白蛋白：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="alb" name="alb" type="text" size="5" ng-model="checka.alb" is-float maxlength="6">
+										</td>
+										<td class="form_td_right">(g/L)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">总胆红素：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="tbil" name="tbil" type="text" size="5" ng-model="checka.tbil" is-float maxlength="6">
+										</td>
+										<td class="form_td_right">(umol/L)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">结合胆红素：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="jhbil" name="jhbil" type="text" size="5" ng-model="checka.jhbil" is-float maxlength="6">
+										</td>
+										<td class="form_td_right">(umol/L)</td>
+									</tr>
+								</table>
+							</div>
+                    	</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">肾功能：</td>
+					<td width="100" class="boder_left_bottom">
+                   	 	<select class="form-control input-sm" style="width:98%;" id="renal_exp" name="renal_exp" ng-model="checka.renal_exp" ng-options="item.id as item.text for item in dictIsnormal" >
+							<option value="">-请选择-</option>
+						</select>	
+					</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12" style="padding-left:2px;" >
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">血清肌酐：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="renal_xqjg" name="renal_xqjg" type="text" size="5" ng-model="checka.renal_xqjg" is-float maxlength="6">
+										</td>
+										<td class="form_td_right">(umol/L)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">血尿素氮：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="renal_xnsd" name="renal_xnsd" type="text" size="5" ng-model="checka.renal_xnsd" is-float maxlength="6">
+										</td>
+										<td class="form_td_right">(mmol/L)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">血钾浓度：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="renal_xjnd" name="renal_xjnd" type="text" size="5" ng-model="checka.renal_xjnd" is-float maxlength="6">
+										</td>
+										<td class="form_td_right">(mmol/L)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">血钠浓度：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="renal_xnnd" name="renal_xnnd" type="text" size="5" ng-model="checka.renal_xnnd" is-float maxlength="6">
+										</td>
+										<td class="form_td_right">(mmol/L)</td>
+									</tr>
+								</table>
+							</div>
+                    	</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">血脂：</td>
+					<td width="100" class="boder_left_bottom">
+                   	 	<select class="form-control input-sm" style="width:98%;" id="xz_exp" name="xz_exp" ng-model="checka.xz_exp" ng-options="item.id as item.text for item in dictIsnormal" >
+								<option value="">-请选择-</option>
+						</select>	
+					</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12" style="padding-left:2px;" >
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">总胆固醇值：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="blood_zdgc" name="blood_zdgc" type="text" size="5" ng-model="checka.blood_zdgc" is-float maxlength="5">
+										</td>
+										<td class="form_td_right">(mmol/L)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">甘油三脂值：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="blood_gs" name="blood_gs" type="text" size="5" ng-model="checka.blood_gs" is-float maxlength="5">
+										</td>
+										<td class="form_td_right">(mmol/L)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:180px;">血清低密度脂蛋白胆固醇：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="xqdmddgc" name="xqdmddgc" type="text" size="5" ng-model="checka.xqdmddgc" is-float maxlength="5">
+										</td>
+										<td class="form_td_right">(mmol/L)</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:180px;">血清高密度脂蛋白胆固醇：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="xqgmddgc" name="xqgmddgc" type="text" size="5" ng-model="checka.xqgmddgc" is-float maxlength="5">
+										</td>
+										<td class="form_td_right">(mmol/L)</td>
+									</tr>
+								</table>
+							</div>
+                    	</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">糖化血红蛋白：</td>
+					<td width="100" class="boder_left_bottom">
+                   	 	<select class="form-control input-sm" style="width:98%;" id="thxhdb_exp" name="thxhdb_exp" ng-model="checka.thxhdb_exp" ng-options="item.id as item.text for item in dictIsnormal" >
+							<option value="">-请选择-</option>
+						</select>	
+					</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12" style="padding-left:2px;" >
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">糖化血红蛋白：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="thxhdb" name="thxhdb" type="text" size="5" ng-model="checka.thxhdb" is-float maxlength="5">
+										</td>
+										<td class="form_td_right">(%)</td>
+									</tr>
+								</table>
+							</div>
+                    	</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">乙肝肝炎表面抗原：</td>
+					<td width="100" class="boder_left_bottom">
+                   	 	<select class="form-control input-sm" style="width:98%;" id="yggybmky" name="yggybmky" ng-model="checka.yggybmky" ng-options="item.id as item.text for item in dictPandn" >
+							<option value="">-请选择-</option>
+						</select>	
+					</td>
+					<td class="boder_left_bottom">
+						&nbsp;
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">心电图：</td>
+					<td width="100" class="boder_left_bottom">
+                   	 	<select class="form-control input-sm" style="width:98%;" id="cardiogram" name="cardiogram" ng-model="checka.cardiogram" ng-options="item.id as item.text for item in dictIsnormal" >
+						</select>	
+					</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12" style="padding-left:2px;" >
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.cardiogram.indexOf('HR438_002')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:120px;">心电图异常说明：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="cardiogram_exception" name="cardiogram_exception" type="text"  ng-model="checka.cardiogram_exception" maxlength="50">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+                    	</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" colspan="2" class="boder_bottom">心电图指导说明：</td>
+					<td class="boder_left_bottom">
+						<textarea style="width:75%;height:60px" name="cardiogramcontent" id="cardiogramcontent" ng-model="checka.cardiogramcontent" maxlength="500"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">胸部X线：</td>
+					<td width="100" class="boder_left_bottom">
+                   	 	<select class="form-control input-sm" style="width:98%;" id="lung_x" name="lung_x" ng-model="checka.lung_x" ng-options="item.id as item.text for item in dictIsnormal" >
+						</select>			
+					</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12" style="padding-left:2px;" ng-show="checka.lung_x.indexOf('HR438_002')>=0">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" >
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:140px;">胸部X线异常说明：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="lung_x_exception" name="lung_x_exception"  type="text"  ng-model="checka.lung_x_exception" maxlength="50">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+                    	</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">B超：</td>
+					<td width="100" class="boder_left_bottom">
+                   	 	<select class="form-control input-sm" style="width:98%;" id="bchao" name="bchao" ng-model="checka.bchao" ng-options="item.id as item.text for item in dictIsnormal" >
+						</select>	
+					</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12" style="padding-left:2px;" >
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 padding_div" ng-show="checka.bchao.indexOf('HR438_002')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left">B超异常说明：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="bchao_other" name="bchao_other" type="text" ng-model="checka.bchao_other" maxlength="50">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+                    	</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" colspan="2" class="boder_bottom">其他：</td>
+					<td class="boder_left_bottom">
+						<textarea style="width:75%;height:60px"  id="fzjc_qt" name="fzjc_qt" type="text"  ng-model="checka.fzjc_qt" maxlength="200"></textarea>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!-------------------------------------------------------中医体质辨识--------------------------------------------- -->
+	   	<div class="col-xs-12 title_div">
+			<div class="col-xs-10" style="text-align:center;">中医体质辨识</div>
+			<div class="col-xs-2" style="text-align:left;">
+				<div class="toggleDiv" ng-click="show('5')" ng-show="toggle.toggleText.indexOf('hide_5')>=0" >【展开】</div>
+				<div class="toggleDiv" ng-click="hide()" ng-show="toggle.toggleText.indexOf('show_5')>=0" >【收缩】</div>
+			</div>
+		</div>
+		<div class="form-group col-xs-12" ng-show="toggle.toggleText.indexOf('show_5')>=0">
+			<table width="100%">
+				<tr>
+					<td width="100" class="boder_bottom">平和质：</td>
+					<td width="100" class="boder_left_bottom">	
+						<select class="form-control input-sm" style="width:98%;" id="physique_phz" name="physique_phz" ng-model="checka.physique_phz" ng-options="item.id as item.text for item in dictZytzPhz" >
+							<option value="">-请选择-</option>
+						</select>
+					</td>
+					<td class="boder_left_bottom">
+						<span>特征：正常的体质。<br>调节：饮食有节制，不要常吃过冷过热或不干净的食物，粗细粮食要合理搭配。</span>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">气虚质：</td>
+					<td width="100" class="boder_left_bottom">
+						<select class="form-control input-sm" style="width:98%;" id="physique_qxz" name="physique_qxz" ng-model="checka.physique_qxz" ng-options="item.id as item.text for item in dictZytzGg">
+							<option value="">-请选择-</option>
+						</select>
+					</td>
+					<td class="boder_left_bottom">
+						<span>特征：肌肉松软，声音低，易出汗，易累，易感冒。<br>调节：多食用具有益气健脾作用的食物，如黄豆、白扁豆、鸡肉等。少食空心菜、生萝卜等。</span>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">阳虚质：</td>
+					<td width="100" class="boder_left_bottom">
+						<select class="form-control input-sm" style="width:98%;" id="physique_yaxz" name="physique_yaxz" ng-model="checka.physique_yaxz" ng-options="item.id as item.text for item in dictZytzGg" >
+							<option value="">-请选择-</option>
+						</select>
+					</td>
+					<td class="boder_left_bottom">
+						<span>特征：肌肉不健壮，常常感到手脚发凉，衣服比别人穿得多，夏天不喜欢吹空调，喜欢安静，性格多沉静、内向。<br>调节：平时可多食牛肉、羊肉等温阳之品，少食梨、西瓜、荸荠等生冷寒凉食物，少饮绿茶。</span>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">阴虚质：</td>
+					<td width="100" class="boder_left_bottom">
+						<select class="form-control input-sm" style="width:98%;" id="physique_yxz" name="physique_yxz" ng-model="checka.physique_yxz" ng-options="item.id as item.text for item in dictZytzGg" >
+							<option value="">-请选择-</option>
+						</select>
+					</td>
+					<td class="boder_left_bottom">
+						<span>特征：体形多瘦长，不耐暑热，常感到眼睛干涩，口干咽燥，总想喝水，皮肤干燥，经常大便干结，容易失眠。<br>调节：多食瘦猪肉、鸭肉、绿豆、冬瓜等甘凉滋润之品，少食羊肉、韭菜、辣椒、葵花子等性温燥烈之品。适合太极拳、太极剑、气功等项目。</span>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">痰湿质：</td>
+					<td width="100" class="boder_left_bottom">
+						<select class="form-control input-sm" style="width:98%;" id="physique_dsz" name="physique_dsz" ng-model="checka.physique_dsz" ng-options="item.id as item.text for item in dictZytzGg" >
+							<option value="">-请选择-</option>
+						</select>
+					</td>
+					<td class="boder_left_bottom">
+						<span>特征：体形肥胖，腹部肥满而松软。易出汗，且多黏腻。经常感觉脸上有一层油。<br>调节：饮食应以清淡为主，可多食冬瓜等。因体形肥胖，易于困倦，故应根据自己的具体情况循序渐进，长期坚持运动锻炼。</span>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">湿热质：</td>
+					<td width="100" class="boder_left_bottom">
+						<select class="form-control input-sm" style="width:98%;" id="physique_srz" name="physique_srz" ng-model="checka.physique_srz" ng-options="item.id as item.text for item in dictZytzGg" >
+								<option value="">-请选择-</option>
+						</select>
+					</td>
+					<td class="boder_left_bottom">
+						<span>特征：面部和鼻尖总是油光发亮，脸上易生粉刺，皮肤易瘙痒。常感到口苦、口臭，脾气较急躁。<br>调节：饮食以清淡为主，可多食赤小豆、绿豆、芹菜、黄瓜、藕等甘寒的食物。适合中长跑、游泳、爬山、各种球类、武术等。</span>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">血瘀质：</td>
+					<td width="100" class="boder_left_bottom">
+						<select class="form-control input-sm" style="width:98%;" id="physique_xyz" name="physique_xyz" ng-model="checka.physique_xyz" ng-options="item.id as item.text for item in dictZytzGg" >
+							<option value="">-请选择-</option>
+						</select>	
+					</td>
+					<td class="boder_left_bottom">
+						<span>特征：皮肤较粗糙，眼睛里的红丝很多，牙龈易出血。<br>调节：多食山楂、醋、玫瑰花等，少食肥肉等滋腻之品。可参加各种舞蹈、步行健身法、徒手健身操等。</span>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">气郁质：</td>
+					<td width="100" class="boder_left_bottom">
+						<select class="form-control input-sm" style="width:98%;" id="physique_qiyz" name="physique_qiyz" ng-model="checka.physique_qiyz" ng-options="item.id as item.text for item in dictZytzGg" >
+							<option value="">-请选择-</option>
+						</select>
+					</td>
+					<td class="boder_left_bottom">
+						<span>特征：体形偏瘦，常感到闷闷不乐、情绪低沉，常有胸闷，经常无缘无故地叹气,易失眠。<br>调节：多食黄花菜、海带、山楂、玫瑰花等具有行气、解郁、消食、醒神作用的食物。气郁体质的人不要总待在家里，要多参加群众性的体育运动项目。</span>
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">特秉质：</td>
+					<td width="100" class="boder_left_bottom">
+						<select class="form-control input-sm" style="width:98%;" id="physique_tbz" name="physique_tbz" ng-model="checka.physique_tbz" ng-options="item.id as item.text for item in dictZytzGg" >
+								<option value="">-请选择-</option>
+						</select>
+					</td>
+					<td class="boder_left_bottom">
+						<span>特征：这是一类体质特殊的人群。其中过敏体质的人易对药物、食物、气味、花粉、季节过敏。<br>调节：多食益气固表的食物，少食荞麦(含致敏物质荞麦荧光素)、蚕豆等。居室宜通风良好。保持室内清洁，被褥、床单要经常洗晒，可防止对尘螨过敏。</span>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!-- -----------------------------------------------------现存主要健康问题--------------------------------------------- -->
+	   	<div class="col-xs-12 title_div">
+			<div class="col-xs-10" style="text-align:center;">现存主要健康问题</div>
+			<div class="col-xs-2" style="text-align:left;">
+				<div class="toggleDiv" ng-click="show('6')" ng-show="toggle.toggleText.indexOf('hide_6')>=0" >【展开】</div>
+				<div class="toggleDiv" ng-click="hide()" ng-show="toggle.toggleText.indexOf('show_6')>=0" >【收缩】</div>
+			</div>
+		</div>
+		<div class="form-group col-xs-12" ng-show="toggle.toggleText.indexOf('show_6')>=0">
+			<table width="100%">
+				<tr>
+					<td width="100" class="boder_bottom">脑血管疾病：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div">
+								<checkbox-disease-nxg id="disease_nxg" name="disease_nxg" ng-model="checka.disease_nxg"></checkbox-disease-nxg>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div" ng-show="checka.disease_nxg.indexOf('arch_nxgjb_6')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:140px;">其他脑血管疾病：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" type="text" name="disease_nxg_other" id="disease_nxg_other" maxlength="50"  ng-model="checka.disease_nxg_other">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">肾脏疾病：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div">
+								<checkbox-disease-sz id="disease_sz" name="disease_sz" ng-model="checka.disease_sz"></checkbox-disease-sz>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div" ng-show="checka.disease_sz.indexOf('arch_szjb_6')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:140px;">其他肾脏疾病：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" type="text" name="disease_sz_other" id="disease_sz_other" maxlength="50" ng-model="checka.disease_sz_other">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">心脏疾病：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div">
+								<checkbox-disease-xz id="disease_xz" name="disease_xz" ng-model="checka.disease_xz">
+								</checkbox-disease-xz>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div" ng-show="checka.disease_xz.indexOf('arch_xzjb_')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:140px;">其他心脏疾病：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" type="text" name="disease_xz_other" id="disease_xz_other" maxlength="50" ng-model="checka.disease_xz_other">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">血管疾病：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div">
+								<checkbox-disease-xg id="disease_xg" name="disease_xg" ng-model="checka.disease_xg"></checkbox-disease-xg>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div" ng-show="checka.disease_xg.indexOf('arch_xgjb_4')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:140px;">其他血管疾病：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" type="text" name="disease_xg_other" id="disease_xg_other" maxlength="50" ng-model="checka.disease_xg_other">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">眼部疾病：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div">
+								<checkbox-disease-eye id="disease_eye" name="disease_eye" ng-model="checka.disease_eye">
+								</checkbox-disease-eye>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div" ng-show="checka.disease_eye.indexOf('arch_ybjb_5')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:140px;">其他眼部疾病：</td>
+										<td class="form_td_center">
+											 <input class="form-control input-sm" type="text" name="disease_eye_other" id="disease_eye_other" maxlength="50" ng-model="checka.disease_eye_other">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">神经系统疾病：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:140px;">有无神经系统疾病：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" id="hassjjb" name="hassjjb" ng-model="checka.hassjjb" ng-options="item.id as item.text for item in dictHaved" >
+												<option value="">--请选择--</option>
+											</select>
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div" ng-show="checka.hassjjb.indexOf('HR397_1')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:140px;">神经系统疾病名称：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="sjjbmc" name="sjjbmc" type="text" maxlength="50" ng-model="checka.sjjbmc">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_bottom">其他系统疾病：</td>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 padding_div" style="padding-left:2px;">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:140px;">有无其他系统疾病：</td>
+										<td class="form_td_center">
+											<select class="form-control input-sm" id="qtxtjb" name="qtxtjb" ng-model="checka.qtxtjb" ng-options="item.id as item.text for item in dictHaved" >
+												<option value="">--请选择--</option>
+											</select>
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding_div" ng-show="checka.qtxtjb.indexOf('HR397_1')>=0">
+								<table style="width:100%">
+									<tr>
+										<td class="form_td_left" style="width:140px;">其他系统疾病说明：</td>
+										<td class="form_td_center">
+											<input class="form-control input-sm" id="qtxtjbsm" name="qtxtjbsm" type="text" maxlength="200" ng-model="checka.qtxtjbsm">
+										</td>
+										<td class="form_td_right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>                      	
+                        </div>                    	
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!-- -----------------------------------------------------住院治疗情况、主要用药情况、非规划接种史--------------------------------------------- -->
+	   	<div class="col-xs-12 title_div">
+			<div class="col-xs-10" style="text-align:center;">住院治疗情况、主要用药情况、非规划接种史</div>
+			<div class="col-xs-2" style="text-align:left;">
+				<div class="toggleDiv" ng-click="show('7')" ng-show="toggle.toggleText.indexOf('hide_7')>=0" >【展开】</div>
+				<div class="toggleDiv" ng-click="hide()" ng-show="toggle.toggleText.indexOf('show_7')>=0" >【收缩】</div>
+			</div>
+		</div>
+		<div id="overflow_div" class="form-group col-xs-12" ng-show="toggle.toggleText.indexOf('show_7')>=0">
+			<table width="100%">
+				<tr>
+					<td width="100" rowspan="2" class="boder_bottom">住院治疗情况</td>
+					<td width="100" class="boder_left_bottom">住院史</td>
+					<td class="boder_left_bottom">
+						<div class="dynamic_div" style="overflow-x:auto;">
+							<table style="min-width:800px;width:98%;">
+								<tr style="background-color:silver;">
+									<td width="100px">入院日期：</td>
+									<td width="100px">出院日期：</td>
+									<td>医院名称：</td>
+									<td>病案号：</td>
+									<td>原因：</td>
+									<td></td>
+								</tr>
+								<tr ng-repeat="item in checka.hospitallist">
+									<td>{{item.entertime}}</td>
+									<td>{{item.leavetime}}</td>
+									<td>{{item.hospitalname}}</td>
+									<td>{{item.cureseries}}</td>
+									<td>{{item.diagnose}}</td>
+									<td>
+										<button type="button" class="btn btn-default"
+										  ng-click="delZhuyuanshi(item)">
+											<span class="glyphicon glyphicon-remove"></span>删除
+										</button>
+									</td>
+								</tr>
+								<tr>
+									<td><input style="width:100%;height:32px;border:1px solid #cccccc;line-height:1.428571429;" type="text" hys-datebox ng-model="zhuyuanshi.entertime"/></td>
+									<td><input style="width:100%;height:32px;border:1px solid #cccccc;line-height:1.428571429;" type="text" hys-datebox ng-model="zhuyuanshi.leavetime"/></td>
+									<td><input class="form-control input-sm" type="text" ng-model="zhuyuanshi.hospitalname"></td>
+									<td><input class="form-control input-sm" type="text" ng-model="zhuyuanshi.cureseries"></td>
+									<td><input class="form-control input-sm" type="text" ng-model="zhuyuanshi.diagnose"></td>
+									<td>
+										<button type="button" class="btn btn-default"
+										  ng-click="addZhuyuanshi()">
+											<span class="glyphicon glyphicon-ok-circle"></span>增加
+										</button>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="boder_left_bottom">家庭病床</td>
+					<td class="boder_left_bottom">
+						<div class="dynamic_div" style="overflow-x:auto;">
+							<table style="min-width:800px;width:98%;">
+								<tr style="background-color:silver;">
+									<td width="100px">建床时间：</td>
+									<td width="100px">撤床时间：</td>
+									<td>医院名称：</td>
+									<td>病案号：</td>
+									<td>原因：</td>
+									<td></td>
+								</tr>
+								<tr ng-repeat="item in checka.homebedlist">
+									<td>{{item.buildtime}}</td>
+									<td>{{item.canceltime}}</td>
+									<td>{{item.hospitalname}}</td>
+									<td>{{item.cureseries}}</td>
+									<td>{{item.diseasedes}}</td>
+									<td>
+										<button type="button" class="btn btn-default"
+										  ng-click="delJiazushi(item)">
+											<span class="glyphicon glyphicon-remove"></span>删除
+										</button>
+									</td>
+								</tr>
+								<tr>
+									<td><input style="width:100%;height:32px;border:1px solid #cccccc;line-height:1.428571429;" type="text" hys-datebox ng-model="jiazushi.buildtime"/></td>
+									<td><input style="width:100%;height:32px;border:1px solid #cccccc;line-height:1.428571429;" hys-datebox ng-model="jiazushi.canceltime"/></td>
+									<td><input class="form-control input-sm" type="text" ng-model="jiazushi.hospitalname"></td>
+									<td><input class="form-control input-sm" type="text" ng-model="jiazushi.cureseries"></td>
+									<td><input class="form-control input-sm" type="text" ng-model="jiazushi.diseasedes"></td>
+									<td>
+										<button type="button" class="btn btn-default"
+										  ng-click="addJiazushi()">
+											<span class="glyphicon glyphicon-ok-circle"></span>增加
+										</button>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="boder_bottom">非规划接种史</td>
+					<td class="boder_left_bottom">
+						<div class="dynamic_div" style="overflow-x:auto;">
+							<table style="min-width:500px;width:98%;">
+								<tr style="background-color:silver;">
+									<td>名称：</td>
+									<td width="100px">接种日期：</td>
+									<td>接种机构：</td>
+									<td></td>
+								</tr>
+								<tr ng-repeat="item in checka.inocutelist">
+									<td>{{item.vaccination_name}}</td>
+									<td>{{item.vaccination_date}}</td>
+									<td>{{item.vaccination_org}}</td>
+									<td>
+										<button type="button" class="btn btn-default"
+										  ng-click="delJiezhongshi(item)">
+											<span class="glyphicon glyphicon-remove"></span>删除
+										</button>
+									</td>
+								</tr>
+								<tr>
+									<td><input class="form-control input-sm" type="text" ng-model="jiezhongshi.vaccination_name"/></td>
+									<td><input style="width:100%;height:32px;border:1px solid #cccccc;line-height:1.428571429;" type="text" hys-datebox ng-model="jiezhongshi.vaccination_date"/></td>
+									<td><input class="form-control input-sm" type="text" ng-model="jiezhongshi.vaccination_org"></td>
+									<td>
+										<button type="button" class="btn btn-default"
+										  ng-click="addJiezhongshi()">
+											<span class="glyphicon glyphicon-ok-circle"></span>增加
+										</button>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="boder_bottom">主要用药情况</td>
+					<td class="boder_left_bottom">
+						<div class="dynamic_div" style="overflow-x:auto;">
+							<table style="min-width:1000px;width:98%;">
+								<tr style="background-color:silver;">
+									<td>用药名称：</td>
+									<td>用法：</td>
+									<td>用药频率/时间：</td>
+									<td>单次用量：</td>
+									<td>用药年限：</td>
+									<td>服药依从性：</td>
+									<td></td>
+								</tr>
+								<tr ng-repeat="item in checka.druglist">
+									<td>{{item.drugsname}}</td>
+									<td>
+										<select class="form-control input-sm" type="text" ng-model="item.usage" disabled ng-show="item.usage.length>0"
+												ng-options="n.id as n.text for n in dictDrugUsage">
+										</select>
+									</td>
+									<td>
+										<select class="form-control input-sm" type="text" ng-model="item.frequency" disabled ng-show="item.frequency.length>0"
+												ng-options="n.id as n.text for n in dictDrugFrequency">
+										</select>
+									</td>
+									<td>{{item.dosage_no}}
+										<select class="form-control input-sm" type="text" ng-model="item.dosage" disabled ng-show="item.dosage.length>0"
+												ng-options="n.id as n.text for n in dictDrugDosage">
+										</select>
+								</td>
+									<td>{{item.druguse_no}}
+										<select class="form-control input-sm" type="text" ng-model="item.druguse" disabled ng-show="item.druguse.length>0"
+												ng-options="n.id as n.text for n in dictDrugRange">
+										</select>
+									</td>
+									<td>
+										<select class="form-control input-sm" type="text" ng-model="item.drugcompliance" disabled ng-show="item.drugcompliance.length>0"
+												ng-options="n.id as n.text for n in dictCompliance">
+										</select>
+								</td>
+									<td>
+										<button type="button" class="btn btn-default" ng-click="delDrug(item)">
+											<span class="glyphicon glyphicon-remove"></span>删除
+										</button>
+									</td>
+								</tr>
+									<tr>
+									<td>
+										<select class="form-control input-sm" type="text" ng-model="drug.drugsname" 
+												ng-options="item.text as item.text for item in dictDrugName">
+												<option value="">-请选择-</option>
+										</select>
+									</td>
+									<td>
+										<select class="form-control input-sm" type="text" ng-model="drug.usage" 
+												ng-options="item.id as item.text for item in dictDrugUsage">
+												<option value="">-请选择-</option>
+										</select>
+									</td>
+									<td>
+										<select class="form-control input-sm" type="text" ng-model="drug.frequency" 
+												ng-options="item.id as item.text for item in dictDrugFrequency">
+												<option value="">-请选择-</option>
+										</select>
+									</td>
+									<td>
+										<input class="form-control input-sm" style="width:40px;" type="text" size="5" ng-model="drug.dosage_no" is-float>
+										<select class="form-control input-sm" type="text" ng-model="drug.dosage" 
+												ng-options="item.id as item.text for item in dictDrugDosage">
+												<option value="">-请选择-</option>
+										</select>
+									</td>
+									<td>
+										<input class="form-control input-sm" style="width:40px;" type="text" size="5" ng-model="drug.druguse_no" is-num>
+										<select class="form-control input-sm" type="text" ng-model="drug.druguse" 
+												ng-options="item.id as item.text for item in dictDrugRange">
+												<option value="">-请选择-</option>
+										</select>
+									</td>
+									<td>
+										<select class="form-control input-sm" type="text" ng-model="drug.drugcompliance" 
+												ng-options="item.id as item.text for item in dictCompliance">
+												<option value="">-请选择--</option>
+										</select>
+									</td>
+									<td>
+										<button type="button" class="btn btn-default"
+										  ng-click="addDrug()">
+											<span class="glyphicon glyphicon-ok-circle"></span>增加
+										</button>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!-- -----------------------------------------------------健康评价、健康指导--------------------------------------------- -->
+	   	<div class="col-xs-12 title_div">
+			<div class="col-xs-10" style="text-align:center;">健康评价、健康指导</div>
+			<div class="col-xs-2" style="text-align:left;">
+				<div class="toggleDiv" ng-click="show('8')" ng-show="toggle.toggleText.indexOf('hide_8')>=0" >【展开】</div>
+				<div class="toggleDiv" ng-click="hide()" ng-show="toggle.toggleText.indexOf('show_8')>=0" >【收缩】</div>
+			</div>
+		</div>
+		<div class="form-group col-xs-12" ng-show="toggle.toggleText.indexOf('show_8')>=0">
+			<table width="100%">
+				<tr>
+					<td width="100" rowspan="2" class="boder_bottom">健康评价：</td>
+					<td width="100" class="boder_left_bottom">健康评价：</td>
+					<td class="boder_left_bottom">
+						<select class="form-control input-sm" id="healthassess" name="healthassess" ng-model="checka.healthassess" ng-options="item.id as item.text for item in dictHealthassess" >
+							<option value="">--请选择--</option>
+						</select>	                   	
+					</td>
+				</tr>
+				<tr>
+					<td width="100"  class="boder_left_bottom">评价说明：</td>
+					<td class="boder_left_bottom">
+						<textarea style="width:75%;height:180px"  id="healthassess_other" name="healthassess_other" type="text" ng-model="checka.healthassess_other" maxlength="500"></textarea>                	
+					</td>
+				</tr>
+				<tr>
+					<td width="100" rowspan="4" class="boder_bottom">健康指导：</td>
+					<td width="100" class="boder_left_bottom">健康指导：</td>
+					<td class="boder_left_bottom">
+						<checkbox-healthadvice id="healthadvice" name="healthadvice" ng-model="checka.healthadvice"> </checkbox-healthadvice>             	
+					</td>
+				</tr>
+				<tr>
+					<td width="100" rowspan="2" class="boder_left_bottom">危险因素控制：</td>
+					<td class="boder_left_bottom">
+						<checkbox-dangercontrol id="dangercontrol" name="dangercontrol" ng-model="checka.dangercontrol"></checkbox-dangercontrol>
+					</td>
+				</tr>
+				<tr>
+					<td class="boder_left_bottom">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 padding_div" ng-show="checka.dangercontrol.indexOf('HR480_5')>=0">
+							<table style="width:100%">
+								<tr>
+									<td class="form_td_left" style="width:120px;">减体重(目标)：</td>
+									<td class="form_td_center">
+                                       	<input class="form-control input-sm" id="weighttarget" name="weighttarget"  type="text" maxlength="100" ng-model="checka.weighttarget">
+                                    </td>
+									<td class="form_td_right">&nbsp;</td>
+								</tr>
+							</table>
+						</div> 
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 padding_div" ng-show="checka.dangercontrol.indexOf('HR480_6')>=0">
+							<table style="width:100%">
+								<tr>
+									<td class="form_td_left" style="width:200px;">建议疫苗接种(疫苗名称)：</td>
+									<td class="form_td_center">
+                                       	<input class="form-control input-sm" id="jyymjz" name="jyymjz"  type="text" maxlength="100" ng-model="checka.jyymjz">	
+                                    </td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 padding_div" ng-show="checka.dangercontrol.indexOf('HR480_7')>=0">
+							<table style="width:100%">
+								<tr>
+									<td class="form_td_left" style="width:120px;">其他控制：</td>
+									<td class="form_td_center">
+                                       	<input class="form-control input-sm" id="qtkz" name="qtkz"  type="text" maxlength="100" ng-model="checka.qtkz">
+                                    </td>
+									<td class="form_td_right">&nbsp;</td>
+								</tr>
+							</table>
+						</div> 
+					</td>
+				</tr>
+				<tr>
+					<td width="100" class="boder_left_bottom">健康建议：</td>
+					<td class="boder_left_bottom">
+						<textarea style="width:75%;height:180px" name="content" id="content" maxlength="400" ng-model="checka.content"></textarea>            	
+					</td>
+				</tr>
+			</table>
+		</div>
+		<table width="100%" >
+			<tr>
+				<td align="center">
+					<button ng-show="!checka.isOld" id="btnSave" type="button" class="btn btn-default"  data-dismiss="modal" ng-click="save()">
+						<span class="glyphicon glyphicon-ok"></span>保存
+					</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+<script>
+	$('.dynamic_div_f').width($('#shfs_div').width()-200);
+	$('.dynamic_div').width($('#overflow_div').width()-210);
+	$(window).resize(function() {
+		$('.dynamic_div_f').width($('#shfs_div').width()-200);
+		$('.dynamic_div').width($('#overflow_div').width()-210);
+	});
+</script>
+</html>

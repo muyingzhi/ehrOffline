@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ><!--  manifest="ehrOffLine.manifest"  -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="../styles/table_main.css" rel="stylesheet" />
+</head>
+<body>
+<div class="table-responsive ">
+    <table class="table table-hover table_main">
+      <thead style="background:#eee">
+        <tr>
+          <th><input type="checkbox"></th>
+          <th>姓名</th>
+          <th>性别</th>
+          <th>出生日期</th>
+          <th>身份证号</th>
+          <th>住址</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="arch in archlist" ng-click="selectArch(arch.id)" ng-class="{active:arch.id==rootParameter}">
+          <td><a href="#/archDetail/{{arch.id}}">{{arch.id}}</a></td>
+          <td>{{arch.fullname}}</td>
+          <td>{{arch.gender}}</td>
+          <td>{{arch.id}}</td>
+          <td>{{arch.id}}</td>
+          <td>{{arch.addr}}</td>
+          <td>
+          	<a href='#/archDetail/{{arch.id}}' title='档案编辑'><span class='font_blue glyphicon glyphicon-edit'></span>&nbsp;</a>
+			<a href='#/arch/healthCheckA/{{arch.id}}' title='健康体检'><span class='font_blue glyphicon glyphicon-leaf'></span>&nbsp;</a>
+          	<a href='#/arch/hyper/{{arch.id}}' title='高血压随访'><span class='font_blue glyphicon glyphicon-fire'></span>&nbsp;</a>
+          	<a href='#/arch/dm/{{arch.id}}' title='糖尿病随访'><span class='font_blue glyphicon glyphicon-map-marker'></span>&nbsp;</a>
+          	<a href='#/arch/zycmr/{{arch.id}}' title='中医体质管理'><span class='font_blue glyphicon glyphicon-tree-conifer'></span></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+<div class="panel panel-default" id="archPanel"
+	style="display:none;position:
+	absolute;
+	background-color:#ffc;
+	top:1px;
+	width:900px;
+	box-shadow:0 0 15px rgba(0, 0, 0, 0.1);">
+	<div class="panel-heading">
+		<button type="button" class="close" data-dismiss="panel">
+		<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+		</button>
+        <label>标题</label>
+	</div>
+	<div class="panel-body" style="overflow:auto">
+		内容
+	</div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myModalLabel">体检读取</h4>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

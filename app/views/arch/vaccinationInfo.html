@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+<title>Insert title here</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">
+</head>
+<body>
+
+<div class="rows">
+	<div class="col-xs-12">&nbsp;</div>
+	<div class="col-xs-12 table_head">疫苗信息</div>
+	<div class="col-xs-12">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">疫苗名称：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.bacterinname" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">疫苗分类：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.type" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">针次：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.acuscount" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">针次描述：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.description" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">应接种日期：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text" hys-none-datebox style="width:100%;min-width:120px;height:32px;" ng-model="data.sinocudate" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">接种部位：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.inoculationSite" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">接种途径：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.inoculationWay" readonly>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">登记人：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.registerperson" readonly>
+			</span>
+		</div>
+	</div>
+	<div class="col-xs-12">&nbsp;</div>
+	<div class="col-xs-12 table_head">接种信息</div>
+	<div class="col-xs-12">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">接种状态：</span>
+			<span class="data_row_val">
+				<input type="checkbox" style="width:20px;height:20px;" ng-model="data.inocustate" value="1">
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">接种日期：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text" hys-none-datebox style="width:100%;min-width:120px;height:32px;" ng-model="data.inocudate" >
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">接种医生：</span>
+			<span class="data_row_val">
+				<select class="form-control"  ng-model="data.inocudoctor"  ng-options="item.id as item.text for item in dictDoctor" required>
+		    	</select>
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">疫苗批号：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.batchnumber" >
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">有效日期：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text" hys-none-datebox style="width:100%;min-width:120px;height:32px;" ng-model="data.validdate">
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">生产企业：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.manufacturer">
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">备注：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.remark">
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">异常反应：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.exception">
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">异常反应处理：</span>
+			<span class="data_row_val">
+				<input class="form-control" type="text"  ng-model="data.exception_deal">
+			</span>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;">
+			<span class="data_row_tip">接种机构：</span>
+			<span class="data_row_val">
+				<select class="form-control"  ng-model="data.icpcode"  ng-options="item.id as item.text for item in dictTgov" required>
+		    	</select>
+			</span>
+		</div>
+		<div class="col-xs-12">&nbsp;</div>
+		<div class="col-xs-12" style="text-align:center;">
+			<button id="btnSave" class="btn btn-default" ng-click="save()"><span class="glyphicon glyphicon-ok"></span>&nbsp;保存</button>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

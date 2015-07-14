@@ -1,0 +1,452 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>好医生诊所管理系统:::1岁以内儿童健康体检记录新建/修改页面</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">
+</head>
+<style type="text/css">
+input.ng-invalid,select.ng-invalid {
+	background-color: pink;
+}
+.divc{
+    border:#CDC3D9 dotted 1px;
+	font-size: 9pt;
+	padding-top: 13px;
+	padding-right: 5px;
+	padding-left: 5px;
+	text-align:left;
+	background-color:#dedef8; 
+}
+div{
+  align:right;
+}
+</style>
+<body style="background-color:#eef;">
+                          <p style="font-size: 16pt" align="center">0~3岁儿童随访</p>
+<div class="container">
+	<form name="frmAction" role="form"  novalidate id="frmBobyVisit" onsubmit="return false;">
+	<input type="hidden" name="id"  id="objectid" ng-model="baby.babycheckrecordid">	
+	<input type="hidden" id="icpcode" name="icpcode" ng-model="baby.icpcode">
+	<input type="hidden" id="crtime" name="crtime" ng-model="baby.crtime">
+	<input type="hidden" id="fromtype" value="kid">
+	<!-- 如有需要请注意在此修改相应字段名，detail页面的字段名必须与该对象数据表字段名相对应 -->
+	<div class="row divc">
+	<div class="col-sm-2 col-md-2" align="center" style="padding-top:6%;">
+       <span style="font-weight:bold;">一般情况</span>
+     </div>
+    <div class="row col-sm-10 col-md-10">
+    <div class="input-group  col-sm-10 col-md-10" align="right">
+    <div class="form-group col-sm-10 col-md-5">
+            <span>档案ID：</span>
+			<input id="archid" name="archid" type="hidden" ng-model="baby.archid">
+			<input readOnly id="archiveid" name="archiveid"  type="text" style="width:140px" ng-model="baby.archiveid" class="form-control">
+      </div>
+      <div class="form-group col-sm-10 col-md-5">
+           <span>姓名：</span>
+           <input  id="fullname" type="text" readonly ng-model="baby.fullname"  style="width:140px" class="form-control">
+      </div>
+      </div>
+      <div class="input-group  col-sm-10 col-md-10" align="right">
+        <div class="form-group col-sm-10 col-md-5">
+           <span>项目：</span>
+	        <select name="project" id="project" ng-model="baby.project" required
+		    			ng-options="item.id as item.text for item in babyProjectInfo" style="width:140px" class="form-control">
+		    			<option value="">--请选择--</option>
+		    	</select>
+       </div>
+        <div class="form-group col-sm-10 col-md-5">
+           <span>随访日期：</span>
+           <input id="visittime" name="visittime" type="text" ng-model="baby.visittime" style="width:140px" hys-datebox required ng-change="setMyBookingdate()" class="form-control">
+           
+       </div>
+       </div>
+       <div class="input-group  col-sm-10 col-md-10" align="right">
+       <div class="form-group col-sm-10 col-md-5">
+	       		<table>
+					<tr>
+						<td class="right">体重：</td>
+						<td width="140px">
+							<span class="input-group">
+								<input class="form-control" id="avoirdupois" name="avoirdupois" type="text"  is-float ng-model="baby.avoirdupois" ng-change="getChangeValue('weight')">
+	           					<span class="input-group-addon" style="padding: 4px" id="basic-addon2">kg</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+       </div>
+       <div class="form-group col-sm-10 col-md-5">
+           <span>体重级别：</span>
+           <select  name="avoirdupoislevel" id="avoirdupoislevel"  ng-model="baby.avoirdupoislevel"
+					ng-options="item.id as item.text for item in babyBodylevelInfo" style="width:140px" class="form-control">
+			</select>
+       </div>
+       </div>
+       <div class="input-group  col-sm-10 col-md-10" align="right">
+       <div class="form-group col-sm-10 col-md-5">
+           <table>
+					<tr>
+						<td class="right">身长：</td>
+						<td width="140px">
+							<span class="input-group">
+								<input class="form-control" id="height" name="height" type="text" ng-model="baby.height" is-float ng-change="getChangeValue('height')">
+	           					<span class="input-group-addon" style="padding: 4px" id="basic-addon2">cm</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+       </div>
+       <div class="form-group col-sm-10 col-md-5">
+           <span>身长级别：</span>
+             <select  name="heightlevel" id="heightlevel"  ng-model="baby.heightlevel"
+					ng-options="item.id as item.text for item in babyBodylevelInfo" style="width:140px" class="form-control">
+			</select>
+       </div>
+     </div>
+    </div>
+   </div>
+   
+   
+   	<div class="row divc">
+	<div class="col-sm-2 col-md-2" align="center" style="padding-top:12%;">
+       <span style="font-weight:bold;">体格检查</span>
+     </div>
+    <div class="row col-sm-10 col-md-10">
+    <div class="input-group  col-sm-10 col-md-10" align="right">
+    <div class="form-group col-sm-10 col-md-5">
+            <span>面色：</span>
+			<select id="facecolor" name="facecolor" ng-model="baby.facecolor" 
+			        ng-options="item.id as item.text for item in babyFacecolor" style="width:140px" class="form-control"></select>
+      </div>
+      <div class="form-group col-sm-10 col-md-5">
+           <span>皮肤：</span>
+		   <radio-publicstatus id="skin" name="skin" ng-model="baby.skin"></radio-publicstatus>
+      </div>
+    </div>
+    <div class="input-group  col-sm-10 col-md-10" align="right">
+       <div class="form-group col-sm-10 col-md-5">
+           <span>眼：</span>
+		   <radio-publicstatus id="eye" name="eye" ng-model="baby.eye"></radio-publicstatus>
+       </div>
+       <div class="form-group col-sm-10 col-md-5">
+           <span>耳：</span>
+		   <radio-publicstatus id="ear" name="ear" ng-model="baby.ear"></radio-publicstatus>
+       </div>
+      </div>
+       <div class="input-group  col-sm-10 col-md-10" align="right">
+       <div class="form-group col-sm-10 col-md-5">
+           <span>心肺：</span>
+		   <radio-publicstatus id="cardiopulmonary" name="cardiopulmonary" ng-model="baby.cardiopulmonary"></radio-publicstatus>
+       </div>
+       <div class="form-group col-sm-10 col-md-5">
+           <span>腹部：</span>
+		   <radio-publicstatus id="abdomen" name="abdomen" ng-model="baby.abdomen"></radio-publicstatus>
+       </div>
+       </div>
+      <div class="input-group  col-sm-10 col-md-10" align="right">
+       <div class="form-group col-sm-10 col-md-5">
+           <span>脐部：</span>
+		   <radio-publicstatus id="umbilical" name="umbilical" ng-model="baby.umbilical"></radio-publicstatus>
+       </div>
+       <div class="form-group col-sm-10 col-md-5">
+           <span>四肢：</span>
+		   <radio-publicstatus id="limbs" name="limbs" ng-model="baby.limbs"></radio-publicstatus>
+       </div>
+       </div>
+       <div class="input-group  col-sm-10 col-md-10" align="right">
+        <div class="form-group col-sm-10 col-md-5">
+           <span>口腔：</span>
+		    <radio-publicstatus id="mouthcavity" name="mouthcavity" ng-model="baby.mouthcavity"></radio-publicstatus>
+       </div>
+       <div class="form-group col-sm-10 col-md-5">
+           <span>肛门/外生殖器：</span>
+           <radio-publicstatus id="genitals" name="genitals" ng-model="baby.genitals"></radio-publicstatus>
+       </div>
+       </div>
+       <div class="input-group  col-sm-10 col-md-10" align="right">
+       <div class="form-group col-sm-10 col-md-5">
+           <span>前卤状态：</span>
+           <select id="anteriorcranialstate" name="anteriorcranialstate" ng-model="baby.anteriorcranialstate"
+			        ng-options="item.id as item.text for item in babyAnteriorcranialstaten" style="width:140px" class="form-control"></select>
+       </div>
+        <div class="form-group col-sm-10 col-md-5">
+           <span>出牙数：</span>
+           <input id="toothnumber" name="toothnumber" ng-model="baby.toothnumber" type="text" style="width:140px" class="form-control">
+       </div>
+      </div>
+      <div class="input-group  col-sm-10 col-md-10" align="right">
+       <div class="form-group col-sm-10 col-md-5">
+            <table>
+					<tr>
+						<td class="right">头围：</td>
+						<td width="140px">
+							<span class="input-group">
+								<input id="touwei" name="touwei" type="text" ng-model="baby.touwei" is-float class="form-control">
+	           					<span class="input-group-addon" style="padding: 4px" id="basic-addon2">cm</span>
+							</span>
+						</td>
+					</tr>
+				</table>
+       </div>
+       <div class="form-group col-sm-10 col-md-5">
+           <span>颈部包块：</span>
+           <select id="neck" name="neck" ng-model="baby.neck" requird
+			        ng-options="item.id as item.text for item in babyNeck" style="width:140px" class="form-control"></select>
+       </div>
+       </div>
+       <div class="input-group  col-sm-10 col-md-10" align="right">
+         <div class="form-group col-sm-10 col-md-5">
+            <span>听力：</span>
+            <select id="hearing" name="hearing" ng-model="baby.hearing" 
+			        ng-options="item.id as item.text for item in babyHearing" style="width:140px" class="form-control"></select>
+         </div>
+         <div class="form-group col-sm-10 col-md-5">
+           <span>淋巴：</span>
+           <select id="lymph" name="lymph" ng-model="baby.lymph" 
+			        ng-options="item.id as item.text for item in babyLymph" style="width:140px" class="form-control"></select>
+         </div>
+       </div>
+       <div class="input-group  col-sm-10 col-md-10" align="right">
+       <div class="form-group col-sm-10 col-md-5">
+            <table>
+					<tr>
+						<td class="right">骨碱性磷酸酶：</td>
+						<td width="140px">
+							<span class="input-group">
+								<input id="gjxlsm" name="gjxlsm" type="text" is-float ng-model="baby.gjxlsm"  class="form-control">
+	           					<span class="input-group-addon" style="padding: 4px" id="basic-addon2">U/L</span>
+							</span>
+						</td>
+					</tr>
+			</table>
+       </div>
+       <div class="form-group col-sm-10 col-md-5">
+             <table>
+					<tr>
+						<td class="right">胸围：</td>
+						<td width="140px">
+							<span class="input-group">
+								<input id="extcol7" name="extcol7" ng-model="baby.extcol7" is-float class="form-control" maxlength="50">
+	           					<span class="input-group-addon" style="padding: 4px" id="basic-addon2">cm</span>
+							</span>
+						</td>
+					</tr>
+			</table>
+       </div>
+      </div>
+       <div class="input-group  col-sm-10 col-md-10" align="right">
+        <div class="form-group col-sm-10 col-md-5">
+             <table>
+					<tr>
+						<td class="right">血红蛋白值：</td>
+						<td width="140px">
+							<span class="input-group">
+								<input id="hemoglobin" name="hemoglobin" type="text" ng-model="baby.hemoglobin"  is-float  maxlength="10"  class="form-control">
+	           					<span class="input-group-addon" style="padding: 4px" id="basic-addon2">g/L</span>
+							</span>
+						</td>
+					</tr>
+			</table>
+       </div>
+       <div class="form-group col-sm-10 col-md-5">
+           <input id="hemoglobin_memo" name="hemoglobin_memo" ng-model="baby.hemoglobin_memo" style="width:80px" class="form-control" maxlength="50">
+           &nbsp;&nbsp;<button ng-click="changeValue()">拒查</button>
+       </div>
+       </div>
+      <div class="row col-sm-10 col-md-10">
+        <div class=" form-group col-sm-10 col-md-9 col-md-offset-1">
+           <span>佝偻病症状：</span>
+           <checkbox-gouloubinzhuang id="ricketscondition" name="ricketscondition" ng-model="baby.ricketscondition"></checkbox-gouloubinzhuang>
+       </div>
+      </div>
+      <div class="input-group  col-sm-10 col-md-10" >
+        <div class="form-group col-sm-10 col-md-9 col-md-offset-1">
+           <span>佝偻病体征：</span>
+           <checkbox-gouloutizheng id="ricketssigns" name="ricketssigns" ng-model="baby.ricketssigns"></checkbox-gouloutizheng>
+       </div>
+       </div>
+       <div class="input-group  col-sm-10 col-md-10">
+        <div class="form-group col-sm-10 col-md-9 col-md-offset-1">
+           <span>佝偻病体征：</span>
+           <checkbox-goulouciyaotizheng id="ricketsssigns" name="ricketsssigns" ng-model="baby.ricketsssigns"></checkbox-goulouciyaotizheng>
+       </div>
+       </div>
+       <div class="input-group  col-sm-10 col-md-10">
+        <div class="form-group col-sm-10 col-md-9 col-md-offset-1">
+          <span>异常情况：</span>	
+          <textarea   class="form-control"  rows="2" id="exceptioninfo" width="70%" name="exceptioninfo" type="text" ng-model="baby.exceptioninfo" maxlength="500"></textarea>
+       </div>
+     </div>
+     
+     
+     
+     
+     
+     <div class="input-group  col-sm-10 col-md-10" align="right">
+        <div class="form-group col-sm-10 col-md-5">
+           <span>遗传代谢病筛查</span>
+           <input id="extcol1" name="extcol1" ng-model="baby.extcol1" style="width:140px" class="form-control"  maxlength="50">
+       </div>
+       <div class="form-group col-sm-10 col-md-5">
+           <span>DDH筛查：</span>
+           <input id="extcol2" name="extcol2" ng-model="baby.extcol2" style="width:140px" class="form-control"  maxlength="50">
+       </div>
+       </div>
+       <div class="input-group  col-sm-10 col-md-10" align="right">
+        <div class="form-group col-sm-10 col-md-5">
+           <span>DPDQ：</span>
+           <input id="extcol3" name="extcol3" ng-model="baby.extcol3" style="width:140px" class="form-control" maxlength="50">
+       </div>
+       <div class="form-group col-sm-10 col-md-5">
+           <span>DDST：</span>
+           <input id="extcol4" name="extcol4" ng-model="baby.extcol4" style="width:140px" class="form-control" maxlength="50">
+       </div>
+       </div>
+      <div class="input-group  col-sm-10 col-md-10" align="right">
+        <div class="form-group col-sm-10 col-md-5">
+           <span>Gesll：</span>
+           <input id="extcol5" name="extcol5" ng-model="baby.extcol5" style="width:140px" class="form-control" maxlength="50">
+				
+       </div>
+       <div class="form-group col-sm-10 col-md-5">
+           <span>骨密度：</span>
+           <input id="extcol6" name="extcol6" ng-model="baby.extcol6"  style="width:140px" class="form-control" maxlength="50">
+       </div>
+       </div>
+       <div class="input-group  col-sm-10 col-md-10" align="right">
+        <div class="form-group col-sm-10 col-md-5">
+           <span>X线：</span>
+           <input id="extmemo2" name="extmemo2" ng-model="baby.extmemo2" style="width:140px" class="form-control" maxlength="50">
+        </div>
+        <div class="form-group col-sm-10 col-md-5">
+           <span>血生化：</span>
+           <input id="extmemo1" name="extmemo1" ng-model="baby.extmemo1" style="width:140px" class="form-control" maxlength="200">
+        </div>
+       </div>
+     </div>
+   </div>
+   
+<div class="row divc">
+	<div class="col-sm-2 col-md-2" align="center" style="padding-top:6%;">
+           <span style="font-weight:bold;">中医药健康管理</span>
+    </div>
+      <div class="row col-sm-10 col-md-10">
+      <div class="row col-sm-10 col-md-10">
+        <span>饮食调养：</span><br/>
+		<checkbox-eattiaoyang id="foodguide" name="foodguide" ng-model="baby.foodguide"  maxlength="500"></checkbox-eattiaoyang>
+       </div>
+       <div class="row col-sm-10 col-md-10">
+       <div class="row col-sm-10 col-md-10">
+           <span>起居调摄：</span><br/>
+           <checkbox-qijutiaoshe id="sleepguide" name="sleepguide" ng-model="baby.sleepguide"  maxlength="500"></checkbox-qijutiaoshe>
+       </div>
+       </div>
+       <div class="row col-sm-10 col-md-10">
+       <div class="row col-sm-10 col-md-10">
+           <span>推拿方法：</span><br/>
+           <checkbox-tuina id="massageguide" name="massageguide" ng-model="baby.massageguide"  maxlength="60"></checkbox-tuina>
+       </div>
+       </div>
+       <div class="input-group  col-sm-10 col-md-10">
+       <div class="form-group col-sm-10 col-md-10">
+           <span>其他：</span>	
+          <textarea class="form-control" rows="2"  id="cmrotherguide" name="cmrotherguide" ng-model="baby.cmrotherguide" maxlength="500"></textarea>
+       </div>
+       </div>
+       <div class="form-group input-group  col-sm-10 col-md-10">
+       <div class="col-sm-10 col-md-5" align="left">
+           <span>微量元素检测 ：</span>
+       </div>
+       <div class="col-sm-10 col-md-5">
+           <span>铁：</span>
+           <input id="fe" name="fe"  ng-model="baby.fe"  is-float style="width:140px" class="form-control" maxlength="50">mmol/L
+       </div>
+       </div>
+       <div class="form-group input-group  col-sm-10 col-md-10">
+        <div class="col-sm-10 col-md-5">
+           <span>锌：</span>
+		   <input id="zn" name="zn" is-float ng-model="baby.zn" is-float style="width:140px" class="form-control">umol/L
+       </div>
+       <div class="col-sm-10 col-md-5">
+           <span>钙：</span>
+           <input id="ca" name="ca"  ng-model="baby.ca"   is-float style="width:140px" class="form-control" maxlength="50">mmol/L
+       </div>
+      
+     </div>
+     <div class="form-group input-group  col-sm-10 col-md-10">
+         <div class="col-sm-10 col-md-5">
+           <span>镁：</span>
+           <input id="mg" name="mg" ng-model="baby.mg" is-float style="width:140px" class="form-control"  maxlength="50">mmol/L
+        </div>
+        <div class="col-sm-10 col-md-5">
+           <span>铜：</span>
+           <input id="cu" name="cu"  ng-model="baby.cu" is-float style="width:140px" class="form-control"   maxlength="50">umol/L
+       </div>
+     </div>
+     </div>
+</div>
+   
+   	<div class="row divc">
+	<div class="col-sm-2 col-md-2" align="center" style="padding-top:6%;">
+           <span style="font-weight:bold;">其他</span>
+    </div>
+      <div class="row col-sm-10 col-md-10">
+      <div class="form-group input-group  col-sm-10 col-md-10">
+       <div class="col-sm-10 col-md-5">
+           <span>户外活动：</span>
+           <input id="outdoor" name="outdoor" ng-model="baby.outdoor" style="width:140px" class="form-control">(小时/日)
+       </div>
+       <div class="col-sm-10 col-md-5">
+           <span>发育评估：</span>
+           <select id="eyesight" name="eyesight" ng-model="baby.eyesight" 
+			       ng-options="item.id as item.text for item in babyEyesight" style="width:140px" class="form-control"></select>
+       </div>
+       </div>
+       <div class="form-group input-group  col-sm-10 col-md-10">
+       <div class="col-sm-10 col-md-5">
+           <span>2次随访间患病情况：</span>
+            <select id="betweenvisit" name="betweenvisit" ng-model="baby.betweenvisit" 
+			       ng-options="item.id as item.text for item in babyBetweenvisit" style="width:140px" class="form-control"></select>
+       </div>
+       <div class="col-sm-10 col-md-5">
+           <span>其他：</span>
+           <input id="other" name="other"  ng-model="baby.other" style="width:140px" class="form-control">
+       </div>
+       </div>
+       <div class="row col-sm-10 col-md-10">
+        <div class="form-group col-sm-10 col-md-10">
+           <span>指导：</span>
+		   <checkbox-zhidao id="guidance" name="guidance" ng-model="baby.guidance"></checkbox-zhidao>
+		   <input id="guidanceother" name="guidanceother" ng-model="baby.guidanceother" type="text">
+       </div>
+       </div>
+       <div class="row col-sm-10 col-md-10">
+       <div class="form-group col-sm-10 col-md-5">
+           <span>本次随访机构：</span>
+           <input id="icpname" readOnly name="icpname" ng-model="baby.icpname"></input>
+       </div>
+       <div class="form-group col-sm-10 col-md-5">
+           <span>下次随访日期：</span>
+           <input id="nextvisitstime" name="nextvisitstime" type="text" ng-model="baby.nextvisitstime" hys-datebox required >
+       </div>
+     </div>
+     <div class="form-group input-group  col-sm-10 col-md-10">
+        <div class="col-sm-10 col-md-10">
+           <span>随访医生签名：</span>
+            <select id="visitdoctor" name="visitdoctor" ng-model="baby.visitdoctor" required
+			        ng-options="item.id as item.text for item in babyVisitdoctor" style="width:140px" class="form-control"></select>
+       </div>
+     </div>
+     </div>
+   </div>
+   <div class="row" align="center">
+         <div class="form-group col-sm-12 col-md-12 div_options">
+              <button ng-show="!baby.isOld" id="btnSave" class="btn btn-default" ng-click="save()">
+						<span class="glyphicon glyphicon-ok"></span>&nbsp;保存</button>
+         </div>
+     </div>
+</form>
+</div>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insert title here</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">	
+</head>
+<body class="container-fluid">
+	
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<ul class="nav nav-pills">
+			  <li role="presentation" class="active" data="tz"><a href="">卫生监督协管信息报告</a></li>
+			  <li role="presentation" id="xwhshfsn" data="xwhshfs"><a href="">卫生监督协管巡查登记</a></li>
+			</ul>
+		</div>
+		<div class="panel-body show-div" style="border-color:#BDE9F1;min-height:500px;" >
+			<div class="row">
+				<div class="col-xs-12 cathetus_div" id="tz" >
+					<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 " style="margin-top:5px;">
+					    <div class="panel panel-info">
+							<div class="panel-heading">
+					      		<h5>新增
+					      		<span style="float: right;"><a ng-click="addBgdj()" style="display:inline;" class="btn btn-primary col-xs-offset-2" role="button">保存</a></span></h4>
+							</div>
+							<div class="panel-body">
+								<table width="100%">
+									<tr>
+										<td style="color:#428BCA;width:100px;">&nbsp;发现时间：</td><td><input style="width:150px;height:32px;border:1px solid #cccccc;line-height:1.428571429;" name="discover_date" type="text" hys-none-datebox ng-model="bgdj.discover_date"/></td>
+									</tr><tr>
+										<td style="color:#428BCA;width:100px;">&nbsp;信息类别：</td>
+										<td>
+											<select class="form-control input-sm" style="width:150px;" type="text" ng-model="bgdj.info_type" ng-options="n.id as n.text for n in industry"></select>
+										</td>
+									</tr><tr>
+										<td style="color:#428BCA;width:100px;">&nbsp;报告人：</td><td><input class="form-control input-sm" style="width:150px;" type="text" ng-model="bgdj.report_user" ></input></td>
+								    </tr><tr>
+										<td style="color:#428BCA;width:100px;">&nbsp;报告时间：</td><td><input style="width:150px;height:32px;border:1px solid #cccccc;line-height:1.428571429;" type="text" hys-none-datebox ng-model="bgdj.report_date"/></td>
+									</tr><tr>
+										<td colspan="2" align="center" style="color:#428BCA;border-bottom:1px dashed #CFCFCF;">信息内容</td>
+									</tr><tr>
+										<td colspan="2" align="center">
+											<textarea rows="5" style="width:100%;border:none;" ng-model="bgdj.content"></textarea>
+										</td>
+									</tr>
+								</table>
+						    </div>
+						</div>
+					</div>
+					<div ng-repeat="item in bgdjList">
+						<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 " style="margin-top:5px;">
+						    <div class="panel panel-info">
+								<div class="panel-heading">
+						      		<h5>{{item.reportlistid}}
+						      		<span style="float: right;"><a ng-click="delBgdj(item)" style="display:inline;color:red;" class="btn btn-primary col-xs-offset-2" role="button">删除</a></span></h4>
+								</div>
+								<div class="panel-body">
+									<table width="100%">
+										<tr>
+											<td style="color:#428BCA;width:100px;">&nbsp;发现时间：</td><td><input style="width:150px;height:32px;border:1px solid #cccccc;line-height:1.428571429;" name="discover_date" type="text" hys-none-datebox ng-model="item.discover_date"/></td>
+										</tr><tr>
+											<td style="color:#428BCA;width:100px;">&nbsp;信息类别：</td><td><select class="form-control input-sm" style="width:150px;" type="text" ng-model="item.info_type" ng-options="n.id as n.text for n in industry"></select></td>
+										</tr><tr>
+											<td style="color:#428BCA;width:100px;">&nbsp;报告人：</td><td><input class="form-control input-sm" style="width:150px;" type="text" ng-model="item.report_user"></input></td>
+									    </tr><tr>
+											<td style="color:#428BCA;width:100px;">&nbsp;报告时间：</td><td><input style="width:150px;height:32px;border:1px solid #cccccc;line-height:1.428571429;" type="text" hys-none-datebox ng-model="item.report_date"/></td>
+										</tr><tr>
+											<td colspan="2" align="center" style="color:#428BCA;border-bottom:1px dashed #CFCFCF;">信息内容</td>
+										</tr><tr>
+											<td colspan="2" align="center">
+												<textarea rows="5" style="width:100%;border:none;" ng-model="item.content"></textarea>
+											</td>
+										</tr>
+									</table>
+						      	</div>
+							</div>
+						</div>
+					</div>
+				</div> 
+				<div class="col-xs-12 cathetus_div" id="xwhshfs" style="display:none;">
+					<div class="col-xs-12 col-lg-6 " style="margin-top:5px;">
+					    <div class="panel panel-info">
+							<div class="panel-heading">
+								<h4>新增
+					      			<span style="float: right;">
+					      				<a ng-click="addScdj(item)" style="display:inline;color:red;" class="btn btn-primary col-xs-offset-2" role="button">新增</a>
+					      			</span>
+					      		</h4>
+							</div>
+							<div class="panel-body">
+								<table width="100%">
+									<tr>
+										<td style="color:#428BCA;width:100px;">&nbsp;
+											<label>单位名称:<span class="font_red">*</span></label>
+										</td>
+										<td>
+											<div style="width:80%;float:left;"><input type="text" class="form-control" id="comp_name" ng-model="scdj.comp_name" ></div>
+											<div style="width:20%;float:left;line-height:30px;"><a href="javascript:void(0)" id="getWindow">[选择]</a></div>
+							        	</td>
+										<td style="color:#428BCA;width:100px;">&nbsp;
+											<label>单位地址:<span class="font_red">*</span></label>
+										</td>
+										<td>
+											<input type="text" class="form-control" id="address" ng-model="scdj.address" >
+											<input type="hidden" class="form-control" id="company_id" ng-model="scdj.company_id" >
+										</td>
+									</tr>
+									<tr>
+										<td style="color:#428BCA;width:100px;">&nbsp;
+											<label>检查人:<span class="font_red">*</span></label>
+										</td>
+										<td>
+											<input type="text" class="form-control" ng-model="scdj.check_user" >
+										</td>
+										<td style="color:#428BCA;width:100px;">&nbsp;
+											<label>检查时间:<span class="font_red">*</span></label>
+										</td>
+										<td>
+											<input style="width:150px;height:32px;border:1px solid #cccccc;line-height:1.428571429;" hys-none-datebox ng-model="scdj.check_date"/>
+										</td>
+									</tr>
+									<tr>
+										<td style="color:#428BCA;width:100px;">&nbsp;
+											<label>巡查类别:</label>
+										</td>
+										<td colspan="3">
+							        		<select id="patroltype" name="patroltype"  class="form-control" style="width:150px;height:32px;" ng-options="n.id as n.text for n in patroltypes" ng-model="scdj.patroltype"></select>
+										</td>
+								    </tr>
+								    <tr>
+										<td style="color:#428BCA;width:100px;">&nbsp;
+											<label>内  容:</label>
+										</td>
+										<td colspan="3">
+											<textarea rows="2" style="width:100%;" ng-model="scdj.content"></textarea>
+										</td>
+									</tr>
+								    <tr>
+										<td style="color:#428BCA;width:100px;">&nbsp;
+											<label>发现问题:</label>
+										</td>
+										<td colspan="3">
+											<textarea rows="2" style="width:100%;" ng-model="scdj.problem"></textarea>
+										</td>
+									</tr>
+								    <tr>
+										<td style="color:#428BCA;width:100px;">&nbsp;
+											<label>备   注:</label>
+										</td>
+										<td colspan="3">
+											<textarea rows="2" style="width:100%;" ng-model="scdj.remark"></textarea>
+										</td>
+									</tr>
+								</table>
+					      	</div>
+						</div>
+					</div>
+					<div class="col-xs-12">&nbsp;</div>
+					<div class="col-xs-12" style="background-color:#ccc;">
+						<form class="form-inline">
+						  	<div class="form-group">
+						    	<label for="scdjType">行业类别:</label>
+						    	<select id="scdjType" name="scdjType"  class="form-control" style="width:150px;height:32px;" ng-options="n.id as n.text for n in industry" ng-model="scdjType"></select>
+						    	
+						  	</div>
+						 	<div class="form-group">
+						    	<label for="dwmc">单位名称:</label>
+						    	<input id="dwmc" name="dwmc" class="form-control" style="width:150px;height:32px;" type="text"  ng-model="dwmc"/>
+						  	</div>
+						  	<button id="btnSave" class="btn btn-default" ng-click="getListScdj()">查询</button>
+						</form>
+					</div>
+			   	    <div ng-repeat="item in ArrayScdj">
+						<div class="col-xs-12 col-lg-6 " style="margin-top:5px;">
+						    <div class="panel panel-info">
+								<div class="panel-heading">
+						      		<h5>{{item.patrollistid}}
+						      		<span style="float: right;"><a ng-click="delScdj(item)" style="display:inline;color:#fff;" class="btn btn-primary col-xs-offset-2" role="button">删除</a></span></h5>
+								</div>
+								<div class="panel-body">
+									<table width="100%">
+										<tr>
+											<td style="color:#428BCA;width:100px;">&nbsp;
+												<label>单位名称:<span class="font_red">*</span></label>
+											</td>
+											<td>
+												<input type="text" class="form-control" ng-model="item.comp_name" >
+								        	</td>
+											<td style="color:#428BCA;width:100px;">&nbsp;
+												<label>单位地址:<span class="font_red">*</span></label>
+											</td>
+											<td>
+												<input type="text" class="form-control" ng-model="item.address" >
+											</td>
+										</tr>
+										<tr>
+											<td style="color:#428BCA;width:100px;">&nbsp;
+												<label>检查人:<span class="font_red">*</span></label>
+											</td>
+											<td>
+												<input type="text" class="form-control" ng-model="item.check_user" >
+											</td>
+											<td style="color:#428BCA;width:100px;">&nbsp;
+												<label>检查时间:<span class="font_red">*</span></label>
+											</td>
+											<td>
+												<input style="width:100%;height:32px;border:1px solid #cccccc;line-height:1.428571429;" hys-none-datebox ng-model="item.check_date"/>
+											</td>
+										</tr>
+										<tr>
+											<td style="color:#428BCA;width:100px;">&nbsp;
+												<label>巡查类别:</label>
+											</td>
+											<td colspan="3">
+								        		<select id="patroltype" name="patroltype"  class="form-control" style="width:150px;height:32px;" ng-options="n.id as n.text for n in patroltypes" ng-model="item.patroltype"></select>
+											</td>
+									    </tr>
+									    <tr>
+											<td style="color:#428BCA;width:100px;">&nbsp;
+												<label>内  容:</label>
+											</td>
+											<td colspan="3">
+												<textarea rows="2" style="width:100%;" ng-model="item.content"></textarea>
+											</td>
+										</tr>
+									    <tr>
+											<td style="color:#428BCA;width:100px;">&nbsp;
+												<label>发现问题:</label>
+											</td>
+											<td colspan="3">
+												<textarea rows="2" style="width:100%;" ng-model="item.problem"></textarea>
+											</td>
+										</tr>
+									    <tr>
+											<td style="color:#428BCA;width:100px;">&nbsp;
+												<label>备   注:</label>
+											</td>
+											<td colspan="3">
+												<textarea rows="2" style="width:100%;" ng-model="item.remark"></textarea>
+											</td>
+										</tr>
+									</table>
+						      	</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>	
+	<div id="detail">
+		<div class="tit"><label>&nbsp;选择登记单位</label><i class="close">x</i></div>
+		<table id="scdj">
+		</table>
+		<div id="getListScdj" style="padding:2px 5px;">               
+			查询类别: <select style="width:120px;height:32px;" id="cxType" name="cxType"><option value="dwmc">单位名称</option><option value="dwdz">单位地址</option></select>&nbsp;&nbsp;&nbsp;
+			名称: <input style="width:120px;height:32px;" id="cxmc" name="cxmc" type="text" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button id="btnSaveDw" class="btn btn-default" ng-click="getListScdjs()" >查询</button>&nbsp;&nbsp;&nbsp;&nbsp;
+		</div>
+	</div> 
+</body>
+</html>
+
+<!-- 
+	<table id="scdj">
+	</table>
+	<div id="getListScdj" style="padding:2px 5px;">               
+		开始时间: <input  style="width:100px;" name="startDate" type="text" hys-none-datebox ng-model="startDate"/>&nbsp;&nbsp;&nbsp;
+		结束时间: <input  style="width:100px;" name="endDate" type="text" hys-none-datebox ng-model="endDate"/>
+		<br/>  
+		行业类别: <select  style="width:100px;height:24px;" name="scdjType"  ng-options="n.id as n.text for n in industry" ng-model="scdjType"></select>&nbsp;&nbsp;&nbsp;
+		单位名称: <input  style="width:100px;height:24px;" name="dwmc" type="text"  ng-model="dwmc"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<button id="btnSave" class="btn btn-default" ng-click="getListScdj()">查询</button>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button id="btnSave" class="btn btn-default" onclick="$('#w').window('open')">新增</button>
+	</div>
+	<div id="w" class="easyui-window" title="新增" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:500px;padding:10px;">
+        <table>
+        	<tr>
+	        	<td width="80px;"><label>单位名称:<span class="font_red">*</span></label></td>
+	        	<td width="200px;">
+	        		
+		        	<input type="text" class="form-control" id="exampleInputName2" >
+		        	<a href="javascript:void(0)" onclick="$('#s').window('open')">[选择]</a>
+	        	</td>
+	        	<td width="80px;"><label>单位地址:<span class="font_red">*</span></label></td>
+	        	<td><input type="text" class="form-control" id="exampleInputName2" ></td>
+        	</tr>
+        	<tr>
+	        	<td><label>检查人:<span class="font_red">*</span></label></td>
+	        	<td><input type="text" class="form-control" id="exampleInputName2" ></td>
+	        	<td><label>检查时间:<span class="font_red">*</span></label></td>
+	        	<td><input class="easyui-datebox" style="height:32px;border:1px solid #cccccc;"></input></td>
+        	</tr>
+        	<tr>
+	        	<td><label>巡查类别:</label></td>
+	        	<td colspan="3">
+	        		<select class="form-control" id="xcType" name="xcType" style="width:140px;">
+	        			<option value="">..请选择..</option>
+	        			<option value="HR578_2">协同巡查</option>
+	        			<option value="HR578_1">自主巡查</option>
+	        		</select>
+	        	</td>
+        	</tr>
+        	<tr>
+	        	<td><label>内  容:</label></td>
+	        	<td colspan="3"><textarea rows="5" style="width:100%;"></textarea></td>
+        	</tr>
+        	<tr>
+	        	<td><label>发现问题:</label></td>
+	        	<td colspan="3"><textarea rows="5" style="width:100%;"></textarea></td>
+        	</tr>
+        	<tr>
+	        	<td><label>备  注:</label></td>
+	        	<td colspan="3"><textarea rows="5" style="width:100%;"></textarea></td>
+        	</tr>
+        </table>
+    </div>
+-->		

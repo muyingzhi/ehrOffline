@@ -1,0 +1,810 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link href="../styles/table_main.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../vendor/easyui/themes/icon.css">
+<style type="text/css">
+input.ng-invalid,select.ng-invalid {
+	background-color: pink;
+}
+.divc{
+    border:#CDC3D9 dotted 1px;
+	font-size: 9pt;
+	padding-top: 13px;
+	padding-right: 5px;
+	padding-left: 5px;
+	text-align:left;
+	background-color:#dedef8; 
+}
+
+.radius_div{
+	background-color:#eef;
+	border:1px solid #BDE9F1;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+	color:#30708F;
+}
+.cathetus_div{
+	background-color:#eef;
+	color:#30708F;
+}
+.input_border{
+	border:0;
+	background-color:#eef;
+	border-bottom:1px solid #30708F;
+	width:100px;
+}
+.input_border_min{
+	border:0;
+	width:40px;
+	background-color:#eef;
+	border-bottom:1px solid #30708F;
+}
+.select_border{
+	width:100px;
+	background-color:#eef;
+	border:1px solid #30708F;
+}
+.margin-top-div{
+	height:30px;
+}
+</style>
+</head>
+<body style="background-color:#eef;">
+<div class="container-fluid">
+	<p style="font-size: 16pt" align="center">产前首次检查</p>
+	<form name="frmAction" novalidate id="frmDMAction" onsubmit="return false;" action="./hypertensionvisit_addedit.do" method="post">	
+		
+		<input name="firstcheckid" id="firstcheckid" type="hidden" ng-model="lady.firstcheckid">
+		<input name="icpcode" type="hidden" ng-model="lady.icpcode">
+		<input name="archid" id="archid" type="hidden" ng-model="lady.archid">
+		<input name="archiveid" id="archiveid" type="hidden" ng-model="lady.archiveid">
+		
+		<input name="identityno" id="identityno" type="hidden" ng-model="arch.identityno"/>
+		<input class="prop_string" id="fullname" type="hidden" ng-model="arch.fullname">
+		<input class="prop_int" id="gender" type="hidden" ng-model="arch.gender">
+		<input name="age" class="prop_int" id="age" type="hidden" ng-model="arch.age">
+			
+
+		<div class="panel panel-info">
+			<div class="panel-body radius_div">
+				<div class="col-xs-12">&nbsp;</div>
+				<div class="col-xs-10">
+					<strong>档案ID：</strong>{{lady.archiveid}}&nbsp;&nbsp;<strong>姓名：</strong>	{{arch.fullname}}&nbsp;&nbsp;<strong>性别：</strong>{{arch.gender}}&nbsp;&nbsp;
+					<br/><br/>
+					<strong>年龄：</strong>{{arch.age}}
+					&nbsp;&nbsp;<strong>填表日期<span style="color:red;">*</span>：</strong><input class="input_border" style="width:100px;" name="booking_date" id="booking_date" ng-model="lady.booking_date" hys-datebox required><!-- ng-change="setMyBookingdate()" -->
+					<br/>
+				</div>
+				<div class="col-xs-2">
+					<br/>
+					<a href='#/arch/firstcheckA/{{lady.archid}}&{{lady.firstcheckid}}' title='切换'>
+						<button type="button" class="btn btn-info btn-sm" aria-label="Left Align">					  
+					  		<span class="glyphicon glyphicon-list" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;&nbsp;切&nbsp;换
+						</button>
+					</a>
+				</div>
+				<div class="col-xs-12">&nbsp;</div>
+			</div>
+		</div>
+		&nbsp;
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<ul class="nav nav-pills">
+				  <li role="presentation" class="active" data="tz"><a href="">登记信息</a></li>
+				  <li role="presentation" id="xwhshfsn" data="xwhshfs"><a href="">体格检查</a></li>
+				  <li role="presentation" id="sfqkzjn" data="sfqkzj"><a href="">辅助检查</a></li>
+				</ul>
+			</div>
+			<div class="panel-body show-div" style="border-color:#BDE9F1;" >
+				<div class="col-xs-12 cathetus_div" id="tz" >
+					<div class="col-xs-12" style="height:10px;"></div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="isfetiferous">产妇类型<span style="color:red;"> *</span>：</label>
+                  			<radio-isfetiferous name="isfetiferous" id="isfetiferous" required ng-model="lady.isfetiferous"></radio-isfetiferous>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">随访医生<span style="color:red;"> *</span>：</label>
+							<select class="select_border" name="doctor" id="doctor" ng-model="lady.doctor"  ng-options="item.id as item.text for item in dictDoctor" required>
+		    					<option value="">--请选择--</option>
+		    				</select>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">末次月经<span style="color:red;"> *</span>：</label>
+                  			<input class="input_border" style="width:100px;" name="last_menses" id="last_menses" ng-model="lady.last_menses" hys-datebox required />
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">丈夫姓名：</label>
+                  			<input class="input_border" name="husband_name" id="husband_name" type="text" ng-model="lady.husband_name" />
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">丈夫年龄：</label>
+                  			<input class="input_border" name="husband_age" id="husband_age" type="text" ng-model="lady.husband_age" is-float/>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">丈夫电话：</label>
+                  			<input class="input_border" name="husband_tel" id="husband_tel" type="text" ng-model="lady.husband_tel" />
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">孕次<span style="color:red;">&nbsp;&nbsp;*</span>：</label>
+                  			<input class="input_border" name="taici" id="taici" type="text" required ng-model="lady.taici" is-float/>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">产次<span style="color:red;">&nbsp;&nbsp;*</span>：</label>
+                  			<input class="input_border" name="chanci" id="chanci" type="text" required ng-model="lady.chanci" is-float/>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">孕前体重：</label>
+                  			<input class="input_border" name="pre_weight" id="pre_weight" type="text" ng-model="lady.pre_weight" is-float/>kg
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">初潮年龄：</label>
+                  			<input class="input_border" name="menarcheage" id="menarcheage" type="text" ng-model="lady.menarcheage" is-float/>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">经期/周期：</label>
+                  			<input class="input_border_min" name="menstrual_l" id="menstrual_l" type="text" ng-model="lady.menstrual_l" is-float/>
+                  			/
+                  			<input class="input_border_min" name="menstrual_h" id="menstrual_h" type="text" ng-model="lady.menstrual_h" is-float/>天
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">月经量：</label>
+							<select class="select_border" name="menstrualflow" id="menstrualflow" ng-model="lady.menstrualflow" ng-options="item.id as item.text for item in menstrualflow">
+								<option value="">--请选择--</option>
+							</select>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">痛经：</label>
+							<select class="select_border" name="dysmenorrhea" id="dysmenorrhea" ng-model="lady.dysmenorrhea" ng-options="item.id as item.text for item in dysmenorrhea">
+								<option value="">--请选择--</option>
+							</select>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">增补叶酸：</label>
+							<select class="select_border" name="yesuan" id="yesuan" ng-model="lady.yesuan" ng-options="item.id as item.text for item in yesuan">
+								<option value="">--请选择--</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div style="float:left;">
+								<label for="bpheigh">既往病史：</label>
+								<checkbox-ld name=jws id="jws" ng-model="lady.jws"></checkbox-ld>
+							</div>
+							<div style="float:left;" ng-show="lady.jws.indexOf('lady_jwbs_8')>=0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							其他既往病史：<input type="text" name="jwsqt" id="jwsqt" maxlength="100" ng-model="lady.jwsqt">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">初检孕周<span style="color:red;">&nbsp;&nbsp;*</span>：</label>
+                  			<input class="input_border_min" name="pregnant_weeks" id="pregnant_weeks" type="text" required ng-model="lady.pregnant_weeks" is-float/>周
+                  			<input class="input_border_min" name="pregnant_days" id="pregnant_days" type="text" required ng-model="lady.pregnant_days" is-float/>天
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">预产期<span style="color:red;">&nbsp;&nbsp;*</span>：</label>
+                  			<input class="input_border" style="width:100px;" name="expected_childbirth" id="expected_childbirth" ng-model="lady.expected_childbirth" hys-datebox required />
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">阴道流血：</label>
+							<select class="select_border" name="vaginalbleed" id="vaginalbleed" ng-model="lady.vaginalbleed" ng-options="item.id as item.text for item in haved">
+								<option value="">--请选择--</option>
+							</select>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.vaginalbleed.indexOf('HR397_1')>=0">
+							<label for="bpheigh">阴道流血出现孕周：</label>
+                  			<input class="input_border_min" name="vaginalbleed_e" id="vaginalbleed_e" type="text" ng-model="lady.vaginalbleed_e" />
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">妊娠呕吐：</label>
+							<select class="select_border" name="vomitofpreg" id="vomitofpreg" ng-model="lady.vomitofpreg" ng-options="item.id as item.text for item in haved">
+								<option value="">--请选择--</option>
+							</select>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.vomitofpreg.indexOf('HR397_1')>=0">
+							<label for="bpheigh">妊娠呕吐出现孕周：</label>
+                  			<input class="input_border_min" name="vomitofpreg_e" id="vomitofpreg_e" type="text" ng-model="lady.vomitofpreg_e" />
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">孕早期：</label>
+							<select class="select_border" name="earlypreg" id="earlypreg" ng-model="lady.earlypreg" ng-options="item.id as item.text for item in earlypreg">
+								<option value="">--请选择--</option>
+							</select>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.earlypreg.indexOf('LADY_EARLYPREG_4')>=0">
+							<label for="bpheigh">服药名：</label>
+                  			<input class="input_border" name="earlypreg_e" id="earlypreg_e" type="text" ng-model="lady.earlypreg_e" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div style="float:left;">
+								<label for="bpheigh">孕妇家族史：</label>
+								<checkbox-lfd name="jzs" id="jzs" ng-model="lady.jzs"></checkbox-lfd>
+							</div>
+							<div style="float:left;" ng-show="lady.jzs.indexOf('HR436_005')>=0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							其他家族史：<input type="text" name="jzsqt" id="jzsqt" maxlength="100" ng-model="lady.jzsqt">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div style="float:left;">
+								<label for="bpheigh">个人史：</label>
+								<checkbox-lsd name="grs" id="grs" ng-model="lady.grs"></checkbox-lsd>
+							</div>
+							<div style="float:left;" ng-show="lady.grs.indexOf('HR333_6')>=0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							其他个人史：<input type="text" name="grsqt" id="grsqt" maxlength="100" ng-model="lady.grsqt">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">妇科手术史：</label>
+							<select class="select_border" name="hasfkss" id="hasfkss" ng-model="lady.hasfkss" ng-options="item.id as item.text for item in haved">
+								<option value="">--请选择--</option>
+							</select>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.hasfkss.indexOf('HR397_1')>=0">
+							<label for="bpheigh">手术说明：</label>
+                  			<input class="input_border" name="fksss" id="fksss" type="text" ng-model="lady.fksss" />
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">流产：</label>
+                  			<input class="input_border" name="liuc" id="liuc" type="text" ng-model="lady.liuc" is-float/>次
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">死胎：</label>
+                  			<input class="input_border" name="sit" id="sit" type="text" ng-model="lady.sit" is-float/>次
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">死产：</label>
+                  			<input class="input_border" name="sichan" id="sichan" type="text" ng-model="lady.sichan" is-float/>次
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">新生儿死亡：</label>
+                  			<input class="input_border" name="xsesw" id="xsesw" type="text" ng-model="lady.xsesw" is-float/>次
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="bpheigh">出生缺陷儿：</label>
+                  			<input class="input_border" name="quexe" id="quexe" type="text" ng-model="lady.quexe" is-float/>次
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<label for="bpheigh">备注：</label>
+							<input class="input_border" style="width:88%;" name="memo" id="memo" type="text" ng-model="lady.memo" />
+						</div>
+					</div>
+					<div class="col-xs-12" style="height:10px;"></div> 
+					<div class="col-xs-12" style="text-align:right;">	
+						<button type="button" class="btn btn-info btn-sm" aria-label="Left Align" ng-click="nextFunction('xwhshfs')">
+							下 一 步&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+						</button>
+					</div>
+					<div class="col-xs-12" style="height:30px;"></div>
+				</div> 
+				
+				
+				
+				
+				
+				<div class="col-xs-12 cathetus_div" id="xwhshfs" style="display:none;">
+					<div class="row">
+						<div class="col-xs-12 margin-top-div">
+							<label for="isfetiferous">体格检查：</label>
+                  		</div>
+                  		<div class="col-xs-12">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">身高：</label>
+	                  			<input class="input_border" name="height" id="height" type="text" ng-model="lady.height" ng-change="calcBmi()" is-float/>cm
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">体重：</label>
+	                  			<input class="input_border" name="weight" id="weight" type="text" ng-model="lady.weight" ng-change="calcBmi()" is-float />kg
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">体质指数：</label>
+	                  			<input style="background-color:#eef;border-bottom:1px solid #30708F;width:100px;" name="bmi" id="bmi" type="text" ng-model="lady.bmi" readonly />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">血压(收缩压)：</label>
+	                  			<input class="input_border_min" name="blood_pressure_ss" id="blood_pressure_ss" type="text" ng-model="lady.blood_pressure_ss" is-float/>mmHg
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">血压(舒张压)：</label>
+	                  			<input class="input_border_min" name="blood_pressure_sz" id="blood_pressure_sz" type="text" ng-model="lady.blood_pressure_sz" is-float/>mmHg
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">是否高危：</label>
+								<select class="select_border" name="isdanger" id="isdanger" ng-model="lady.isdanger" ng-options="item.id as item.text for item in isstoned">
+									<option value="">--请选择--</option>
+								</select>
+								<a href='' ng-click="returnA()" id="returnA" title='高危评分' style="color:red;">[高危评分]</a>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">发育：</label>
+								<select class="select_border" name="extcol1" id="extcol1" ng-model="lady.extcol1" ng-options="item.id as item.text for item in upgrowth">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.extcol1.indexOf('HR561_2')>=0">
+								<label for="isfetiferous">畸形情况：</label>
+	                  			<input class="input_border" name="extcol10" id="extcol10" type="text" ng-model="lady.extcol10" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">营养：</label>
+								<select class="select_border" name="extcol2" id="extcol2" ng-model="lady.extcol2" ng-options="item.id as item.text for item in pabulum">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">巩膜黄染：</label>
+								<select class="select_border" name="extcol3" id="extcol3" ng-model="lady.extcol3" ng-options="item.id as item.text for item in haved">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">甲状腺肿大：</label>
+								<select class="select_border" name="extcol4" id="extcol4" ng-model="lady.extcol4" ng-options="item.id as item.text for item in haved">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.extcol4.indexOf('HR397_1')>=0">
+								<label for="isfetiferous">甲状腺肿大情况：</label>
+	                  			<input class="input_border" name="extcol11" id="extcol11" type="text" ng-model="lady.extcol11" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">肝：</label>
+	                  			<input class="input_border" name="extcol5" id="extcol5" type="text" ng-model="lady.extcol5" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">脾：</label>
+	                  			<input class="input_border" name="extcol6" id="extcol6" type="text" ng-model="lady.extcol6" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">浮肿：</label>
+								<select class="select_border" name="extcol7" id="extcol7" ng-model="lady.extcol7" ng-options="item.id as item.text for item in dropsy">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">乳房：</label>
+	                  			<input class="input_border" name="extcol8" id="extcol8" type="text" ng-model="lady.extcol8" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">乳头：</label>
+	                  			<input class="input_border" name="extcol9" id="extcol9" type="text" ng-model="lady.extcol9" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 margin-top-div">
+							<label for="isfetiferous">听诊：</label>
+                  		</div>
+                  		<div class="col-xs-12">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">心脏：</label>
+								<select class="select_border" name="heat" id="heat" ng-model="lady.heat" ng-options="item.id as item.text for item in isnormal">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.heat.indexOf('HR438_002')>=0">
+								<label for="isfetiferous">异常说明：</label>
+	                  			<input class="input_border" name="heat_exception" id="heat_exception" type="text" ng-model="lady.heat_exception" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">肺部听诊：</label>
+								<select class="select_border" name="lung" id="lung" ng-model="lady.lung" ng-options="item.id as item.text for item in isnormal">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.lung.indexOf('HR438_002')>=0">
+								<label for="isfetiferous">异常说明：</label>
+	                  			<input class="input_border" name="lung_other" id="lung_other" type="text" ng-model="lady.lung_other" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 margin-top-div">
+							<label for="isfetiferous">妇科检查：</label>
+                  		</div>
+                  		<div class="col-xs-12">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">外阴：</label>
+								<select class="select_border" name="wy" id="wy" ng-model="lady.wy" ng-options="item.id as item.text for item in isnormal">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.wy.indexOf('HR438_002')>=0">
+								<label for="isfetiferous">外阴异常说明：</label>
+	                  			<input class="input_border" name="wyyc" id="wyyc" type="text" ng-model="lady.wyyc" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">阴道：</label>
+								<select class="select_border" name="yd" id="yd" ng-model="lady.yd" ng-options="item.id as item.text for item in isnormal">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.yd.indexOf('HR438_002')>=0">
+								<label for="isfetiferous">阴道异常说明：</label>
+	                  			<input class="input_border" name="ydyc" id="ydyc" type="text" ng-model="lady.ydyc" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">宫颈：</label>
+								<select class="select_border" name="gongjing" id="gongjing" ng-model="lady.gongjing" ng-options="item.id as item.text for item in isnormal">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.gongjing.indexOf('HR438_002')>=0">
+								<label for="isfetiferous">宫颈异常说明：</label>
+	                  			<input class="input_border" name="gongjingyc" id="gongjingyc" type="text" ng-model="lady.gongjingyc" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">子宫：</label>
+								<select class="select_border" name="zigong" id="zigong" ng-model="lady.zigong" ng-options="item.id as item.text for item in isnormal">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.zigong.indexOf('HR438_002')>=0">
+								<label for="isfetiferous">子宫异常说明：</label>
+	                  			<input class="input_border" name="zigongyc" id="zigongyc" type="text" ng-model="lady.zigongyc" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">附件：</label>
+								<select class="select_border" name="fujian" id="fujian" ng-model="lady.fujian" ng-options="item.id as item.text for item in isnormal">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.fujian.indexOf('HR438_002')>=0">
+								<label for="isfetiferous">附件异常说明：</label>
+	                  			<input class="input_border" name="fujianyc" id="fujianyc" type="text" ng-model="lady.fujianyc" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 margin-top-div">
+							<label for="isfetiferous">产科检查：</label>
+                  		</div>
+                  		<div class="col-xs-12">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">宫高：</label>
+	                  			<input class="input_border" name="uterushigh" id="uterushigh" type="text" ng-model="lady.uterushigh" is-float/>cm
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">腹围：</label>
+	                  			<input class="input_border" name="abdominalgirth" id="abdominalgirth" type="text" ng-model="lady.abdominalgirth" is-float/>cm
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">胎位：</label>
+	                  			<input class="input_border" name="fetalpresentation" id="fetalpresentation" type="text" ng-model="lady.fetalpresentation" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">胎心位置：</label>
+	                  			<input class="input_border" name="fetalposition" id="fetalposition" type="text" ng-model="lady.fetalposition" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">胎心率：</label>
+	                  			<input class="input_border" name="fetalheartrate" id="fetalheartrate" type="text" ng-model="lady.fetalheartrate" is-float/>次/分钟
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">胎先露：</label>
+	                  			<input class="input_border" name="fetalfirstdew" id="fetalfirstdew" type="text" ng-model="lady.fetalfirstdew" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12" style="height:20px;"></div> 
+					<div class="col-xs-12" style="text-align:right;">	
+						<button type="button" class="btn btn-info btn-sm" aria-label="Left Align" ng-click="nextFunction('sfqkzj')">
+						  下 一 步&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+						</button>
+					</div>
+					<div class="col-xs-12" style="height:40px;"></div> 
+				</div>
+					
+				<div class="col-xs-12 cathetus_div" id="sfqkzj" style="display:none;">
+					<div class="row">
+						<div class="col-xs-12 margin-top-div">
+							<label for="isfetiferous">血常规 ：</label>
+                  		</div>
+                  		<div class="col-xs-12">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">血红蛋白 ：</label>
+	                  			<input class="input_border" name="xhdb" id="xhdb" type="text" ng-model="lady.xhdb" is-float/>(g/L)
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">白细胞计数值：</label>
+	                  			<input class="input_border" name="baixibao" id="baixibao" type="text" ng-model="lady.baixibao" is-float/>(×10<sup>9</sup>/L)
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">白细胞分类计数：</label>
+	                  			<input class="input_border" name="wbc_count" id="wbc_count" type="text" ng-model="lady.wbc_count" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">血小板计数值：</label>
+	                  			<input class="input_border" name="xuexiaoban" id="xuexiaoban" type="text" ng-model="lady.xuexiaoban" is-float/>(×10<sup>9</sup>/L)
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">红细胞计数值：</label>
+	                  			<input class="input_border" name="erythrocytecount" id="erythrocytecount" type="text" ng-model="lady.erythrocytecount" is-float/>(×10<sup>12</sup>/L)
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">血糖：</label>
+	                  			<input class="input_border" name="xuet" id="xuet" type="text" ng-model="lady.xuet" is-float/>mmol/l
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">血型：</label>
+								<select class="select_border" name="bloodgroup" id="bloodgroup" ng-model="lady.bloodgroup" ng-options="item.id as item.text for item in bloodtype">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">RH阴性：</label>
+								<select class="select_border" name="bloodRH" id="bloodRH" ng-model="lady.bloodRH" ng-options="item.id as item.text for item in bloodRH">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">其它：</label>
+	                  			<input class="input_border" name="xuecgqt" id="xuecgqt" type="text" ng-model="lady.xuecgqt" />
+							</div>							
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 margin-top-div">
+							<label for="isfetiferous">尿常规：</label>
+                  		</div>
+                  		<div class="col-xs-12">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">尿蛋白：</label>
+								<select class="select_border" name="ndb" id="ndb" ng-model="lady.ndb" ng-options="item.id as item.text for item in antigen">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">尿比重：</label>
+	                  			<input class="input_border" name="urineproportion" id="urineproportion" type="text" ng-model="lady.urineproportion" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">尿糖：</label>
+	                  			<input class="input_border" name="height" id="height" type="text" ng-model="lady.niaot" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">尿酮体：</label>
+	                  			<input class="input_border" name="height" id="niaott" type="text" ng-model="lady.niaott" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">尿潜血：</label>
+	                  			<input class="input_border" name="niaoqx" id="niaoqx" type="text" ng-model="lady.niaoqx" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">其它：</label>
+	                  			<input class="input_border" name="niaocgqt" id="niaocgqt" type="text" ng-model="lady.niaocgqt" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 margin-top-div">
+							<label for="isfetiferous">肝功能  ：</label>
+                  		</div>
+                  		<div class="col-xs-12">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">血清谷丙转氨酶：</label>
+	                  			<input class="input_border" name="atl" id="atl" type="text" ng-model="lady.atl" is-float/>U/L
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">血清谷草转氨酶：</label>
+	                  			<input class="input_border" name="ast" id="ast" type="text" ng-model="lady.ast" is-float/>U/L
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">白蛋白：</label>
+	                  			<input class="input_border" name="alb" id="alb" type="text" ng-model="lady.alb" is-float/>g/L
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">总胆红素：</label>
+	                  			<input class="input_border" name="tbil" id="tbil" type="text" ng-model="lady.tbil" is-float/>umol/L
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">结合胆红素：</label>
+	                  			<input class="input_border" name="jhbil" id="jhbil" type="text" ng-model="lady.jhbil" is-float/>umol/L
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 margin-top-div">
+							<label for="isfetiferous">肾功能：</label>
+                  		</div>
+                  		<div class="col-xs-12">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">血清肌酐：</label>
+	                  			<input class="input_border" name="xueqjg" id="xueqjg" type="text" ng-model="lady.xueqjg" is-float/>umol/L
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">血尿素氮：</label>
+	                  			<input class="input_border" name="xuensd" id="xuensd" type="text" ng-model="lady.xuensd" is-float/>mmol/L
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">血钾浓度：</label>
+	                  			<input class="input_border" name="xuejnd" id="xuejnd" type="text" ng-model="lady.xuejnd" is-float/>mmol/L
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">血钠浓度：</label>
+	                  			<input class="input_border" name="xuennd" id="xuennd" type="text" ng-model="lady.xuennd" is-float/>mmol/L
+							</div>							
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 margin-top-div">
+							<label for="isfetiferous">乙型肝炎五项：</label>
+                  		</div>
+                  		<div class="col-xs-12">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">乙型肝炎表面抗原：</label>
+								<select class="select_border" name="hbsag" id="hbsag" ng-model="lady.hbsag" ng-options="item.id as item.text for item in antigen">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">乙型肝炎表面抗体：</label>
+								<select class="select_border" name="hbsab" id="hbsab" ng-model="lady.hbsab" ng-options="item.id as item.text for item in antigen">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">乙型肝炎e抗原：</label>
+								<select class="select_border" name="hbeag" id="hbeag" ng-model="lady.hbeag" ng-options="item.id as item.text for item in antigen">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">乙型肝炎e抗体：</label>
+								<select class="select_border" name="hbeab" id="hbeab" ng-model="lady.hbeab" ng-options="item.id as item.text for item in antigen">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">乙型肝炎核心抗体：</label>
+								<select class="select_border" name="hbcab" id="hbcab" ng-model="lady.hbcab" ng-options="item.id as item.text for item in antigen">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-xs-12">
+							<div style="float:left;">
+								<label for="bpheigh">阴道分泌物：</label>
+								<checkbox-lvd  name="yindfmw" id="yindfmw" type="text" ng-model="lady.yindfmw" ></checkbox-lvd>
+							</div>
+							<div style="float:left;" ng-show="lady.yindfmw.indexOf('lady_ydfmw_4')>=0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							其它说明：<input class="input_border" type="text" name="yindfmwqt" id="yindfmwqt" maxlength="100" ng-model="lady.yindfmwqt">
+							</div>
+							<div style="float:left;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<label for="bpheigh">阴道清洁度：</label>
+								<select class="select_border" name="yindqjd" id="yindqjd" ng-model="lady.yindqjd" ng-options="item.id as item.text for item in greekNumerals">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row  margin-top-div">
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="isfetiferous">梅毒血清学试验：</label>
+							<select class="select_border" name="lues_survey" id="lues_survey" ng-model="lady.lues_survey" ng-options="item.id as item.text for item in pandn">
+								<option value="">--请选择--</option>
+							</select>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="isfetiferous">HIV抗体检测：</label>
+							<select class="select_border" name="hiv_survey" id="hiv_survey" ng-model="lady.hiv_survey" ng-options="item.id as item.text for item in pandn">
+								<option value="">--请选择--</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 margin-top-div">
+							<label for="isfetiferous">建议检查：</label>
+                  		</div>
+                  		<div class="col-xs-12">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">其他性病检查：</label>
+	                  			<input class="input_border" name="otherSTDcheck" id="otherSTDcheck" type="text" ng-model="lady.otherSTDcheck" />
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">丙肝：</label>
+								<select class="select_border" name="hepatitisC" id="hepatitisC" ng-model="lady.hepatitisC" ng-options="item.id as item.text for item in pandn">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">OGTT：</label>
+								<select class="select_border" name="ogtt" id="ogtt" ng-model="lady.ogtt" ng-options="item.id as item.text for item in isnormal">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+								<label for="isfetiferous">TSH：</label>
+								<select class="select_border" name="tsh" id="tsh" ng-model="lady.tsh" ng-options="item.id as item.text for item in isnormal">
+									<option value="">--请选择--</option>
+								</select>
+							</div>
+							
+						</div>
+					</div>
+					<div class="row margin-top-div">
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="isfetiferous">B超：</label>
+							<select class="select_border" name="bchao" id="bchao" ng-model="lady.bchao" ng-options="item.id as item.text for item in isnormal">
+								<option value="">--请选择--</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div style="float:left;">
+								<label for="bpheigh">保健指导：</label>
+								<checkbox-lhd  name="guidance" id="guidance" type="text" ng-model="lady.guidance" ></checkbox-lhd>
+							</div>
+							<div style="float:left;" ng-show="lady.guidance.indexOf('HR234_6')>=0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							其他保健指导：<input class="input_border" type="text" name="guidanceother" id="guidanceother" maxlength="100" ng-model="lady.guidanceother">
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="row margin-top-div">
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="isfetiferous">总体评估：</label>
+							<select class="select_border" name="assess" id="assess" ng-model="lady.assess" ng-options="item.id as item.text for item in isnormal">
+								<option value="">--请选择--</option>
+							</select>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div" ng-show="lady.assess.indexOf('HR438_002')>=0">
+							<label for="isfetiferous">异常说明：</label>
+	                  		<input class="input_border" name="assess_exception" id="assess_exception" type="text" ng-model="lady.assess_exception" />
+						</div>
+					</div>
+					<div class="row margin-top-div">
+						<div class="col-xs-12 margin-top-div">
+							<label for="isfetiferous">处理意见：</label>
+	                  		<input class="input_border" style="width:88%;" name="treatadvice" id="treatadvice" type="text" ng-model="lady.treatadvice" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="isfetiferous">下次随访日期<span style="color:red;">&nbsp;&nbsp;*</span>：</label>
+							<input class="input_border" style="width:100px;" name="nextvisitdate" id="nextvisitdate" ng-model="lady.nextvisitdate" hys-datebox required />
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-div">
+							<label for="isfetiferous">结案标志<span style="color:red;">&nbsp;&nbsp;*</span>：</label>
+							<select class="select_border" name="isover" id="isover" ng-model="lady.isover" required ng-options="item.id as item.text for item in finalmark">
+								<option>..请选择..</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-xs-12" style="height:20px;"></div> 
+					<div class="col-xs-12" style="text-align:right;">
+						<button id="btnSave" class="btn btn-default" ng-show="!lady.isOld" ng-click="save()">
+							<span class="glyphicon glyphicon-ok"></span>&nbsp;保存
+						</button>
+					</div>
+					<div class="col-xs-12" style="height:10px;"></div> 
+					
+				</div>
+				
+						
+			</div>
+		</div>
+	</form>
+
+</div>
+</body>
+</html>
